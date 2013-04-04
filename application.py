@@ -10,6 +10,10 @@ application.debug=True
 def landing_page(name=None):
     return render_template('landing.html', name=name)
 
+@application.route('/home')
+def home_page(name=None):
+    return render_template('home.html', name=name)
+
 @application.route('/timeline')
 def timeline(name=None):
     return render_template('timeline.html', name=name)
