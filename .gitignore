@@ -1,1 +1,1 @@
-.elasticbeanstalk/
+venv*.pyc*\~*.swp
