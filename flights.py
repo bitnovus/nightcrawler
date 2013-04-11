@@ -56,4 +56,5 @@ def orbitz(start, end, month, day, year):
 
   return package_info(times_s, prices_s, carriers_s, start, end)
 
-orbitz("EWR", "MIA", 4, 14, 2013)
+if __name__ == '__main__':
+    orbitz("EWR", "MIA", 4, 14, 2013)

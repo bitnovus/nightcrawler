@@ -50,4 +50,5 @@ def megabus(start, end, month, day, year):
 	print p
 	return p
 
-megabus(302, 289, 4, 14, 2013)
+if __name__ == '__main__':
+    megabus(302, 289, 4, 14, 2013)
