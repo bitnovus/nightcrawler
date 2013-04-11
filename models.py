@@ -2,7 +2,8 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+application.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') \
+        if os.environ.get('DATABASE_URL') else 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
 class Route(db.Model):
