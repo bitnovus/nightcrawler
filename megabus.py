@@ -47,7 +47,7 @@ def megabus(start, end, month, day, year):
 	departures_s = sanitize_departures(departures)
 
 	p = package_info(times_s, prices, departures_s)
-	print p
+	#print p
 	return p
 
 if __name__ == '__main__':
