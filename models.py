@@ -3,7 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
-application.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') \
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') \
         if os.environ.get('DATABASE_URL') else 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
