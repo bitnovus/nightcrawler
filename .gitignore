@@ -1,1 +1,5 @@
-venv*.pyc*\~*.swp
+venv
+*.pyc
+*\~
+*.swp
+*.db

@@ -1,111 +1,54 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# scrape megabus routes by select departure points one at a time and parsing
-# AJAX updates to destinations select box 
-# john@lawnjam.com
+#!/bin/env python
 
-from bs4 import BeautifulSoup
-import urllib, urllib2, cookielib
+import urllib2, re
 
-cj = cookielib.CookieJar()
-opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-urllib2.install_opener(opener)
+def sanitize_times(times):
+	g = []
+	for t in times:
+		g.append(re.sub(r"\xc2\xa0", " ", t))
+	return g
 
-headers = {'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en-gb,en;q=0.8,en-us;q=0.5,gd;q=0.3',
-    'Accept-Encoding': 'gzip,deflate',
-    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7'}
+def sanitize_departures(departures):
+	g = []
+	for d in departures:
+		s = re.sub(r"ALBACORE\t\t\t\t\t\t\t\t", "", d)
+		s = re.sub("\rAARDVARK", "", s)
+		g.append(s)
+	return g
 
-req = urllib2.Request('http://us.megabus.com/default.aspx')
-response = urllib2.urlopen(req)
+def package_info(times, prices, departures):
+	dictionaries = []
+	for j in range(len(prices)):
+		dictionaries.append(dict(price = prices[j], departure = departures[2 * j], arrival = departures[2 * j + 1], departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = "Megabus"))
+	return dictionaries
 
-megaSoup = BeautifulSoup(response.read())
-viewstate = megaSoup.find(name='input', attrs={'name': '__VIEWSTATE'})['value']
-eventvalidation = megaSoup.find(name='input', attrs={'name': '__EVENTVALIDATION'})['value']
-options = megaSoup.find(name='select', attrs={'name': 'SearchAndBuy1$ddlLeavingFrom'}).findAll('option')
-startLocations = {}
-for o in options:
-    startLocations[int(o['value'])] = o.find(text=True)
-del startLocations[0] # 0 is "Select"
 
-# set other form values
-values = {
-    'Welcome1_ScriptManager1_HiddenField': '',
-    'Welcome1$ScriptManager1': 'SearchAndBuy1$upSearchAndBuy|SearchAndBuy1$ddlLeavingFrom',
-    '__EVENTTARGET': 'SearchAndBuy1$ddlLeavingFrom',
-    '__EVENTARGUMENT': '',
-    'Welcome1$hdnBasketItemCount': '0',
-    'Language1$ddlLanguage': 'en',
-    'SearchAndBuy1$txtPassengers': '1',
-    'SearchAndBuy1$txtConcessions': '0',
-    'SearchAndBuy1$txtNUSExtra': '0',
-    'SearchAndBuy1$txtOutboundDate': '',
-    'SearchAndBuy1$txtReturnDate': '',
-    'SearchAndBuy1$txtPromotionalCode': '',
-    '__ASYNCPOST': 'true'
-    }
-headers['X-MicrosoftAjax'] = 'Delta=true'
+def megabus(start, end, month, day, year):
+	s = "https://us.megabus.com/JourneyResults.aspx?originCode=" + str(start) + "&destinationCode=" + str(end) + "&outboundDepartureDate=" + str(month) + "%2f" + str(day) + "%2f" + str(year) + "&inboundDepartureDate=&passengerCount=1&transportType=0&concessionCount=0&nusCount=0&outboundWheelchairSeated=0&outboundOtherDisabilityCount=0&inboundWheelchairSeated=0&inboundOtherDisabilityCount=0&outboundPcaCount=0&inboundPcaCount=0&promotionCode=&withReturn=0"
+	html = urllib2.urlopen(s).read()
 
-for a in startLocations:
-    values['SearchAndBuy1$ddlLeavingFrom'] = a
-    values['__EVENTVALIDATION'] = eventvalidation
-    values['__VIEWSTATE'] = viewstate
-    data = urllib.urlencode(values)
-    req = urllib2.Request('http://us.megabus.com/default.aspx', data, headers)
+	times = re.findall("[0-9]*[0-9]:[0-9][0-9].*[AP]M", html)
+	times_s = sanitize_times(times)
 
-    # store the received (pipe-separated) data in a list
-    L = urllib2.urlopen(req).read().split('|')
-    for position, item in enumerate(L):
-        if item == 'SearchAndBuy1_upSearchAndBuy':
-            html = L[position + 1]
-        if item == '__VIEWSTATE':
-            viewstate = L[position + 1] # save __VIEWSTATE for the next iteration
-        if item == '__EVENTVALIDATION':
-            eventvalidation = L[position + 1] # save __EVENTVALIDATION for the next iteration
+	prices = re.findall("\$[0-9]*\.[0-9][0-9]", html)
+	lines = html.split("\n")
+	s = ""
+	next = False
+	for line in lines:
+		if next:
+			s = s + "ALBACORE" + line + "AARDVARK \n"
+			next = False
+		else:
+			s = s + line + " "
+		if ",<!-- mp_trans -->" in line:
+			next = True
 
-    megaSoup = BeautifulSoup(html)
-    options = megaSoup.find(name='select', attrs={'name': 'SearchAndBuy1$ddlTravelingTo'}).findAll('option')
-    endLocations = {}
-    for o in options:
-        if int(o['value']) > 0:
-            print '"' + startLocations[a] + '","' + o.find(text=True) + '"'
-            #endLocations[int(o['value'])] = o.find(text=True)
-    #print endLocations
+	departures = re.findall("ALBACORE.*AARDVARK", s)
+	departures_s = sanitize_departures(departures)
 
-"""
-#print endLocations
+	p = package_info(times_s, prices, departures_s)
+	print p
+	return p
 
-# 2nd POST: set travelling to
-values['__EVENTVALIDATION'] = eventvalidation
-values['__VIEWSTATE'] = viewstate
-values['Welcome1$ScriptManager1'] = 'SearchAndBuy1$upSearchAndBuy|SearchAndBuy1$ddlTravellingTo'
-values['__EVENTTARGET'] = 'SearchAndBuy1$ddlTravellingTo'
-values['__LASTFOCUS'] = ''
-values['SearchAndBuy1$ddlTravellingTo'] = '10' # 10 is Birmingham
-data = urllib.urlencode(values)req = urllib2.Request('http://uk.megabus.com/default.aspx', data, headers)
-
-# store the received (pipe-separated) data in a list
-L = urllib2.urlopen(req).read().split('|')
-
-for position, item in enumerate(L):
-    if item == '__VIEWSTATE':
-        viewstate = L[position + 1]
-    if item == '__EVENTVALIDATION':
-        eventvalidation = L[position + 1]
-
-# 3rd POST: set date
-values['__EVENTVALIDATION'] = eventvalidation
-values['__VIEWSTATE'] = viewstate
-values['Welcome1$ScriptManager1'] = 'SearchAndBuy1$upSearchAndBuy|SearchAndBuy1$calendarOutboundDate'
-values['__EVENTTARGET'] = 'SearchAndBuy1$calendarOutboundDate'
-values['__EVENTARGUMENT'] = '4087' ###### FIXME map these values to actual dates - 4087 is 11/03/2011
-values['SearchAndBuy1$ddlTravellingBy'] = '0'
-data = urllib.urlencode(values)
-req = urllib2.Request('http://uk.megabus.com/default.aspx', data, headers)
-urllib2.urlopen(req)
-
-# GET the results
-req = urllib2.Request('http://uk.megabus.com/JourneyResults.aspx', None, headers)
-print urllib2.urlopen(req).read()
-"""
+if __name__ == '__main__':
+    megabus(302, 289, 4, 14, 2013)
