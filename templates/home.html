@@ -87,30 +87,44 @@
 	<script type="text/javascript">
 		function submit()
 		{
+			var arrive = false;
+			if (document.getElementById("arriveby").checked) {
+				arrive = true;
+			}
+			var speed = false;
+			if (document.getElementById("speed").checked) {
+				speed = true;
+			}
 
 			$.get(
 				"megabus",
 				{
 					orig: document.getElementById("originform").value,
 					dest: document.getElementById("destform").value
-					//datetime: document.getElementById("datetimeform").value,
-					//arriveby:"",
-					//optimizefor:""
+					month: document.getElementById("month").value,
+					day: document.getElementById("day").value,
+					year: document.getElementById("year").value,
+					hour: document.getElementById("hour").value,
+					minute: document.getElementById("minute").value,
+					arriveby: arrive,
+					optimizeforspeed: speed
 				},
 				function (data, status) {
 					console.log(data + " " + status);
 					a = data;
 					var e = document.getElementById("results");
+					if (data.length == 0) {
+						e.innerHTML += "No routes found.";
+					}
 					for (var i = 0; i < data.length; i++) {
 						var x = data[i];
 						e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
 						e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
 						e.innerHTML += "Price: " + x.price + '<br />';
-						e.innerHTML += "Carrier: " + x.carrier + '<br /><br />';
+						e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
 					}
 				}
 			);
-			//window.alert(document.getElementById("originform").value);
 		}
 	</script>
 
@@ -157,17 +171,28 @@
                 <input type="text" class="span3" placeholder="e.g. New York City, NY" id="originform">  
                 <label>Destination</label>  
                 <input type="text" class="span3" placeholder="e.g. Princeton, NJ" id="destform">
-                <label>Date/Time</label>
-                <input type="text" class="span3" placeholder="e.g. MM/DD/YY HH:MM" id="datetimeform">
-                <div class="btn-group" class="span3">
-                    <button class="btn" id="arriveby">Arrive By</button>
-                    <button class="btn" id="departby">Depart By</button>
+                <label>Date</label>
+                <input type="text" class="span3" id="month" placeholder="e.g. MM">
+                <input type="text" class="span3" id="day" placeholder="e.g. DD">
+                <input type="text" class="span3" id="year" placeholder="e.g. YYYY">
+		<label>Time</label>
+		<!--<select id="hour"><option value="0"></select>-->
+		<input type="text" class="span3" id="hour" placeholder="e.g. HH">
+		<input type="text" class="span3" id="minute" placeholder="e.g. MM">
+		<div class="btn-group" class="span3">
+		    <input type="radio" name="time" id="arriveby" checked>Arrive By</input>
+		    <input type="radio" name="time" id="departby">Depart By</input>
+                   <!-- <button class="btn" id="arriveby">Arrive By</button>
+		   <button class="btn" id="departby">Depart By</button> -->
                 </div>
                 <label>Optimize for:</label>
                 <div class="btn-group">
-                    <button class="btn" id="speed">Speed</button>
+		    <input type="radio" name="optimize" id="speed" checked>Speed</input>
+		    <input type="radio" name="optimize" id="cheapness">Cheapness</input>
+		    <!--<input type="radio" name="optimize" id="laziness">Laziness</input>-->
+                    <!-- <button class="btn" id="speed">Speed</button>
                     <button class="btn" id="cheapness">Cheapness</button>
-                    <button class="btn" id="laziness">Laziness</button>
+		    <button class="btn" id="laziness">Laziness</button> -->
                 </div>
 
                 <br></br>
@@ -177,8 +202,8 @@
                 <label>CALENDARS HERE</label>
 
 		<!--<button type="submit" class="btn btn-large btn-success" onclick="submit()">Submit</button>  -->
-            </form>    
-	    <button onclick="submit()">Submit</button>  
+	</form>    <br/>
+		<button onclick="submit()">Submit</button>  <br/>
 
 	    <div id="results"></div>
 
