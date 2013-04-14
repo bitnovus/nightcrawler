@@ -33,21 +33,25 @@ def timeline(name=None):
 def megabus_stuff():
     origin = request.args.get('orig')
     destination = request.args.get('dest')
-    month = request.args.get('day')
-    day = request.args.get('month') 
+    month = request.args.get('month')
+    day = request.args.get('day') 
     year = request.args.get('year')
+    print month + " " + day + " " + year
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
     results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year) 
+
+    print results
     return Response(json.dumps(results), mimetype='application/json')
 
 @application.route('/flights')
-def megabus_stuff():
+def flight_stuff():
     origin = request.args.get('orig')
     destination = request.args.get('dest')
-    month = request.args.get('day')
-    day = request.args.get('month') 
+    month = request.args.get('month')
+    day = request.args.get('day') 
     year = request.args.get('year')
+    print month + " " + day + " " + year
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
     results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year) 
