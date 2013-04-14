@@ -103,7 +103,10 @@
 					var e = document.getElementById("results");
 					for (var i = 0; i < data.length; i++) {
 						var x = data[i];
-						e.innerHTML += x.arrival + '<br />';
+						e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
+						e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
+						e.innerHTML += "Price: " + x.price + '<br />';
+						e.innerHTML += "Carrier: " + x.carrier + '<br /><br />';
 					}
 				}
 			);
