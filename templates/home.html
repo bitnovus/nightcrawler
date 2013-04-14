@@ -100,7 +100,14 @@
 				function (data, status) {
 					console.log(data + " " + status);
 					a = data;
-					console.log(window.JSON.parse(data));
+					var e = document.getElementById("results");
+					for (var i = 0; i < data.length; i++) {
+						var x = data[i];
+						e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
+						e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
+						e.innerHTML += "Price: " + x.price + '<br />';
+						e.innerHTML += "Carrier: " + x.carrier + '<br /><br />';
+					}
 				}
 			);
 			//window.alert(document.getElementById("originform").value);
@@ -171,7 +178,9 @@
 
 		<!--<button type="submit" class="btn btn-large btn-success" onclick="submit()">Submit</button>  -->
             </form>    
-                <button onclick="submit()">Submit</button>  
+	    <button onclick="submit()">Submit</button>  
+
+	    <div id="results"></div>
 
             <!-- Le javascript
             ================================================== -->
