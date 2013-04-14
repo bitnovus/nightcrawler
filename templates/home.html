@@ -99,6 +99,8 @@
 				},
 				function (data, status) {
 					console.log(data + " " + status);
+					a = data;
+					console.log(window.JSON.parse(data));
 				}
 			);
 			//window.alert(document.getElementById("originform").value);
