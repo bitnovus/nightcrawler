@@ -79,12 +79,17 @@
                 border-right: 0;
                 border-radius: 0 3px 3px 0;
             }
+
+	    .results {
+		    clear: both;
+	    }
         </style>
 
 
 	<link href="{{url_for('static', filename='css/bootstrap-responsive.css') }}" rel="stylesheet">
     <script src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
 	<script type="text/javascript">
+		var results;
 		function submit()
 		{
 			var arrive = false;
@@ -111,7 +116,7 @@
 				},
 				function (data, status) {
 					console.log(data + " " + status);
-					a = data;
+					results = data;
 					var e = document.getElementById("results");
 					e.innerHTML = "";
 					if (data.length == 0) {
@@ -126,6 +131,52 @@
 					}
 				}
 			);
+		}
+
+		function comparebyprice(a, b) {
+			return a.price.substring(1) - b.price.substring(1);
+		}
+
+		function timetominutes(time) {
+			var colon = time.indexOf(":");
+			var hour = time.substring(0, colon);
+			var minute = time.substring(colon+1, colon+3);
+			if (time.indexOf("PM") != -1) {
+				hour = (hour*1) + 12;
+			}
+			return hour * 60 + (minute*1);
+		}
+
+		function comparebyarrival(a, b) {
+			return timetominutes(a.arrival) - timetominutes(b.arrival);
+		}
+
+		function comparebydeparture(a, b) {
+			return timetominutes(a.departure) - timetominutes(b.departure);
+		}
+
+		function comparebyelapsed(a, b) {
+			return comparebyarrival(a, b) - comparebydeparture(a, b);
+		}
+
+		function sortresults(comparefunction) {
+			results.sort(comparefunction);
+			display();
+		}
+
+		function display() {
+			var e = document.getElementById("results");
+			e.innerHTML = "";
+			if (results.length == 0) {
+				e.innerHTML += "No routes found.";
+			}
+			for (var i = 0; i < results.length; i++) {
+				var x = results[i];
+				e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
+				e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
+				e.innerHTML += "Price: " + x.price + '<br />';
+				e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
+			}
 		}
 	</script>
 
@@ -180,21 +231,21 @@
 		<!--<select id="hour"><option value="0"></select>-->
 		<input type="text" class="span3" id="hour" placeholder="e.g. HH">
 		<input type="text" class="span3" id="minute" placeholder="e.g. MM">
-		<div class="btn-group" class="span3">
+		<!--<div class="btn-group" class="span3">-->
 		    <input type="radio" name="time" id="arriveby" checked>Arrive By</input>
 		    <input type="radio" name="time" id="departby">Depart By</input>
                    <!-- <button class="btn" id="arriveby">Arrive By</button>
 		   <button class="btn" id="departby">Depart By</button> -->
-                </div>
+		   <!--</div>-->
                 <label>Optimize for:</label>
-                <div class="btn-group">
+		<!--<div class="btn-group">-->
 		    <input type="radio" name="optimize" id="speed" checked>Speed</input>
 		    <input type="radio" name="optimize" id="cheapness">Cheapness</input>
 		    <!--<input type="radio" name="optimize" id="laziness">Laziness</input>-->
                     <!-- <button class="btn" id="speed">Speed</button>
                     <button class="btn" id="cheapness">Cheapness</button>
 		    <button class="btn" id="laziness">Laziness</button> -->
-                </div>
+		    <!--</div>-->
 
                 <br></br>
 
@@ -204,9 +255,14 @@
 
 		<!--<button type="submit" class="btn btn-large btn-success" onclick="submit()">Submit</button>  -->
 	</form>    <br/>
-		<button onclick="submit()">Submit</button>  <br/>
 
-	    <div id="results"></div>
+	<div class="results"><button onclick="submit()">Submit</button> </div> <br/>
+
+	<div class="results">
+		<button onclick="sortresults(comparebyprice)">Sort by Price</button>
+		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>
+	</div>
+	    <div class="results" id="results"></div>
 
             <!-- Le javascript
             ================================================== -->
