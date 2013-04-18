@@ -117,18 +117,12 @@
 				function (data, status) {
 					console.log(data + " " + status);
 					results = data;
-					var e = document.getElementById("results");
-					e.innerHTML = "";
-					if (data.length == 0) {
-						e.innerHTML += "No routes found.";
+					if (speed) {
+						sortresults(comparebyelapsed);
+					} else {
+						sortresults(comparebyprice);
 					}
-					for (var i = 0; i < data.length; i++) {
-						var x = data[i];
-						e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
-						e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
-						e.innerHTML += "Price: " + x.price + '<br />';
-						e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
-					}
+					display();
 				}
 			);
 		}
@@ -148,11 +142,11 @@
 		}
 
 		function comparebyarrival(a, b) {
-			return timetominutes(a.arrival) - timetominutes(b.arrival);
+			return timetominutes(a.arrival_time) - timetominutes(b.arrival_time);
 		}
 
 		function comparebydeparture(a, b) {
-			return timetominutes(a.departure) - timetominutes(b.departure);
+			return timetominutes(a.departure_time) - timetominutes(b.departure_time);
 		}
 
 		function comparebyelapsed(a, b) {
@@ -166,7 +160,7 @@
 
 		function display() {
 			var e = document.getElementById("results");
-			e.innerHTML = "";
+			e.innerHTML = "<h2>Results</h2></br></br>";
 			if (results.length == 0) {
 				e.innerHTML += "No routes found.";
 			}
@@ -260,6 +254,8 @@
 
 	<div class="results">
 		<button onclick="sortresults(comparebyprice)">Sort by Price</button>
+		<button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
+		<button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
 		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>
 	</div>
 	    <div class="results" id="results"></div>
