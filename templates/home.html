@@ -197,9 +197,13 @@
 			}
 		}
 
-		var places2;
+		var places;
 		function loadCities() {
-			$.get("cities", function (data, status) {places2=data;});
+			$.get("cities", function (data, status) {
+					places = [];
+					for(var i = 0; i < data.length; i++) {
+						places[i] = data[i];
+					}});
 		}
 
 		$(document).ready(loadCities());
@@ -207,7 +211,7 @@
 		$(function() {
 			$( "#datepicker" ).datepicker();
 			//var places= ["Princeton", "Boston", "New York"];
-			var places = places2;
+			//var places = places2;
 			$( "#originform" ).autocomplete({
 				source: places
 			});
