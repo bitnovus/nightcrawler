@@ -133,8 +133,11 @@
 
 		function timetominutes(time) {
 			var colon = time.indexOf(":");
-			var hour = time.substring(0, colon);
-			var minute = time.substring(colon+1, colon+3);
+			var hour = time.substring(0, colon) *1;
+			var minute = time.substring(colon+1, colon+3) *1;
+			if (hour == 12) {
+				hour = 0;
+			}
 			if (time.indexOf("PM") != -1) {
 				hour = (hour*1) + 12;
 			}
@@ -172,6 +175,10 @@
 				e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
 			}
 		}
+
+		$(function() {
+			$( "#datepicker" ).datepicker();
+		});
 	</script>
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -217,7 +224,8 @@
                 <input type="text" class="span3" placeholder="e.g. New York City, NY" id="originform">  
                 <label>Destination</label>  
                 <input type="text" class="span3" placeholder="e.g. Princeton, NJ" id="destform">
-                <label>Date</label>
+		<label>Date</label>
+		<input type="text" id="datepicker">
                 <input type="text" class="span3" id="month" placeholder="e.g. MM">
                 <input type="text" class="span3" id="day" placeholder="e.g. DD">
                 <input type="text" class="span3" id="year" placeholder="e.g. YYYY">
