@@ -40,9 +40,10 @@ def all_stuff():
     dest_city = db.session.query(City).filter(City.name==destination).first()
     bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year) 
     flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year) 
+    total_results = bus_results + flight_results
     print type(bus_results)
     print type(flight_results)
-    return Response(json.dumps(bus_results)+json.dumps(flight_results), mimetype='application/json')
+    return Response(json.dumps(total_results), mimetype='application/json')
 
 @application.route('/megabus')
 def megabus_stuff():
