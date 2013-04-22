@@ -199,14 +199,14 @@
 
 		var places;
 		function loadCities() {
-			$.get("cities", function (data, status) {a=data;});
+			$.get("cities", function (data, status) {places=data;});
 		}
 
 		$(document).ready(loadCities());
 
 		$(function() {
 			$( "#datepicker" ).datepicker();
-			var places= ["Princeton", "Boston", "New York"];
+			//var places= ["Princeton", "Boston", "New York"];
 			$( "#originform" ).autocomplete({
 				source: places
 			});
