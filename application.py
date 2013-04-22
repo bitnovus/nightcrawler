@@ -36,13 +36,14 @@ def all_stuff():
     month = request.args.get('month')
     day = request.args.get('day') 
     year = request.args.get('year')
+    hour = request.args.get('hour')
+    minute = request.args.get('minute')
+    isArriv = request.args.get('isArriv')
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
-    bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year) 
-    flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year) 
+    bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv) 
+    flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv) 
     total_results = bus_results + flight_results
-    print type(bus_results)
-    print type(flight_results)
     return Response(json.dumps(total_results), mimetype='application/json')
 
 @application.route('/megabus')

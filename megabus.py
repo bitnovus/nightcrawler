@@ -59,8 +59,8 @@ def megabus(start, end, month, day, year, hour, minute, isArriving):
   departures_s = sanitize_departures(departures)
 
   p = package_info(times_s, prices, departures_s, hour, minute, isArriving)
-  print p
+  #print p
   return p
 
 if __name__ == '__main__':
-    megabus(89, 123, 4, 20, 2013, 13, 30, False)
+    megabus(89, 123, 4, 25, 2013, 13, 30, False)

@@ -67,8 +67,8 @@ def orbitz(start, end, month, day, year, hour, minute, isArriving):
   carriers_s = sanitize_carriers(carriers)
 
   p = package_info(times_s, prices_s, carriers_s, start, end, hour, minute, isArriving)
-  print p
+  #print p
   return p
 
 if __name__ == '__main__':
-    orbitz("EWR", "MIA", 4, 14, 2013, 13, 30, True)
+    orbitz("EWR", "MIA", 4, 25, 2013, 13, 30, True)
