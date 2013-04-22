@@ -85,12 +85,14 @@
 		    clear: both;
 	    }
 
-	    .ui-autocomplete {
-	    	position: absolute;
-		top: 0;
-		left: 0;
-		cursor: default;
+	    .ui-helper-hidden-accessible {
+	    	display: none;
 	    }
+
+	    .ui-helper-hidden {
+		display: none;
+	    }
+
         </style>
 
 
@@ -194,6 +196,13 @@
 				e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
 			}
 		}
+
+		var places;
+		function loadCities() {
+			$.get("cities", function (data, status) {a=data;});
+		}
+
+		$(document).ready(loadCities());
 
 		$(function() {
 			$( "#datepicker" ).datepicker();
