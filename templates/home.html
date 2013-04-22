@@ -10,6 +10,7 @@
         <!-- Le styles -->
         <link href="{{url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{url_for('static', filename='css/night.css') }}" rel="stylesheet">
+        <link href="{{url_for('static', filename='css/toggle-switch.css') }}" rel="stylesheet">
         <style type="text/css">
             body {
                 padding-top: 20px;
@@ -260,7 +261,7 @@
                 <p class="lead">Type in an origin, destination, and your travel preferences <br> and get started with Nightcrawler today!</p>
             </div>
 
-            <form class="well offset1 span7">  
+            <div class="well offset1 span7">  
                 <label>Origin</label>
                 <input type="text" class="span3" placeholder="e.g. New York City, NY" id="originform">  
                 <label>Destination</label>  
@@ -276,17 +277,28 @@
 		<input type="text" class="span3" id="hour" placeholder="e.g. HH">
 		<input type="text" class="span3" id="minute" placeholder="e.g. MM"> <br/>
 		<select><option value="AM" id="AM">AM</option><option value="PM" id="PM">PM</option></select>
-                <label>Optimize for:</label>
+                <!-- <label>Optimize for:</label>
 		    <input type="radio" name="optimize" id="speed" checked>Speed</input>
-		    <input type="radio" name="optimize" id="cheapness">Cheapness</input>
-		    <!--<input type="radio" name="optimize" id="laziness">Laziness</input>-->
+            <input type="radio" name="optimize" id="cheapness">Cheapness</input>-->
 
+            <label>Optimize for:</label>
+            <div class="switch candy blue">
+                <input id="speed" name="optimize" type="radio" checked>
+                <label for="speed" onclick="">Speed</label>
+
+                <input id="cheapness" name="optimize" type="radio"> 
+                <label for="cheapness" onclick="">Cheapness</label>
+
+                <span class="slide-button"></span>
+            </div>
+            <!--<input type="radio" name="optimize" id="laziness">Laziness</input>-->
+            <div class="results"><button class="btn btn-large btn-success" type="button" onclick="submit()">Submit</button> </div>
                 <br></br>
 
 		<!--<button type="submit" class="btn btn-large btn-success" onclick="submit()">Submit</button>  -->
-	</form>    <br/>
+	</div>    <br/>
 
-	<div class="results"><button onclick="submit()">Submit</button> </div> <br/>
+	
 
 	<div class="results">
 		<button onclick="sortresults(comparebyprice)">Sort by Price</button>
