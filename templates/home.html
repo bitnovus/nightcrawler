@@ -175,6 +175,10 @@
 				e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
 			}
 		}
+
+		$(function() {
+			$( "#datepicker" ).datepicker();
+		});
 	</script>
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -220,7 +224,8 @@
                 <input type="text" class="span3" placeholder="e.g. New York City, NY" id="originform">  
                 <label>Destination</label>  
                 <input type="text" class="span3" placeholder="e.g. Princeton, NJ" id="destform">
-                <label>Date</label>
+		<label>Date</label>
+		<input type="text" id="datepicker">
                 <input type="text" class="span3" id="month" placeholder="e.g. MM">
                 <input type="text" class="span3" id="day" placeholder="e.g. DD">
                 <input type="text" class="span3" id="year" placeholder="e.g. YYYY">
