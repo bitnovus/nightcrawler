@@ -38,7 +38,7 @@ def all_stuff():
     year = request.args.get('year')
     hour = request.args.get('hour')
     minute = request.args.get('minute')
-    isArriv = request.args.get('isArriv')
+    isArriv = request.args.get('arriveby')
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
     bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv) 
@@ -53,12 +53,15 @@ def megabus_stuff():
     month = request.args.get('month')
     day = request.args.get('day') 
     year = request.args.get('year')
-    print month + " " + day + " " + year
+    hour = request.args.get('hour')
+    minute = request.args.get('minute')
+    isArriv = request.args.get('arriveby')
+    #print month + " " + day + " " + year
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
-    results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year) 
+    results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv)
 
-    print results
+    #print results
     return Response(json.dumps(results), mimetype='application/json')
 
 @application.route('/flights')
@@ -68,10 +71,13 @@ def flight_stuff():
     month = request.args.get('month')
     day = request.args.get('day') 
     year = request.args.get('year')
-    print month + " " + day + " " + year
+    hour = request.args.get('hour')
+    minute = request.args.get('minute')
+    isArriv = request.args.get('arriveby')
+    #print month + " " + day + " " + year
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
-    results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year) 
+    results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv) 
     return Response(json.dumps(results), mimetype='application/json')
 
 if __name__ == '__main__':
