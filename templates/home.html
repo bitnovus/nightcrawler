@@ -271,27 +271,39 @@
 		<input type="text" id="datepicker">
                 <!--<input type="text" class="span3" id="month" placeholder="e.g. MM">
                 <input type="text" class="span3" id="day" placeholder="e.g. DD">
-		<input type="text" class="span3" id="year" placeholder="e.g. YYYY">-->
-		<label>Time (optional)</label>
-		    <input type="radio" name="time" id="arriveby" checked>Arrive By</input>
-		    <input type="radio" name="time" id="departby">Depart By</input> <br/>
-		<input type="text" class="span3" id="hour" placeholder="e.g. HH">
-		<input type="text" class="span3" id="minute" placeholder="e.g. MM"> <br/>
-		<select><option value="AM" id="AM">AM</option><option value="PM" id="PM">PM</option></select>
+                <input type="text" class="span3" id="year" placeholder="e.g. YYYY">-->
+
+                <div id="switchbar">
+                    <label>Time (optional)</label>
+                    <div class="switch candy blue">
+                        <input id="arriveby" name="time" type="radio" checked>
+                        <label for="arriveby" onclick="">Arrive By</label>
+
+                        <input id="departby" name="time" type="radio">
+                        <label for="departby" onclick="">Depart By</label>
+
+                        <span class="slide-button"></span>
+                    </div>
+                </div>
+                <input type="text" class="span3" id="hour" placeholder="e.g. HH">
+                <input type="text" class="span3" id="minute" placeholder="e.g. MM"> <br/>
+                <select><option value="AM" id="AM">AM</option><option value="PM" id="PM">PM</option></select>
                 <!-- <label>Optimize for:</label>
-		    <input type="radio" name="optimize" id="speed" checked>Speed</input>
-            <input type="radio" name="optimize" id="cheapness">Cheapness</input>-->
+                <input type="radio" name="optimize" id="speed" checked>Speed</input>
+                <input type="radio" name="optimize" id="cheapness">Cheapness</input>-->
 
-            <label>Optimize for:</label>
-            <div class="switch candy blue">
-                <input id="speed" name="optimize" type="radio" checked>
-                <label for="speed" onclick="">Speed</label>
+                <div id="switchbar">
+                    <label>Optimize for:</label>
+                    <div class="switch candy blue">
+                        <input id="speed" name="optimize" type="radio" checked>
+                        <label for="speed" onclick="">Speed</label>
 
-                <input id="cheapness" name="optimize" type="radio"> 
-                <label for="cheapness" onclick="">Cheapness</label>
+                        <input id="cheapness" name="optimize" type="radio"> 
+                        <label for="cheapness" onclick="">Cheapness</label>
 
-                <span class="slide-button"></span>
-            </div>
+                        <span class="slide-button"></span>
+                    </div>
+                </div>
             <!--<input type="radio" name="optimize" id="laziness">Laziness</input>-->
             <div class="results"><button class="btn btn-large btn-success" type="button" onclick="submit()">Submit</button> </div>
                 <br></br>
