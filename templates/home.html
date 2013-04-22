@@ -197,9 +197,9 @@
 			}
 		}
 
-		var places;
+		var places2;
 		function loadCities() {
-			$.get("cities", function (data, status) {places=data;});
+			$.get("cities", function (data, status) {places2=data;});
 		}
 
 		$(document).ready(loadCities());
@@ -207,6 +207,7 @@
 		$(function() {
 			$( "#datepicker" ).datepicker();
 			//var places= ["Princeton", "Boston", "New York"];
+			var places = places2;
 			$( "#originform" ).autocomplete({
 				source: places
 			});
