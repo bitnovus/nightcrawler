@@ -190,7 +190,15 @@
 
 		$(function() {
 			$( "#datepicker" ).datepicker();
+			var places= ["Princeton", "Boston", "New York"];
+			$( "#originform" ).autocomplete({
+				source: places
+			});
+			$( "#destform" ).autocomplete({
+				source: places
+			});
 		});
+
 	</script>
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
