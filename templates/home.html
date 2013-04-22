@@ -133,8 +133,11 @@
 
 		function timetominutes(time) {
 			var colon = time.indexOf(":");
-			var hour = time.substring(0, colon);
-			var minute = time.substring(colon+1, colon+3);
+			var hour = time.substring(0, colon) *1;
+			var minute = time.substring(colon+1, colon+3) *1;
+			if (hour == 12) {
+				hour = 0;
+			}
 			if (time.indexOf("PM") != -1) {
 				hour = (hour*1) + 12;
 			}
