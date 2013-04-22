@@ -29,6 +29,11 @@ def home_page(name=None):
 def timeline(name=None):
     return render_template('timeline.html', name=name)
 
+@application.route('/cities')
+def all_cities():
+    cities = db.session.query(City.name).all()
+    return Response(json.dumps(cities), mimetype='application/json')
+
 @application.route('/all')
 def all_stuff():
     origin = request.args.get('orig')
