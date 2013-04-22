@@ -30,7 +30,7 @@ def timeline(name=None):
     return render_template('timeline.html', name=name)
 
 @application.route('/all')
-def megabus_stuff():
+def all_stuff():
     origin = request.args.get('orig')
     destination = request.args.get('dest')
     month = request.args.get('month')
@@ -40,6 +40,8 @@ def megabus_stuff():
     dest_city = db.session.query(City).filter(City.name==destination).first()
     bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year) 
     flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year) 
+    print type(bus_results)
+    print type(flight_results)
     return Response(json.dumps(bus_results)+json.dumps(flight_results), mimetype='application/json')
 
 @application.route('/megabus')
