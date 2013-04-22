@@ -29,6 +29,22 @@ def home_page(name=None):
 def timeline(name=None):
     return render_template('timeline.html', name=name)
 
+@application.route('/all')
+def all_stuff():
+    origin = request.args.get('orig')
+    destination = request.args.get('dest')
+    month = request.args.get('month')
+    day = request.args.get('day') 
+    year = request.args.get('year')
+    orig_city = db.session.query(City).filter(City.name==origin).first()
+    dest_city = db.session.query(City).filter(City.name==destination).first()
+    bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year) 
+    flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year) 
+    total_results = bus_results + flight_results
+    print type(bus_results)
+    print type(flight_results)
+    return Response(json.dumps(total_results), mimetype='application/json')
+
 @application.route('/megabus')
 def megabus_stuff():
     origin = request.args.get('orig')
