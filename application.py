@@ -29,6 +29,16 @@ def home_page(name=None):
 def timeline(name=None):
     return render_template('timeline.html', name=name)
 
+@application.route('/cities')
+def all_cities():
+    cities = db.session.query(City.name).all()
+    results = []
+    for city_sublist in cities:
+        for city in city_sublist:
+            results.append(city)
+
+    return Response(json.dumps(results), mimetype='application/json')
+
 @application.route('/all')
 def all_stuff():
     origin = request.args.get('orig')
@@ -36,13 +46,28 @@ def all_stuff():
     month = request.args.get('month')
     day = request.args.get('day') 
     year = request.args.get('year')
-    hour = request.args.get('hour')
-    minute = request.args.get('minute')
-    isArriv = request.args.get('arriveby')
+    try:
+        hour = int(request.args.get('hour'))
+    except:
+        hour = 0
+    try:
+        minute = int(request.args.get('minute'))
+    except:
+        minute = 0
+    isArriv = (request.args.get('arriveby') == 'True')
+    """print type(isArriv)
+    print type(hour)
+    print type(minute)
+    print request.args"""
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
     bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv) 
     flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv) 
+    print bus_results
+    print flight_results
+    print hour
+    print minute
+    print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
     total_results = bus_results + flight_results
     return Response(json.dumps(total_results), mimetype='application/json')
 

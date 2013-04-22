@@ -9,6 +9,7 @@
 
         <!-- Le styles -->
         <link href="{{url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{url_for('static', filename='css/night.css') }}" rel="stylesheet">
         <style type="text/css">
             body {
                 padding-top: 20px;
@@ -83,11 +84,21 @@
 	    .results {
 		    clear: both;
 	    }
+
+	    .ui-helper-hidden-accessible {
+	    	display: none;
+	    }
+
+	    .ui-helper-hidden {
+		display: none;
+	    }
+
         </style>
 
 
 	<link href="{{url_for('static', filename='css/bootstrap-responsive.css') }}" rel="stylesheet">
     <script src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{url_for('static', filename='js/jquery-ui.js') }}"></script>
 	<script type="text/javascript">
 		var results;
 		function submit()
@@ -101,15 +112,25 @@
 				speed = true;
 			}
 
+			var date = document.getElementById("datepicker").value.split("/");
+			var am = document.getElementById("AM").selected;
+			var hour = document.getElementById("hour").value*1;
+			if (hour == 12) {
+				hour = 0;
+			}
+			if (!am) {
+				hour = hour + 12;
+			}
+
 			$.get(
 				"all",
 				{
 					orig: document.getElementById("originform").value,
 					dest: document.getElementById("destform").value,
-					month: document.getElementById("month").value,
-					day: document.getElementById("day").value,
-					year: document.getElementById("year").value,
-					hour: document.getElementById("hour").value,
+					month: date[0],
+					day: date[1],
+					year: date[2],
+					hour: hour,
 					minute: document.getElementById("minute").value,
 					arriveby: arrive,
 					optimizeforspeed: speed
@@ -133,8 +154,11 @@
 
 		function timetominutes(time) {
 			var colon = time.indexOf(":");
-			var hour = time.substring(0, colon);
-			var minute = time.substring(colon+1, colon+3);
+			var hour = time.substring(0, colon) *1;
+			var minute = time.substring(colon+1, colon+3) *1;
+			if (hour == 12) {
+				hour = 0;
+			}
 			if (time.indexOf("PM") != -1) {
 				hour = (hour*1) + 12;
 			}
@@ -172,6 +196,30 @@
 				e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
 			}
 		}
+
+		var places = [];
+		function loadCities() {
+			$.get("cities", function (data, status) {
+                    for (a in data) {
+                        places.push(data[a]);
+                    }
+                });
+		};
+
+		$(document).ready(loadCities());
+
+		$(function() {
+			$( "#datepicker" ).datepicker();
+			//var places= ["Princeton", "Boston", "New York"];
+			//var places = places2;
+			$( "#originform" ).autocomplete({
+				source: places
+			});
+			$( "#destform" ).autocomplete({
+				source: places
+			});
+		});
+
 	</script>
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -217,35 +265,23 @@
                 <input type="text" class="span3" placeholder="e.g. New York City, NY" id="originform">  
                 <label>Destination</label>  
                 <input type="text" class="span3" placeholder="e.g. Princeton, NJ" id="destform">
-                <label>Date</label>
-                <input type="text" class="span3" id="month" placeholder="e.g. MM">
+		<label>Date</label>
+		<input type="text" id="datepicker">
+                <!--<input type="text" class="span3" id="month" placeholder="e.g. MM">
                 <input type="text" class="span3" id="day" placeholder="e.g. DD">
-                <input type="text" class="span3" id="year" placeholder="e.g. YYYY">
-		<label>Time</label>
-		<!--<select id="hour"><option value="0"></select>-->
-		<input type="text" class="span3" id="hour" placeholder="e.g. HH">
-		<input type="text" class="span3" id="minute" placeholder="e.g. MM">
-		<!--<div class="btn-group" class="span3">-->
+		<input type="text" class="span3" id="year" placeholder="e.g. YYYY">-->
+		<label>Time (optional)</label>
 		    <input type="radio" name="time" id="arriveby" checked>Arrive By</input>
-		    <input type="radio" name="time" id="departby">Depart By</input>
-                   <!-- <button class="btn" id="arriveby">Arrive By</button>
-		   <button class="btn" id="departby">Depart By</button> -->
-		   <!--</div>-->
+		    <input type="radio" name="time" id="departby">Depart By</input> <br/>
+		<input type="text" class="span3" id="hour" placeholder="e.g. HH">
+		<input type="text" class="span3" id="minute" placeholder="e.g. MM"> <br/>
+		<select><option value="AM" id="AM">AM</option><option value="PM" id="PM">PM</option></select>
                 <label>Optimize for:</label>
-		<!--<div class="btn-group">-->
 		    <input type="radio" name="optimize" id="speed" checked>Speed</input>
 		    <input type="radio" name="optimize" id="cheapness">Cheapness</input>
 		    <!--<input type="radio" name="optimize" id="laziness">Laziness</input>-->
-                    <!-- <button class="btn" id="speed">Speed</button>
-                    <button class="btn" id="cheapness">Cheapness</button>
-		    <button class="btn" id="laziness">Laziness</button> -->
-		    <!--</div>-->
 
                 <br></br>
-
-
-
-                <label>CALENDARS HERE</label>
 
 		<!--<button type="submit" class="btn btn-large btn-success" onclick="submit()">Submit</button>  -->
 	</form>    <br/>
