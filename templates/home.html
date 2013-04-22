@@ -197,14 +197,14 @@
 			}
 		}
 
-		var places;
+		var places = [];
 		function loadCities() {
 			$.get("cities", function (data, status) {
-					places = [];
-					for(var i = 0; i < data.length; i++) {
-						places[i] = data[i];
-					}});
-		}
+                    for (a in data) {
+                        places.push(data[a]);
+                    }
+                });
+		};
 
 		$(document).ready(loadCities());
 
