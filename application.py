@@ -32,7 +32,12 @@ def timeline(name=None):
 @application.route('/cities')
 def all_cities():
     cities = db.session.query(City.name).all()
-    return Response(json.dumps(cities), mimetype='application/json')
+    results = []
+    for city_sublist in cities:
+        for city in city_sublist:
+            results.append(city)
+
+    return Response(json.dumps(results), mimetype='application/json')
 
 @application.route('/all')
 def all_stuff():
