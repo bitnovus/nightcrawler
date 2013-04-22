@@ -36,8 +36,14 @@ def all_stuff():
     month = request.args.get('month')
     day = request.args.get('day') 
     year = request.args.get('year')
-    hour = int(request.args.get('hour'))
-    minute = int(request.args.get('minute'))
+    try:
+        hour = int(request.args.get('hour'))
+    except:
+        hour = 0
+    try:
+        minute = int(request.args.get('minute'))
+    except:
+        minute = 0
     isArriv = (request.args.get('arriveby') == 'True')
     """print type(isArriv)
     print type(hour)
