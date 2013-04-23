@@ -264,9 +264,9 @@
 
             <div class="well offset1 span7">  
                 <label>Origin</label>
-                <input type="text" class="span3" placeholder="e.g. New York City, NY" id="originform">  
+                <input type="text" class="span3" placeholder="e.g. New York City" id="originform">  
                 <label>Destination</label>  
-                <input type="text" class="span3" placeholder="e.g. Princeton, NJ" id="destform">
+                <input type="text" class="span3" placeholder="e.g. Princeton" id="destform">
 		<label>Date</label>
 		<input type="text" id="datepicker">
                 <!--<input type="text" class="span3" id="month" placeholder="e.g. MM">
@@ -285,9 +285,9 @@
                         <span class="slide-button"></span>
                     </div>
                 </div>
-                <input type="text" class="span3" id="hour" placeholder="e.g. HH">
-                <input type="text" class="span3" id="minute" placeholder="e.g. MM"> <br/>
-                <select><option value="AM" id="AM">AM</option><option value="PM" id="PM">PM</option></select>
+                <input type="text" class="span3 time" id="hour" placeholder="HH">
+                <input type="text" class="span3 time" id="minute" placeholder="MM">
+                <select class="dropdown"><option value="AM" id="AM">AM</option><option value="PM" id="PM">PM</option></select>
                 <!-- <label>Optimize for:</label>
                 <input type="radio" name="optimize" id="speed" checked>Speed</input>
                 <input type="radio" name="optimize" id="cheapness">Cheapness</input>-->
@@ -299,12 +299,11 @@
                         <label for="speed" onclick="">Speed</label>
 
                         <input id="cheapness" name="optimize" type="radio"> 
-                        <label for="cheapness" onclick="">Cheapness</label>
+                        <label for="cheapness" onclick="">Price</label>
 
                         <span class="slide-button"></span>
                     </div>
                 </div>
-            <!--<input type="radio" name="optimize" id="laziness">Laziness</input>-->
             <div class="results"><button class="btn btn-large btn-success" type="button" onclick="submit()">Submit</button> </div>
                 <br></br>
 

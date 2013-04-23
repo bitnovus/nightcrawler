@@ -70,6 +70,12 @@
     line-height:1.5;
     zoom:1;
     font-weight: bolder;
-    position: relative;
-    z-index: 10;
+}
+
+.dropdown {
+    width: auto;
+}
+
+.span3 .time {
+    width: 50px;
 }
