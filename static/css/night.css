@@ -60,8 +60,6 @@
     -moz-border-radius: 4px;
     border-radius: 4px;
     list-style-type: none;
-    z-index: 10;
-
 }
 .ui-menu .ui-menu-item a {
     text-decoration:none;
@@ -70,4 +68,5 @@
     line-height:1.5;
     zoom:1;
     font-weight: bolder;
+    z-index: 10;
 }
