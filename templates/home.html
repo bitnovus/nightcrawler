@@ -204,6 +204,9 @@
 		}
 
 		function sortresults(comparefunction) {
+			if (!isLoading) {
+				toggleloadingimage();
+			}
 			results.sort(comparefunction);
 			display();
 		}
@@ -279,10 +282,6 @@
     </head>
 
     <body>
-	<div class="loading">
-    	    <img src="{{url_for('static', filename='img/ajax-loader.gif') }}"></script>
-	</div>
-
         <div class="container">
 
             <div class="masthead">
