@@ -33,10 +33,21 @@ def sanitize_times(times):
     g.append(s)
   return g
 
+# returns true if time is before hour and minute
+# hours are between 0 and 23 when they are passed in
+def comp_times(time, hour, min):
+  hour2 = int(get_hour(time))
+  if time[time.find(':') + 4] == 'P' and hour2!=12:
+    hour2 = hour2 + 12
+  if time[time.find(':') + 4] == 'A' and hour2==12:
+    hour2 = hour2 - 12
+  min2 = int(get_min(time))
+  if (hour2 < hour) or (hour2==hour and min2 < min):
+    return True
+  else: return False
+
 def get_hour(time):
   hour = int(time[0:time.find(':')])
-  if time[time.find(':') + 4] == 'P' or hour==12 or hour==1:
-    hour = hour + 12
   return hour
 
 def get_min(time):
@@ -47,9 +58,9 @@ def package_info(times, prices, carriers, start, end, hour, minute, isArriving):
   i = len(prices)
   dictionaries = []
   for j in range(len(prices)):
-    if isArriving and (get_hour(times[2*j+1]) < hour or (get_hour(times[2*j+1]) == hour and get_min(times[2*j+1]) <= minute)):
+    if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
       dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j]))
-    elif isArriving is False and (get_hour(times[2*j]) > hour or (get_hour(times[2*j]) == hour and get_min(times[2*j])>= minute)):
+    elif isArriving is False and (comp_times(times[2*j], hour, minute) is False):
         dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j]))
   return dictionaries
 
@@ -71,4 +82,4 @@ def orbitz(start, end, month, day, year, hour, minute, isArriving):
   return p
 
 if __name__ == '__main__':
-    orbitz("EWR", "MIA", 4, 25, 2013, 13, 30, True)
+    orbitz("EWR", "MIA", 4, 30, 2013, 17, 30, False)
