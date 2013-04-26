@@ -192,10 +192,10 @@
 			c1 = a2 - a1;
 			c2 = b2 - b1;
 			if (c1 < 0) {
-				c1 = c1 * -1 + 24*60;
+				c1 = c1 + 24*60;
 			}
 			if (c2 < 0) {
-				c2 = c2 * -1 + 24*60;
+				c2 = c2 + 24*60;
 			}
 			return c1 - c2;
 		}
@@ -307,11 +307,9 @@
                         <span class="slide-button"></span>
                     </div>
 	        </div>
-		<div id="time">
                 <input type="text" class="span3" id="hour" placeholder="HH">
                 <input type="text" class="span3" id="minute" placeholder="MM">
 		<select class="dropdown"><option value="AM" id="AM">AM</option><option value="PM" id="PM">PM</option></select>
-		</div>
                 <!-- <label>Optimize for:</label>
                 <input type="radio" name="optimize" id="speed" checked>Speed</input>
                 <input type="radio" name="optimize" id="cheapness">Cheapness</input>-->
