@@ -147,7 +147,7 @@
 						sortresults(comparebyprice);
 					}
 					display();
-					toggleloadingimage();
+					//toggleloadingimage();
 				}
 			);
 		}
@@ -209,6 +209,9 @@
 		}
 
 		function display() {
+			if (!isLoading) {
+				toggleloadingimage();
+			}
 			var e = document.getElementById("results");
 			e.innerHTML = "<h2>Results</h2></br></br>";
 			if (results.length == 0) {
@@ -221,6 +224,7 @@
 				e.innerHTML += "Price: " + x.price + '<br />';
 				e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
 			}
+			toggleloadingimage();
 		}
 
 		var isLoading = false;
