@@ -117,12 +117,15 @@
 
 			var date = document.getElementById("datepicker").value.split("/");
 			var am = document.getElementById("AM").selected;
-			var hour = document.getElementById("hour").value*1;
-			if (hour == 12) {
-				hour = 0;
-			}
-			if (!am) {
-				hour = hour + 12;
+			var hour = document.getElementById("hour").value;
+			if (hour != "") {
+				hour = hour*1;
+				if (hour == 12) {
+					hour = 0;
+				}
+				if (!am) {
+					hour = hour + 12;
+				}
 			}
 
 			$.get(
