@@ -20,12 +20,12 @@ def sanitize_departures(departures):
 # hours are between 0 and 23 when they are passed in 
 def comp_times(time, hour, min):
   hour2 = int(get_hour(time))
-  if time[time.find(':') + 4] == 'P' and hour2!=12:
+  if time[time.find(':') + 4]=='P' and hour2!=12:
     hour2 = hour2 + 12
-  if time[time.find(':') + 4] == 'A' and hour2==12:
+  if time[time.find(':') + 4]=='A' and hour2==12:
     hour2 = hour2 - 12
   min2 = int(get_min(time))
-  if (hour2 < hour) or (hour2==hour and min2 < min):
+  if (hour2<hour) or (hour2==hour and min2<min):
     return True
   else: return False
 
@@ -71,8 +71,8 @@ def megabus(start, end, month, day, year, hour, minute, isArriving):
   departures_s = sanitize_departures(departures)
 
   p = package_info(times_s, prices, departures_s, hour, minute, isArriving)
-  #print p
+  print p
   return p
 
 if __name__ == '__main__':
-    megabus(89, 123, 4, 30, 2013, 11, 30, True)
+    megabus(94, 123, 4, 27, 2013, 20, 30, False)
