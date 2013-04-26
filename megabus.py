@@ -16,10 +16,21 @@ def sanitize_departures(departures):
     g.append(s)
   return g
 
+# returns true if time is before hour and minute
+# hours are between 0 and 23 when they are passed in 
+def comp_times(time, hour, min):
+  hour2 = int(get_hour(time))
+  if time[time.find(':') + 4] == 'P' and hour2!=12:
+    hour2 = hour2 + 12
+  if time[time.find(':') + 4] == 'A' and hour2==12:
+    hour2 = hour2 - 12
+  min2 = int(get_min(time))
+  if (hour2 < hour) or (hour2==hour and min2 < min):
+    return True
+  else: return False
+
 def get_hour(time):
   hour = int(time[0:time.find(':')])
-  if time[time.find(':') + 4] == 'P' or hour==12 or hour==1:
-    hour = hour + 12
   return hour
 
 def get_min(time):
@@ -29,9 +40,10 @@ def get_min(time):
 def package_info(times, prices, departures, hour, minute, isArriving):
   dictionaries = []
   for j in range(len(prices)):
-    if isArriving and (get_hour(times[2*j+1]) < hour or (get_hour(times[2*j+1]) == hour and get_min(times[2*j+1]) <= minute)):
+    # we need both arrival and departure times to be before the given time
+    if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
       dictionaries.append(dict(price = prices[j], departure = departures[2*j], arrival = departures[2*j+1], departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Megabus"))
-    elif isArriving is False and (get_hour(times[2*j]) > hour or (get_hour(times[2*j]) == hour and get_min(times[2*j]) >= minute)):
+    elif isArriving is False and (comp_times(times[2*j], hour, minute) is False):
       dictionaries.append(dict(price = prices[j], departure = departures[2*j], arrival = departures[2*j+1], departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Megabus"))
   return dictionaries
 
@@ -63,4 +75,4 @@ def megabus(start, end, month, day, year, hour, minute, isArriving):
   return p
 
 if __name__ == '__main__':
-    megabus(89, 123, 4, 25, 2013, 13, 30, False)
+    megabus(89, 123, 4, 30, 2013, 11, 30, True)
