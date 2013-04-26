@@ -10,11 +10,10 @@ db = SQLAlchemy(app)
 class Route(db.Model):
     __tablename__ = 'routes'
     id = db.Column(db.Integer, primary_key=True)
-    orig_id = db.Column(db.Integer, db.ForeignKey('cities.id'))
-    dest_id = db.Column(db.Integer, db.ForeignKey('cities.id'))
-
-    orig = db.relationship('City', backref = db.backref('routes', order_by = id), primaryjoin = "Route.orig_id == City.id")
-    dest = db.relationship('City', primaryjoin = "Route.dest_id == City.id")
+    orig_city = db.Column(db.String(30))
+    orig_state = db.Column(db.String(2))
+    dest_city = db.Column(db.String(30))
+    dest_state = db.Column(db.String(2))
 
     provider = db.Column(db.String(30))
     method = db.Column(db.Integer(1))
@@ -23,9 +22,11 @@ class Route(db.Model):
     start_time = db.Column(db.DateTime(timezone=False))
     end_time = db.Column(db.DateTime(timezone=False))
 
-    def __init__(self, orig, dest, provider, method, start_time, end_time):
-        self.orig = orig
-        self.dest = dest
+    def __init__(self, orig_city, orig_state, dest_city, dest_state, provider, method, start_time, end_time):
+        self.orig_city = orig_city
+        self.orig_state = orig_state
+        self.dest_city = dest_city
+        self.dest_state = dest_state
         self.provider = provider
         self.method = method
         self.start_time = start_time
@@ -33,20 +34,3 @@ class Route(db.Model):
 
     def __repr__(self):
         return '<Route %r %r>' % (self.orig.name, self.dest.name)
-
-class City(db.Model):
-    __tablename__ = 'cities'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30))
-    state = db.Column(db.String(2))
-    aircode = db.Column(db.String(5))
-    megacode = db.Column(db.String(10))
-
-    def __init__(self, name, state, aircode, megacode):
-        self.name = name
-        self.state = state
-        self.aircode = aircode
-        self.megacode = megacode
-
-    def __repr__(self):
-        return '<City %r %r %r %r>' % (self.name, self.state, self.aircode, self.megacode)
