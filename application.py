@@ -54,7 +54,7 @@ def all_stuff():
         minute = int(request.args.get('minute'))
     except:
         minute = 0
-    isArriv = (request.args.get('arriveby') == 'True')
+    isArriv = (request.args.get('arriveby') == 'true')
     """print type(isArriv)
     print type(hour)
     print type(minute)

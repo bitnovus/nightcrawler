@@ -226,10 +226,10 @@
 		var isLoading = false;
 		function toggleloadingimage() {
 			if (isLoading) {
-				.unblockUI();
+				$.unblockUI();
 			}
 			else {
-				.blockUI({ message: '<img src="{{url_for('static', filename='img/ajax-loader.gif') }}"/>' });
+				$.blockUI({ message: '<img src="{{url_for('static', filename='img/ajax-loader.gif') }}"/>' });
 			}
 			isLoading = !isLoading;
 			//$( ".loading img" ).fadeToggle();
