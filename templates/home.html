@@ -219,7 +219,7 @@
 				toggleloadingimage();
 			}
 			var e = document.getElementById("results-div");
-			e.innerHTML = "<h2>Results</h2></br></br>";
+			e.innerHTML = "";
 			if (results.length == 0) {
 				e.innerHTML += "No routes found.";
 			}
@@ -291,6 +291,10 @@
 	    <div class="modal-header">
 		<a class="close" data-dismiss="modal">&times;</a>
 		<h3>Results</h3>
+		<button onclick="sortresults(comparebyprice)">Sort by Price</button>
+		<button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
+		<button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
+		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>
 	    </div>
 	    <div class="modal-body" id="results-div">
 	    </div>
@@ -369,12 +373,12 @@
 
 	
 
-	<div class="results">
+	<!--<div class="results">
 		<button onclick="sortresults(comparebyprice)">Sort by Price</button>
 		<button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
 		<button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
 		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>
-	</div>
+	</div>-->
 	    <div class="results" id="results"></div>
 
             <!-- Le javascript
