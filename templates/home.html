@@ -103,6 +103,7 @@
     <script src="{{url_for('static', filename='js/jquery.blockUI.js') }}"></script>
 	<script type="text/javascript">
 		var results;
+		var sortedby;
 		function submit()
 		{
 			toggleloadingimage();
@@ -145,9 +146,11 @@
 					console.log(data + " " + status);
 					results = data;
 					if (speed) {
-						sortresults(comparebyelapsed);
+						sortresults(comparebyelapsed, 4);
+						sortedby = 4;
 					} else {
-						sortresults(comparebyprice);
+						sortresults(comparebyprice, 1);
+						sortedby = 1;
 					}
 					display();
 					//toggleloadingimage();
@@ -206,10 +209,14 @@
 			return c1 - c2;
 		}
 
-		function sortresults(comparefunction) {
+
+		function sortresults(comparefunction, type) {
 			/*if (!isLoading) {
 				toggleloadingimage();
-			}*/
+				}*/
+			if (sortedby == type) {
+				return;
+			}
 			results.sort(comparefunction);
 			display();
 		}
@@ -219,6 +226,9 @@
 				toggleloadingimage();
 			}
 			var e = document.getElementById("results-div");
+			var header = document.getElementById("results-header");
+			header.innerHTML = document.getElementById("originform").value + " to " +
+				document.getElementById("destform").value + " on " + document.getElementById("datepicker").value;
 			e.innerHTML = "";
 			if (results.length == 0) {
 				e.innerHTML += "No routes found.";
@@ -229,6 +239,9 @@
 				e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
 				e.innerHTML += "Price: " + x.price + '<br />';
 				e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
+			}
+			if (sortedby == 4) {
+				document.getElementById("sort-by-elapsed-time").checked = true;
 			}
 			$("#results-modal").modal("show");
 			toggleloadingimage();
@@ -290,11 +303,29 @@
 	<div class="modal fade" id="results-modal">
 	    <div class="modal-header">
 		<a class="close" data-dismiss="modal">&times;</a>
-		<h3>Results</h3>
-		<button onclick="sortresults(comparebyprice)">Sort by Price</button>
+		<h3>Results</h3> <h4 id="results-header"></h4>
+                <div id="sort-options">
+                    <label>Sort by:</label>
+                    <div class="switch candy blue">
+                        <input id="sort-by-price" name="sorting" type="radio" checked>
+                        <label for="sort-by-price" onclick="sortresults(comparebyprice, 1)">Price</label>
+
+                        <input id="sort-by-arrival-time" name="sorting" type="radio">
+			<label for="sort-by-arrival-time" onclick="sortresults(comparebyarrival, 2)">Arrival Time</label>
+
+                        <input id="sort-by-departure-time" name="sorting" type="radio">
+			<label for="sort-by-departure-time" onclick="sortresults(comparebydeparture, 3)">Departure Time</label>
+
+                        <input id="sort-by-elapsed-time" name="sorting" type="radio">
+                        <label for="sort-by-elapsed-time" onclick="sortresults(comparebyelapsed, 4)">Elapsed Time</label>
+
+                        <span class="slide-button"></span>
+                    </div>
+                </div>
+		<!--<button onclick="sortresults(comparebyprice)">Sort by Price</button>
 		<button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
 		<button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
-		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>
+		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>-->
 	    </div>
 	    <div class="modal-body" id="results-div">
 	    </div>
