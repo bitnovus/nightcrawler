@@ -220,6 +220,10 @@
 			}
 		}
 
+		function toggleloadingimage() {
+			$( ".loading img" ).fadeToggle();
+		}
+
 		var places = [];
 		function loadCities() {
 			$.get("cities", function (data, status) {
@@ -260,6 +264,9 @@
     </head>
 
     <body>
+	<div class="loading">
+    	    <img src="{{url_for('static', filename='img/ajax-loader.gif') }}"></script>
+	</div>
 
         <div class="container">
 
@@ -302,7 +309,7 @@
                         <label for="arriveby" onclick="">Arrive By</label>
 
                         <input id="departby" name="time" type="radio">
-                        <label for="departby" onclick="">Depart By</label>
+                        <label for="departby" onclick="">Depart After</label>
 
                         <span class="slide-button"></span>
                     </div>
