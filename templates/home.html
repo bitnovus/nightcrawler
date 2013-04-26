@@ -167,7 +167,17 @@
 		}
 
 		function comparebyarrival(a, b) {
-			return timetominutes(a.arrival_time) - timetominutes(b.arrival_time);
+			a1 = timetominutes(a.departure_time);
+			a2 = timetominutes(a.arrival_time);
+			b1 = timetominutes(b.departure_time);
+			b2 = timetominute(b.arrival_time);
+			if (a2 < a1) {
+				a2 = a2 + 24*60;
+			}
+			if (b2 < b1) {
+				b2 = b2 + 24*60;
+			}
+			return a2 - b2;
 		}
 
 		function comparebydeparture(a, b) {
@@ -175,7 +185,19 @@
 		}
 
 		function comparebyelapsed(a, b) {
-			return comparebyarrival(a, b) - comparebydeparture(a, b);
+			a1 = timetominutes(a.departure_time);
+			a2 = timetominutes(a.arrival_time);
+			b1 = timetominutes(b.departure_time);
+			b2 = timetominute(b.arrival_time);
+			c1 = a2 - a1;
+			c2 = b2 - b1;
+			if (c1 < 0) {
+				c1 = c1 * -1 + 24*60;
+			}
+			if (c2 < 0) {
+				c2 = c2 * -1 + 24*60;
+			}
+			return c1 - c2;
 		}
 
 		function sortresults(comparefunction) {
