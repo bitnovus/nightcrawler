@@ -100,10 +100,12 @@
 	<link href="{{url_for('static', filename='css/bootstrap-responsive.css') }}" rel="stylesheet">
     <script src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{url_for('static', filename='js/jquery-ui.js') }}"></script>
+    <script src="{{url_for('static', filename='js/jquery.blockUI.js') }}"></script>
 	<script type="text/javascript">
 		var results;
 		function submit()
 		{
+			toggleloadingimage();
 			var arrive = false;
 			if (document.getElementById("arriveby").checked) {
 				arrive = true;
@@ -145,6 +147,7 @@
 						sortresults(comparebyprice);
 					}
 					display();
+					toggleloadingimage();
 				}
 			);
 		}
@@ -220,8 +223,16 @@
 			}
 		}
 
+		var isLoading = false;
 		function toggleloadingimage() {
-			$( ".loading img" ).fadeToggle();
+			if (isLoading) {
+				.unblockUI();
+			}
+			else {
+				.blockUI({ message: '<img src="{{url_for('static', filename='img/ajax-loader.gif') }}"/>' });
+			}
+			isLoading = !isLoading;
+			//$( ".loading img" ).fadeToggle();
 		}
 
 		var places = [];
