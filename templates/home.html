@@ -303,21 +303,21 @@
 	<div class="modal fade" id="results-modal">
 	    <div class="modal-header">
 		<a class="close" data-dismiss="modal">&times;</a>
-		<h3>Results</h3> <h2 id="results-header"></h2>
+		<h3>Results</h3> <h4 id="results-header"></h4>
                 <div id="sort-options">
                     <label>Sort by:</label>
                     <div class="switch candy blue">
                         <input id="sort-by-price" name="sorting" type="radio" checked>
-                        <label for="price" onclick="sortresults(comparebyprice, 1)">Price</label>
+                        <label for="sort-by-price" onclick="sortresults(comparebyprice, 1)">Price</label>
 
                         <input id="sort-by-arrival-time" name="sorting" type="radio">
-			<label for="arrival-time" onclick="sortresults(comparebyarrival, 2)">Arrival Time</label>
+			<label for="sort-by-arrival-time" onclick="sortresults(comparebyarrival, 2)">Arrival Time</label>
 
                         <input id="sort-by-departure-time" name="sorting" type="radio">
-			<label for="departure-time" onclick="sortresults(comparebydeparture, 3)">Departure Time</label>
+			<label for="sort-by-departure-time" onclick="sortresults(comparebydeparture, 3)">Departure Time</label>
 
                         <input id="sort-by-elapsed-time" name="sorting" type="radio">
-                        <label for="elapsed-time" onclick="sortresults(comparebyelapsed, 4)">Elapsed Time</label>
+                        <label for="sort-by-elapsed-time" onclick="sortresults(comparebyelapsed, 4)">Elapsed Time</label>
 
                         <span class="slide-button"></span>
                     </div>
