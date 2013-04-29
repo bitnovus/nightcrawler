@@ -108,5 +108,37 @@ def flight_stuff():
     results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv) 
     return Response(json.dumps(results), mimetype='application/json')
 
+@application.route('/njtransit')
+def flight_stuff():
+    origin = request.args.get('orig')
+    destination = request.args.get('dest')
+    month = request.args.get('month')
+    day = request.args.get('day') 
+    year = request.args.get('year')
+    hour = request.args.get('hour')
+    minute = request.args.get('minute')
+    isArriv = request.args.get('arriveby')
+    #print month + " " + day + " " + year
+    orig_city = db.session.query(City).filter(City.name==origin).first()
+    dest_city = db.session.query(City).filter(City.name==destination).first()
+    results = njtransit.njtransit(orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv) 
+    return Response(json.dumps(results), mimetype='application/json')
+
+@application.route('/amtrak')
+def flight_stuff():
+    origin = request.args.get('orig')
+    destination = request.args.get('dest')
+    month = request.args.get('month')
+    day = request.args.get('day') 
+    year = request.args.get('year')
+    hour = request.args.get('hour')
+    minute = request.args.get('minute')
+    isArriv = request.args.get('arriveby')
+    #print month + " " + day + " " + year
+    orig_city = db.session.query(City).filter(City.name==origin).first()
+    dest_city = db.session.query(City).filter(City.name==destination).first()
+    results = amtrak.amtrak(orig_city.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv) 
+    return Response(json.dumps(results), mimetype='application/json')
+
 if __name__ == '__main__':
     application.run(host='0.0.0.0', debug=True)
