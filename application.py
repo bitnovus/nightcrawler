@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify, Response, request
 from flask.ext.sqlalchemy import SQLAlchemy
-from models import City, Route
+from models import City
 import os, megabus, flights, json
 
 #=========================================================
