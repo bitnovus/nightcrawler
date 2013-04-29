@@ -74,7 +74,7 @@ def amtrak(start, end, month, day, year, hour, min, isArriving):
 	prices = sanitize_prices(prices)
 	
 	p = package_info(times, prices, start, end, hour, min, isArriving)
-	print p
+	#print p
 	return p
 
 if __name__ == '__main__':

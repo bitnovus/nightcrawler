@@ -67,19 +67,19 @@ def all_stuff():
     try:
         bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv)
     except:
-        bus_results = {}
+        bus_results = []
     try: 
         flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv)
     except:
-        flight_results = {}
+        flight_results = []
     try:
         nj_results = njtransit.njtransit(orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv)
     except:
-        nj_results = {}
+        nj_results = []
     try:
         am_results = amtrak.amtrak(orig_city.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv)
     except:
-        am_results = {}
+        am_results = []
     #print bus_results
     #print flight_results
     #print hour
