@@ -64,14 +64,16 @@ def all_stuff():
     print request.args"""
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
-    bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv) 
-    flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv) 
-    print bus_results
-    print flight_results
-    print hour
-    print minute
-    print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
-    total_results = bus_results + flight_results
+    bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv)
+    flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv)
+    nj_results = njtransit.njtransit(orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv)
+    am_results = amtrak.amtrak(orig_city.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv)
+    #print bus_results
+    #print flight_results
+    #print hour
+    #print minute
+    #print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
+    total_results = bus_results + flight_results + nj_results + am_results
     return Response(json.dumps(total_results), mimetype='application/json')
 
 @application.route('/megabus')
