@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, Response, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from models import City
 import os, megabus, flights, json, njtransit, amtrak
+from multiprocessing.pool import ThreadPool
 
 #=========================================================
 
@@ -64,22 +65,50 @@ def all_stuff():
     print request.args"""
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
+    pool = ThreadPool(processes=1)
+
+    success1 = True
+    success2 = True
+    success3 = True
+    success4 = True
+
     try:
-        bus_results = megabus.megabus(orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv)
+        async_result1 = pool.apply_async(megabus.megabus, (orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
+    except:
+        success1 = False
+    try: 
+        async_result2 = pool.apply_async(flights.orbitz, (orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv))
+    except:
+        success2 = False
+    try:
+        async_result3 = pool.apply_async(njtransit.njtransit, (orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv))
+    except:
+        success3 = False
+    try:
+        async_result4 = pool.apply_async(amtrak.amtrak, (orig_city.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
+    except:
+        success4 = False
+
+    try:
+        bus_results = async_result1.get()
     except:
         bus_results = []
-    try: 
-        flight_results = flights.orbitz(orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv)
+
+    try:
+        flight_results = async_result2.get()
     except:
         flight_results = []
+
     try:
-        nj_results = njtransit.njtransit(orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv)
+        nj_results = async_result3.get()
     except:
         nj_results = []
+
     try:
-        am_results = amtrak.amtrak(orig_city.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv)
+        am_results = async_result4.get()
     except:
         am_results = []
+
     #print bus_results
     #print flight_results
     #print hour
