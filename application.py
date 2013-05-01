@@ -67,27 +67,10 @@ def all_stuff():
     dest_city = db.session.query(City).filter(City.name==destination).first()
     pool = ThreadPool(processes=4)
 
-    success1 = True
-    success2 = True
-    success3 = True
-    success4 = True
-
-    try:
-        async_result1 = pool.apply_async(megabus.megabus, (orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
-    except:
-        success1 = False
-    try: 
-        async_result2 = pool.apply_async(flights.orbitz, (orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv))
-    except:
-        success2 = False
-    try:
-        async_result3 = pool.apply_async(njtransit.njtransit, (orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv))
-    except:
-        success3 = False
-    try:
-        async_result4 = pool.apply_async(amtrak.amtrak, (orig_city.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
-    except:
-        success4 = False
+    async_result1 = pool.apply_async(megabus.megabus, (orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
+    async_result2 = pool.apply_async(flights.orbitz, (orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv))
+    async_result3 = pool.apply_async(njtransit.njtransit, (orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv))
+    async_result4 = pool.apply_async(amtrak.amtrak, (orig_city.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
 
     try:
         bus_results = async_result1.get()
