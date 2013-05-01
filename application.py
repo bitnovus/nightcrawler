@@ -65,7 +65,7 @@ def all_stuff():
     print request.args"""
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
-    pool = ThreadPool(processes=1)
+    pool = ThreadPool(processes=4)
 
     success1 = True
     success2 = True
