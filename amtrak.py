@@ -37,13 +37,13 @@ def get_min(time):
   colon = time.find(':')
   return int(time[colon+1: colon+3])
 
-def package_info(times, prices, start, end, hour, minute, isArriving):
+def package_info(times, prices, start, end, hour, minute, isArriving, link, payload):
   dictionaries = []
   for j in range(len(prices)):
   	if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
-  		dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Amtrak"))
+  		dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Amtrak", link = link, payload = payload))
   	elif ((isArriving is False) and ((comp_times(times[2*j], hour, minute) is False))):
-  		dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Amtrak"))
+  		dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Amtrak", link = link, payload = payload))
   return dictionaries 
 
 def sanitize_loc(loc):
@@ -61,8 +61,8 @@ def amtrak(start, end, month, day, year, hour, min, isArriving):
 
 	date = weekdays[int(calendar.weekday(int(year), int(month), int(day)))] + '%2C+' + months[int(month)] + '+' + str(day) + '%2C+' + str(year)
 	tmp = "xwdf_origin=%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D%2FtravelSelection%2FjourneySelection%5B1%5D%2FdepartLocation%2Fsearch&wdf_origin=" + start + "&xwdf_destination=%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D%2FtravelSelection%2FjourneySelection%5B1%5D%2FarriveLocation%2Fsearch&wdf_destination=" + end + "&%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D%2FtripRequirements%2FjourneyRequirements%5B1%5D%2FdepartDate.date=" + date + "&%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D%2FtripRequirements%2FallJourneyRequirements%2FnumberOfTravellers%5B%40key%3D%27Adult%27%5D=1&_handler%3Damtrak.presentation.handler.request.rail.AmtrakRailSearchRequestHandler%2F_xpath%3D%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D.x=24"
-
-	html = urllib2.urlopen("http://tickets.amtrak.com/itd/amtrak", tmp).read()
+	link = "http://tickets.amtrak.com/itd/amtrak"
+	html = urllib2.urlopen(link, tmp).read()
 
 	start = sanitize_loc(start)
 	end = sanitize_loc(end)
@@ -73,7 +73,7 @@ def amtrak(start, end, month, day, year, hour, min, isArriving):
 	prices = re.findall("CartPrice.>\$[0-9]*\.[0-9][0-9]", html)
 	prices = sanitize_prices(prices)
 	
-	p = package_info(times, prices, start, end, hour, min, isArriving)
+	p = package_info(times, prices, start, end, hour, min, isArriving, link, tmp)
 	#print p
 	return p
 
