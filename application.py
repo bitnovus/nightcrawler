@@ -219,14 +219,14 @@ def get_best_leg3(leg3, flight):
 	    best_time = start - flight_end
     return best
 
-def time_to_minutes(time, departure):
-    departure_hour = get_hour(time.departure_time)
-    departure_minute = get_minute(time.departure_time)
+def time_to_minutes(record, departure):
+    departure_hour = get_hour(record.departure_time)
+    departure_minute = get_minute(record.departure_time)
     departure_in_minutes = departure_hour * 60 + departure_minute
     if departure:
 	return departure_in_minutes
-    arrival_hour = get_hour(time.arrival_time)
-    arrival_minute = get_minute(time.arrival_time)
+    arrival_hour = get_hour(record.arrival_time)
+    arrival_minute = get_minute(record.arrival_time)
     arrival_in_minutes = arrival_hour * 60 + arrival_minute
     if arrival_in_minutes < departure_in_minutes:
 	arrival_in_minutes += 24*60
@@ -234,6 +234,7 @@ def time_to_minutes(time, departure):
 
 
 def get_hour(time):
+    return 0
     hour = int(time[0:time.find(':')])
     if hour == 12:
         hour = 0
@@ -242,6 +243,7 @@ def get_hour(time):
     return hour
 
 def get_minute(time):
+    return 0
     colon = time.find(':')
     return int(time[colon+1:colon+3])
 
