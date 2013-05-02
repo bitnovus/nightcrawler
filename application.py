@@ -124,6 +124,7 @@ def all_stuff():
 	leg2 = flight_result.get()
     except:
 	leg2 = []
+    flight_results = leg2
 
     try:
 	leg3_1 = leg3_result1.get()
@@ -165,8 +166,8 @@ def all_stuff():
     #print hour
     #print minute
     #print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
-    #total_results = bus_results + flight_results + nj_results + am_results
-    total_results = combine(leg1, leg2, leg3) + bus_results + nj_results + am_results
+    total_results = bus_results + flight_results + nj_results + am_results
+    #total_results = combine(leg1, leg2, leg3) + bus_results + nj_results + am_results
     return Response(json.dumps(total_results), mimetype='application/json')
 
 def combine(leg1, leg2, leg3):
