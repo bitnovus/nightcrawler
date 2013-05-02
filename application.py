@@ -105,17 +105,20 @@ def all_stuff():
     leg3 = []
 
     try:
-	leg1 += leg1_result1.get()
+	leg1_1 = leg1_result1.get()
     except:
-	# empty
+	leg1_1 = []
+
     try:
-	leg1 += leg1_result2.get()
+	leg1_2 = leg1_result2.get()
     except:
-	# empty
+	leg1_2 = []
     try:
-	leg1 += leg1_result3.get()
+	leg1_3 = leg1_result3.get()
     except:
-	# empty
+	leg1_3 = []
+
+    leg1 = leg1_1 + leg1_2 + leg1_3
 
     try:
 	leg2 = flight_result.get()
@@ -123,17 +126,19 @@ def all_stuff():
 	leg2 = []
 
     try:
-	leg3 += leg3_result1.get()
+	leg3_1 = leg3_result1.get()
     except:
-	# empty
+	leg3_1 = []
     try:
-	leg3 += leg3_result2.get()
+	leg3_2 = leg3_result2.get()
     except:
-	# empty
+        leg3_2 = []
     try:
-	leg3 += leg3_result3.get()
+	leg3_3 = leg3_result3.get()
     except:
-	# empty
+	leg3_3 = []
+
+    leg3 = leg3_1 + leg3_2 + leg3_3
 
     try:
         bus_results = async_result1.get()
