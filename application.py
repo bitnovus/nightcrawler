@@ -167,7 +167,9 @@ def all_stuff():
     #print minute
     #print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
     #total_results = bus_results + flight_results + nj_results + am_results
-    total_results = combine(leg1, leg2, leg3) + bus_results + nj_results + am_results
+    total_results = bus_results + nj_results + am_results
+    if !(dest_city != dest_city2 and leg3 == []) and !(orig_city != orig_city2 and leg1 == [])
+        total_results += combine(leg1, leg2, leg3)
     return Response(json.dumps(total_results), mimetype='application/json')
 
 def combine(leg1, leg2, leg3):
@@ -214,7 +216,7 @@ def get_best_leg3(leg3, flight):
 	start = time_to_minutes(r, True)
 	if start > flight_end and start - flight_end < best_time:
             best = r
-	    best_time = flight_start - end
+	    best_time = start - flight_end
     return best
 
 def time_to_minutes(time, departure):
