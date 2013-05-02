@@ -24,13 +24,13 @@ def get_min(time):
   colon = time.find(':')
   return int(time[colon+1: colon+3])
 
-def package_info(times, price2, start, end, hour, minute, isArriving):
+def package_info(times, price2, start, end, hour, minute, isArriving, link, payload):
   dictionaries = []
   for j in range(len(times)/2):
   	if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
-  		dictionaries.append(dict(price = price2, departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "NJ Transit"))
+  		dictionaries.append(dict(price = price2, departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "NJ Transit", link = link, payload = payload))
   	elif ((isArriving is False) and ((comp_times(times[2*j], hour, minute) is False))):
-  		dictionaries.append(dict(price = price2, departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "NJ Transit"))
+  		dictionaries.append(dict(price = price2, departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "NJ Transit", link = link, payload = payload))
   return dictionaries 
 
 def sanitize_loc(loc):
@@ -46,7 +46,9 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   'OriginDescription' : start, 
   'DestDescription' : end }
 
-  req = urllib2.Request("http://www.njtransit.com/sf/sf_servlet.srv?hdnPageAction=TrainSchedulesFrom", urllib.urlencode(payload))
+  link = "http://www.njtransit.com/sf/sf_servlet.srv?hdnPageAction=TrainSchedulesFrom"
+
+  req = urllib2.Request(link, urllib.urlencode(payload))
   res = urllib2.urlopen(req)
   html = res.read()
   #print html
@@ -56,7 +58,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   start = sanitize_loc(start)
   end = sanitize_loc(end)
 
-  p = package_info(times, price, start, end, hour, min, isArriving)
+  p = package_info(times, price, start, end, hour, min, isArriving, link, urllib.urlencode(payload))
   print p
   return p
 
