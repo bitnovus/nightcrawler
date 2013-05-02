@@ -15,6 +15,7 @@ class City(db.Model):
     aircode = db.Column(db.String(5))
     megacode = db.Column(db.String(10))
     njcode = db.Column(db.String(30))
+    njstation = db.Column(db.String(30))
     amcode = db.Column(db.String(60))
 
     def __init__(self, name, state, aircode, megacode):

@@ -230,7 +230,7 @@ def get_hour(time):
 
 def get_minute(time):
     colon = time.find(':')
-    return int(time[colon+1:colon+3]
+    return int(time[colon+1:colon+3])
 
 @application.route('/megabus')
 def megabus_stuff():
