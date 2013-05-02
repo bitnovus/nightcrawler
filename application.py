@@ -167,8 +167,7 @@ def all_stuff():
     #print minute
     #print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
     #total_results = bus_results + flight_results + nj_results + am_results
-    total_results = leg1
-    #total_results = combine(leg1, leg2, leg3) + bus_results + nj_results + am_results
+    total_results = combine(leg1, leg2, leg3) + bus_results + nj_results + am_results
     return Response(json.dumps(total_results), mimetype='application/json')
 
 def combine(leg1, leg2, leg3):
