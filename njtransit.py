@@ -37,11 +37,11 @@ def sanitize_loc(loc):
 	r = loc.replace('+', ' ')
 	return r
 
-def njtransit(start, end, month, day, year, hour, min, isArriving):
+def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArriving):
 
   date = str(month) + '%2F' + str(day) + '%2F' + str(year)
-  payload = {'selOrigin': '124_PRIN', 
-  'selDestination': '125_NEC', 
+  payload = {'selOrigin': codeStart, 
+  'selDestination': codeEnd, 
   'datepicker' : date, 
   'OriginDescription' : start, 
   'DestDescription' : end }
@@ -61,4 +61,4 @@ def njtransit(start, end, month, day, year, hour, min, isArriving):
 
 
 if __name__ == '__main__':
-	njtransit('Princeton', 'Princeton+Junction', '4', '30', '2013', '10', '30', False)
+	njtransit('Princeton', 'Princeton+Junction', '124_PRIN', '125_NEC', '5', '30', '2013', '10', '30', False)
