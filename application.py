@@ -225,6 +225,7 @@ def time_to_minutes(record, departure):
     departure_in_minutes = departure_hour * 60 + departure_minute
     if departure:
 	return departure_in_minutes
+    return 0
     arrival_hour = get_hour(record.arrival_time)
     arrival_minute = get_minute(record.arrival_time)
     arrival_in_minutes = arrival_hour * 60 + arrival_minute
@@ -234,7 +235,6 @@ def time_to_minutes(record, departure):
 
 
 def get_hour(time):
-    return 0
     hour = int(time[0:time.find(':')])
     if hour == 12:
         hour = 0
@@ -243,7 +243,6 @@ def get_hour(time):
     return hour
 
 def get_minute(time):
-    return 0
     colon = time.find(':')
     return int(time[colon+1:colon+3])
 
