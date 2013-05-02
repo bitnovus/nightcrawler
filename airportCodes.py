@@ -1,0 +1,2 @@
+# a list of the airport codes
+airCodes = {'ALB':'Albany', 'ABE':'Allentown', 'BWI':'Baltimore', 'BGR':'Bangor', 'BOS':'Boston', 'BUF':'Buffalo', 'MDT':'Harrisburg', 'BDL':'Hartford', 'ISP':'Islip', 'EEN':'Keene', 'MHT':'Manchester', 'JFK':'New York', 'LGA':'New York 2', 'EWR':'Newark', 'SWF':'Newburgh', 'PHL':'Philadelphia', 'PIT':'Pittsburg', 'SYR':'Syracuse', 'DCA':'Washington', 'IAD':'Washington 2', 'HPN':'Westchester', 'AVP':'Wilkes Barre', 'ORH':'Worcester'}
