@@ -54,14 +54,14 @@ def get_min(time):
   colon = time.find(':')
   return int(time[colon + 1: colon + 3])
 
-def package_info(times, prices, carriers, start, end, hour, minute, isArriving):
+def package_info(times, prices, carriers, start, end, hour, minute, isArriving, s):
   i = len(prices)
   dictionaries = []
   for j in range(len(prices)):
     if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
-      dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j]))
+      dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j], url = s))
     elif isArriving is False and (comp_times(times[2*j], hour, minute) is False):
-        dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j]))
+        dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j], url = s))
   return dictionaries
 
 def orbitz(start, end, month, day, year, hour, minute, isArriving):
@@ -77,9 +77,9 @@ def orbitz(start, end, month, day, year, hour, minute, isArriving):
   carriers = re.findall(".* </strong>", html)
   carriers_s = sanitize_carriers(carriers)
 
-  p = package_info(times_s, prices_s, carriers_s, start, end, hour, minute, isArriving)
+  p = package_info(times_s, prices_s, carriers_s, start, end, hour, minute, isArriving, s)
   #print p
   return p
 
 if __name__ == '__main__':
-    orbitz("EWR", "MIA", 4, 30, 2013, 17, 30, False)
+    orbitz("EWR", "MIA", 5, 30, 2013, 17, 30, False)
