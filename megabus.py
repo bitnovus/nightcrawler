@@ -42,9 +42,9 @@ def package_info(times, prices, departures, hour, minute, isArriving, s):
   for j in range(len(prices)):
     # we need both arrival and departure times to be before the given time
     if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
-      dictionaries.append(dict(price = prices[j], departure = departures[2*j], arrival = departures[2*j+1], departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Megabus", url = s))
+      dictionaries.append(dict(price = prices[j], departure = departures[2*j], arrival = departures[2*j+1], departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Megabus", link = s, payload = ""))
     elif isArriving is False and (comp_times(times[2*j], hour, minute) is False):
-      dictionaries.append(dict(price = prices[j], departure = departures[2*j], arrival = departures[2*j+1], departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Megabus", url=s))
+      dictionaries.append(dict(price = prices[j], departure = departures[2*j], arrival = departures[2*j+1], departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Megabus", link = s, payload = ""))
   return dictionaries
 
 def megabus(start, end, month, day, year, hour, minute, isArriving):

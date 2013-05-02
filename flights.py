@@ -59,9 +59,9 @@ def package_info(times, prices, carriers, start, end, hour, minute, isArriving, 
   dictionaries = []
   for j in range(len(prices)):
     if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
-      dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j], url = s))
+      dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j], link = s, payload = ""))
     elif isArriving is False and (comp_times(times[2*j], hour, minute) is False):
-        dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j], url = s))
+        dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j], link = s, payload = ""))
   return dictionaries
 
 def orbitz(start, end, month, day, year, hour, minute, isArriving):
