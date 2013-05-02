@@ -70,10 +70,10 @@ def all_stuff():
 
     if orig_city.aircode.find("*") != -1:
         # get airport city - update this
-	orig_city2 = get_city(orig_city.aircode.substring(1))
+	orig_city2 = get_city(orig_city.aircode[1:])
         leg1_result1 = pool.apply_async(megabus.megabus, (orig_city.megacode, orig_city2.megacode, month, day, year, hour, minute, isArriv))
-        leg1_result2 = pool.apply_async(njtransit.njtransit, (orig_city.megacode, orig_city2.megacode, month, day, year, hour, minute, isArriv))
-        leg1_result3 = pool.apply_async(amtrak.amtrak, (orig_city.megacode, orig_city2.megacode, month, day, year, hour, minute, isArriv))
+        leg1_result2 = pool.apply_async(njtransit.njtransit, (orig_city.njcode, orig_city2.njcode, month, day, year, hour, minute, isArriv))
+        leg1_result3 = pool.apply_async(amtrak.amtrak, (orig_city.amcode, orig_city2.amcode, month, day, year, hour, minute, isArriv))
     else:
 	orig_city2 = orig_city
 	leg1_result1 = []
@@ -82,10 +82,10 @@ def all_stuff():
 
     if dest_city.aircode.find("*") != -1:
 	#get airport city - update this
-	dest_city2 = get_city(dest_city.aircode.substring(1))
+	dest_city2 = get_city(dest_city.aircode[1:])
         leg3_result1 = pool.apply_async(megabus.megabus, (dest_city2.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
-        leg3_result2 = pool.apply_async(njtransit.njtransit, (dest_city2.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
-        leg3_result3 = pool.apply_async(amtrak.amtrak, (dest_city2.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
+        leg3_result2 = pool.apply_async(njtransit.njtransit, (dest_city2.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv))
+        leg3_result3 = pool.apply_async(amtrak.amtrak, (dest_city2.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
     else:
 	dest_city2 = dest_city
 	leg3_result1 = []
