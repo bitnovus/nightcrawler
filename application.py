@@ -220,7 +220,7 @@ def get_best_leg3(leg3, flight):
     return best
 
 def time_to_minutes(record, departure):
-    return 0
+    return record.departure_time
     departure_hour = get_hour(record.departure_time)
     departure_minute = get_minute(record.departure_time)
     departure_in_minutes = departure_hour * 60 + departure_minute
