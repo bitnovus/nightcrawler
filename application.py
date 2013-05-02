@@ -203,7 +203,7 @@ def get_best_leg1(leg1, flight):
     best_time = 1000000
     for r in leg1:
 	end = time_to_minutes(r, False)
-	if end <= flight_start and flight_start - end < best_time:
+	if end < flight_start and flight_start - end < best_time:
             best = r
 	    best_time = flight_start - end
     return best
@@ -220,14 +220,13 @@ def get_best_leg3(leg3, flight):
     return best
 
 def time_to_minutes(time, departure):
-    return 0
     departure_hour = get_hour(time.departure_time)
     departure_minute = get_minute(time.departure_time)
     departure_in_minutes = departure_hour * 60 + departure_minute
     if departure:
 	return departure_in_minutes
     arrival_hour = get_hour(time.arrival_time)
-    arrival_minute = get_minute(time.arrival_minute)
+    arrival_minute = get_minute(time.arrival_time)
     arrival_in_minutes = arrival_hour * 60 + arrival_minute
     if arrival_in_minutes < departure_in_minutes:
 	arrival_in_minutes += 24*60
