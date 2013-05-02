@@ -49,6 +49,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   req = urllib2.Request("http://www.njtransit.com/sf/sf_servlet.srv?hdnPageAction=TrainSchedulesFrom", urllib.urlencode(payload))
   res = urllib2.urlopen(req)
   html = res.read()
+  #print html
 
   times = re.findall("[0-9]*[0-9]:[0-9][0-9].*[AP]M", html)
   price = re.search("\$[0-9]*\.[0-9][0-9]", html).group(0)
@@ -61,4 +62,4 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
 
 
 if __name__ == '__main__':
-	njtransit('Princeton', 'Princeton+Junction', '124_PRIN', '125_NEC', '5', '30', '2013', '10', '30', False)
+	njtransit('Newark+Airport', 'Princeton+Junction', '37953_NEC', '125_NEC', '5', '9', '2013', '10', '30', False)
