@@ -176,11 +176,21 @@ def combine(leg1, leg2, leg3):
     results = []
     for flight in leg2:
 	result = []
+	best1 = []
+	best3 = []
 	if leg1 != []:
-	    result.append(get_best_leg1(leg1, flight))
-	result.append(leg2)
+	    best1 = get_best_leg1(leg1, flight)
+	    if best1 == []:
+		continue
 	if leg3 != []:
-            result.append(get_best_leg3(leg3, flight))
+            best3 = get_best_leg3(leg3, flight)
+	    if best3 == []:
+		continue
+	if best1 != []:
+	    result.append(best1)
+	result.append(leg2)
+	if best3 != []:
+	    result.append(best3)
 	results.append(result)
 	
     return results
