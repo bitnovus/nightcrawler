@@ -168,7 +168,7 @@ def all_stuff():
     #print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
     #total_results = bus_results + flight_results + nj_results + am_results
     total_results = bus_results + nj_results + am_results
-    if !(dest_city != dest_city2 and leg3 == []) and !(orig_city != orig_city2 and leg1 == [])
+    if !(dest_city != dest_city2 and leg3 == []) and !(orig_city != orig_city2 and leg1 == []):
         total_results += combine(leg1, leg2, leg3)
     return Response(json.dumps(total_results), mimetype='application/json')
 
