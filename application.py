@@ -198,6 +198,7 @@ def combine(leg1, leg2, leg3):
     return results
 
 def get_best_leg1(leg1, flight):
+    return leg1[0]
     flight_start = time_to_minutes(flight, True)
     best = []
     best_time = 1000000
@@ -209,6 +210,7 @@ def get_best_leg1(leg1, flight):
     return best
 
 def get_best_leg3(leg3, flight):
+    return leg3[0]
     flight_end = time_to_minutes(flight, False)
     best = []
     best_time = 1000000
