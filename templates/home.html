@@ -263,19 +263,22 @@
 					for (var j = 1; j < x.length; j++) {
 						var y = x[j];
 						console.log(y);
-						e.innerHTML += "<h5>Leg " + (j+1) + "</h5><br />";
+						e.innerHTML += "<h5>Leg " + j + "</h5>";
 						e.innerHTML += "Depart from: " + y.departure + " at " + y.departure_time + '<br />';
 						e.innerHTML += "Arrive at: " + y.arrival + " at " + y.arrival_time + '<br />';
 						e.innerHTML += "Price: " + y.price + '<br />';
-						e.innerHTML += "Carrier: " + y.carrier + '<br /><br/>';
+						e.innerHTML += "Carrier: " + y.carrier;
+						if (j < x.length - 1) {
+							e.innerHTML += "<br/>";
+						}
 					}
-					e.innerHTML += "<br/><br/>"
+					e.innerHTML += "<hr/>"
 				} else {
 					e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
 					e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
 					e.innerHTML += "Price: " + x.price + '<br />';
-					e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
-					e.innerHTML += "<br/><br/>"
+					e.innerHTML += "Carrier: " + x.carrier;
+					e.innerHTML += "<hr/>"
 				}
 			}
 			if (sortedby == 4) {
