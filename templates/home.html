@@ -235,10 +235,23 @@
 			}
 			for (var i = 0; i < results.length; i++) {
 				var x = results[i];
-				e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
-				e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
-				e.innerHTML += "Price: " + x.price + '<br />';
-				e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
+				if (x.departure == undefined) {
+					for (var j = 0; j < x.length; j++) {
+						var y = x[i];
+						e.innerHTML += "<h5>Leg " + (j+1) + "</h5><br />";
+						e.innerHTML += "Depart from: " + y.departure + " at " + y.departure_time + '<br />';
+						e.innerHTML += "Arrive at: " + y.arrival + " at " + y.arrival_time + '<br />';
+						e.innerHTML += "Price: " + y.price + '<br />';
+						e.innerHTML += "Carrier: " + y.carrier + '<br /><br/>';
+					}
+					e.innerHTML += "<br/><br/>"
+				} else {
+					e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
+					e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
+					e.innerHTML += "Price: " + x.price + '<br />';
+					e.innerHTML += "Carrier: " + x.carrier + '<br /><br/>';
+					e.innerHTML += "<br/><br/>"
+				}
 			}
 			if (sortedby == 4) {
 				document.getElementById("sort-by-elapsed-time").checked = true;
