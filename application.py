@@ -198,7 +198,7 @@ def combine(leg1, leg2, leg3):
 	t2 = result[len(result)-1]['arrival_time']
 	p = 0
 	for res in result:
-	    p += res['price']
+	    p += int(res['price'])
 	d = [{'arrival_time':t2, 'departure_time':t1, 'price':p}]
 	result = d + result
 	results.append(result)
