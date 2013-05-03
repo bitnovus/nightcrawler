@@ -75,4 +75,5 @@ def megabus(start, end, month, day, year, hour, minute, isArriving):
   return p
 
 if __name__ == '__main__':
-    megabus(94, 123, 5, 27, 2013, 20, 30, False)
+    a = megabus(94, 123, 5, 27, 2013, 20, 30, False)
+    print a[0]['arrival_time']
