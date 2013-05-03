@@ -262,6 +262,7 @@
 				if (x.departure == undefined) {
 					for (var j = 1; j < x.length; j++) {
 						var y = x[i];
+						console.log(y);
 						e.innerHTML += "<h5>Leg " + (j+1) + "</h5><br />";
 						e.innerHTML += "Depart from: " + y.departure + " at " + y.departure_time + '<br />';
 						e.innerHTML += "Arrive at: " + y.arrival + " at " + y.arrival_time + '<br />';
