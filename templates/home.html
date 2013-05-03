@@ -159,7 +159,10 @@
 		}
 
 		function comparebyprice(a, b) {
-			return a.price.substring(1) - b.price.substring(1);
+			var p1, p2;
+			p1 = (a.price == undefined) ? a[0].price : a.price;
+			p2 = (b.price == undefined) ? b[0].price : b.price;
+			return p1.substring(1) - p2.substring(1);
 		}
 
 		function timetominutes(time) {
@@ -176,10 +179,12 @@
 		}
 
 		function comparebyarrival(a, b) {
-			a1 = timetominutes(a.departure_time);
-			a2 = timetominutes(a.arrival_time);
-			b1 = timetominutes(b.departure_time);
-			b2 = timetominutes(b.arrival_time);
+			c = (a.departure_time == undefined) ? a[0] : a;
+			d = (b.departure_time == undefined) ? b[0] : b;
+			a1 = timetominutes(c.departure_time);
+			a2 = timetominutes(c.arrival_time);
+			b1 = timetominutes(d.departure_time);
+			b2 = timetominutes(d.arrival_time);
 			if (a2 < a1) {
 				a2 = a2 + 24*60;
 			}
@@ -190,14 +195,18 @@
 		}
 
 		function comparebydeparture(a, b) {
-			return timetominutes(a.departure_time) - timetominutes(b.departure_time);
+			c = (a.departure_time == undefined) ? a[0] : a;
+			d = (b.departure_time == undefined) ? b[0] : b;
+			return timetominutes(c.departure_time) - timetominutes(d.departure_time);
 		}
 
 		function comparebyelapsed(a, b) {
-			a1 = timetominutes(a.departure_time);
-			a2 = timetominutes(a.arrival_time);
-			b1 = timetominutes(b.departure_time);
-			b2 = timetominutes(b.arrival_time);
+			c = (a.departure_time == undefined) ? a[0] : a;
+			d = (b.departure_time == undefined) ? b[0] : b;
+			a1 = timetominutes(c.departure_time);
+			a2 = timetominutes(c.arrival_time);
+			b1 = timetominutes(d.departure_time);
+			b2 = timetominutes(d.arrival_time);
 			c1 = a2 - a1;
 			c2 = b2 - b1;
 			if (c1 < 0) {
@@ -236,7 +245,7 @@
 			for (var i = 0; i < results.length; i++) {
 				var x = results[i];
 				if (x.departure == undefined) {
-					for (var j = 0; j < x.length; j++) {
+					for (var j = 1; j < x.length; j++) {
 						var y = x[i];
 						e.innerHTML += "<h5>Leg " + (j+1) + "</h5><br />";
 						e.innerHTML += "Depart from: " + y.departure + " at " + y.departure_time + '<br />';
