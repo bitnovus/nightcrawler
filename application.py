@@ -16,6 +16,8 @@ application.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') \
         if os.environ.get('DATABASE_URL') else 'sqlite:///test.db'
 
 db = SQLAlchemy(application)
+
+pool = ThreadPool(processes=10)
 #=========================================================
 
 @application.route('/')
@@ -66,7 +68,6 @@ def all_stuff():
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
 
-    pool = ThreadPool(processes=10)
 
     if orig_city.aircode.find("*") != -1:
         # get airport city - update this
