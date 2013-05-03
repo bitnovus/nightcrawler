@@ -17,7 +17,7 @@ application.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') \
 
 db = SQLAlchemy(application)
 
-pool = ThreadPool(processes=1)
+pool = ThreadPool(processes=10)
 #=========================================================
 
 @application.route('/')
