@@ -145,6 +145,7 @@
 				function (data, status) {
 					console.log(data + " " + status);
 					results = data;
+					initializeprices(results);
 					if (speed) {
 						sortresults(comparebyelapsed, 4);
 						sortedby = 4;
@@ -156,6 +157,20 @@
 					//toggleloadingimage();
 				}
 			);
+		}
+
+		function initializeprices(x) {
+			for (var i = 0; i < x.length;x++) {
+				var r = x[0];
+				if (r.price == undefined) {
+					var sum = 0;
+					for (var j = 0; j < r.length; j++) {
+						var y = r[j];
+						sum += y.price.substring(1);
+					}
+					r.price = sum;
+				}
+			}
 		}
 
 		function comparebyprice(a, b) {

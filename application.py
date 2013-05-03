@@ -196,10 +196,7 @@ def combine(leg1, leg2, leg3):
 	    result.append(best3)
 	t1 = result[0]['departure_time']
 	t2 = result[len(result)-1]['arrival_time']
-	p = 0
-	for res in result:
-	    p += int(res['price'])
-	d = [{'arrival_time':t2, 'departure_time':t1, 'price':p}]
+	d = [{'arrival_time':t2, 'departure_time':t1}]
 	result = d + result
 	results.append(result)
 	
