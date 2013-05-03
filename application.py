@@ -70,11 +70,11 @@ def all_stuff():
 
 
     if orig_city.aircode.find("*") != -1:
-        # get airport city - update this
-	orig_city2 = get_city(orig_city.aircode.substring(1))
+        # get airport city
+	orig_city2 = db.session.query(City).filter(City.name==get_city(orig_city.aircode[1:])).first()
         leg1_result1 = pool.apply_async(megabus.megabus, (orig_city.megacode, orig_city2.megacode, month, day, year, hour, minute, isArriv))
-        leg1_result2 = pool.apply_async(njtransit.njtransit, (orig_city.megacode, orig_city2.megacode, month, day, year, hour, minute, isArriv))
-        leg1_result3 = pool.apply_async(amtrak.amtrak, (orig_city.megacode, orig_city2.megacode, month, day, year, hour, minute, isArriv))
+        leg1_result2 = pool.apply_async(njtransit.njtransit, (orig_city.njcode, orig_city2.njcode, month, day, year, hour, minute, isArriv))
+        leg1_result3 = pool.apply_async(amtrak.amtrak, (orig_city.amcode, orig_city2.amcode, month, day, year, hour, minute, isArriv))
     else:
 	orig_city2 = orig_city
 	leg1_result1 = []
@@ -82,11 +82,11 @@ def all_stuff():
 	leg1_result3 = []
 
     if dest_city.aircode.find("*") != -1:
-	#get airport city - update this
-	dest_city2 = get_city(dest_city.aircode.substring(1))
+	#get airport city
+	dest_city2 = db.session.query(City).filter(City.name==get_city(dest_city.aircode[1:])).first()
         leg3_result1 = pool.apply_async(megabus.megabus, (dest_city2.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
-        leg3_result2 = pool.apply_async(njtransit.njtransit, (dest_city2.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
-        leg3_result3 = pool.apply_async(amtrak.amtrak, (dest_city2.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
+        leg3_result2 = pool.apply_async(njtransit.njtransit, (dest_city2.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv))
+        leg3_result3 = pool.apply_async(amtrak.amtrak, (dest_city2.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
     else:
 	dest_city2 = dest_city
 	leg3_result1 = []
@@ -125,6 +125,7 @@ def all_stuff():
 	leg2 = flight_result.get()
     except:
 	leg2 = []
+    flight_results = leg2
 
     try:
 	leg3_1 = leg3_result1.get()
@@ -166,8 +167,10 @@ def all_stuff():
     #print hour
     #print minute
     #print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
-    #total_results = bus_results + flight_results + nj_results + am_results
-    total_results = combine(leg1, leg2, leg3) + bus_results + nj_results + am_results
+    total_results = bus_results + flight_results + nj_results + am_results
+    #total_results = bus_results + nj_results + am_results
+    #if not (dest_city != dest_city2 and leg3 == []) and not (orig_city != orig_city2 and leg1 == []):
+    #    total_results += combine(leg1, leg2, leg3)
     return Response(json.dumps(total_results), mimetype='application/json')
 
 def combine(leg1, leg2, leg3):
@@ -176,11 +179,21 @@ def combine(leg1, leg2, leg3):
     results = []
     for flight in leg2:
 	result = []
+	best1 = []
+	best3 = []
 	if leg1 != []:
-	    result.append(get_best_leg1(leg1, flight))
-	result.append(leg2)
+	    best1 = get_best_leg1(leg1, flight)
+	    if best1 == []:
+		continue
 	if leg3 != []:
-            result.append(get_best_leg3(leg3, flight))
+            best3 = get_best_leg3(leg3, flight)
+	    if best3 == []:
+		continue
+	if best1 != []:
+	    result.append(best1)
+	result.append(flight)
+	if best3 != []:
+	    result.append(best3)
 	results.append(result)
 	
     return results
@@ -204,17 +217,17 @@ def get_best_leg3(leg3, flight):
 	start = time_to_minutes(r, True)
 	if start > flight_end and start - flight_end < best_time:
             best = r
-	    best_time = flight_start - end
+	    best_time = start - flight_end
     return best
 
-def time_to_minutes(time, departure):
-    departure_hour = get_hour(time.departure_time)
-    departure_minute = get_minute(time.departure_time)
+def time_to_minutes(record, departure):
+    departure_hour = get_hour(record[departure_time])
+    departure_minute = get_minute(record[departure_time])
     departure_in_minutes = departure_hour * 60 + departure_minute
     if departure:
 	return departure_in_minutes
-    arrival_hour = get_hour(time.arrival_time)
-    arrival_minute = get_minute(time.arrival_minute)
+    arrival_hour = get_hour(record[arrival_time])
+    arrival_minute = get_minute(record[arrival_time])
     arrival_in_minutes = arrival_hour * 60 + arrival_minute
     if arrival_in_minutes < departure_in_minutes:
 	arrival_in_minutes += 24*60
@@ -232,6 +245,12 @@ def get_hour(time):
 def get_minute(time):
     colon = time.find(':')
     return int(time[colon+1:colon+3])
+
+def get_city(code):
+    return airCodes[code]
+
+# a list of the airport codes
+airCodes = {'ALB':'Albany', 'ABE':'Allentown', 'BWI':'Baltimore', 'BGR':'Bangor', 'BOS':'Boston', 'BUF':'Buffalo', 'MDT':'Harrisburg', 'BDL':'Hartford', 'ISP':'Islip', 'EEN':'Keene', 'MHT':'Manchester', 'JFK':'New York', 'LGA':'New York 2', 'EWR':'Newark', 'SWF':'Newburgh', 'PHL':'Philadelphia', 'PIT':'Pittsburg', 'SYR':'Syracuse', 'DCA':'Washington', 'IAD':'Washington 2', 'HPN':'Westchester', 'AVP':'Wilkes Barre', 'ORH':'Worcester'}
 
 @application.route('/megabus')
 def megabus_stuff():
