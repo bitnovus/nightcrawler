@@ -183,6 +183,9 @@ def all_stuff():
     #total_results = bus_results + nj_results + am_results
     #if not (dest_city != dest_city2 and leg3 == []) and not (orig_city != orig_city2 and leg1 == []):
     #    total_results += combine(leg1, leg2, leg3)
+    #total_results = bus_results + nj_results + am_results
+    if not (dest_city != dest_city2 and leg3 == []) and not (orig_city != orig_city2 and leg1 == []):
+        total_results += combine(leg1, leg2, leg3)
     return Response(json.dumps(total_results), mimetype='application/json')
 
 def combine(leg1, leg2, leg3):
@@ -206,6 +209,10 @@ def combine(leg1, leg2, leg3):
 	result.append(flight)
 	if best3 != []:
 	    result.append(best3)
+	t1 = result[0]['departure_time']
+	t2 = result[len(result)-1]['arrival_time']
+	d = [{'arrival_time':t2, 'departure_time':t1}]
+	result = d + result
 	results.append(result)
 	
     return results
@@ -233,13 +240,13 @@ def get_best_leg3(leg3, flight):
     return best
 
 def time_to_minutes(record, departure):
-    departure_hour = get_hour(record[departure_time])
-    departure_minute = get_minute(record[departure_time])
+    departure_hour = get_hour(record['departure_time'])
+    departure_minute = get_minute(record['departure_time'])
     departure_in_minutes = departure_hour * 60 + departure_minute
     if departure:
 	return departure_in_minutes
-    arrival_hour = get_hour(record[arrival_time])
-    arrival_minute = get_minute(record[arrival_time])
+    arrival_hour = get_hour(record['arrival_time'])
+    arrival_minute = get_minute(record['arrival_time'])
     arrival_in_minutes = arrival_hour * 60 + arrival_minute
     if arrival_in_minutes < departure_in_minutes:
 	arrival_in_minutes += 24*60
