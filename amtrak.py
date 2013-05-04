@@ -78,4 +78,4 @@ def amtrak(start, end, month, day, year, hour, min, isArriving):
 	return p
 
 if __name__ == '__main__':
-	amtrak('Trenton%2C+NJ+%28TRE%29', 'New+York+-+Penn+Station%2C+NY+%28NYP%29', '4', '30', '2013', '10', '30', False)
+	print amtrak('Trenton%2C+NJ+%28TRE%29', 'New+York+-+Penn+Station%2C+NY+%28NYP%29', '5', '30', '2013', '10', '30', False)

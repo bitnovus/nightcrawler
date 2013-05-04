@@ -82,4 +82,4 @@ def orbitz(start, end, month, day, year, hour, minute, isArriving):
   return p
 
 if __name__ == '__main__':
-    orbitz("EWR", "MIA", 5, 30, 2013, 17, 30, False)
+    print orbitz("EWR", "MIA", 5, 30, 2013, 17, 30, False)

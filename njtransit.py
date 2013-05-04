@@ -59,9 +59,9 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   end = sanitize_loc(end)
 
   p = package_info(times, price, start, end, hour, min, isArriving, link, urllib.urlencode(payload))
-  print p
+  #print p
   return p
 
 
 if __name__ == '__main__':
-	njtransit('Newark+Airport', 'Princeton+Junction', '37953_NEC', '125_NEC', '5', '9', '2013', '10', '30', False)
+	print njtransit('Newark+Airport', 'Princeton+Junction', '37953_NEC', '125_NEC', '5', '9', '2013', '10', '30', False)
