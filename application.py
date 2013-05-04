@@ -119,10 +119,7 @@ def all_stuff():
     except:
 	leg1_3 = []
 
-    #leg1 = leg1_1 + leg1_2 + leg1_3
-    leg1[0:0] = leg1_1
-    leg1[0:0] = leg1_2
-    leg1[0:0] = leg1_3
+    leg1 = leg1_1 + leg1_2 + leg1_3
 
     try:
 	leg2 = flight_result.get()
@@ -143,10 +140,7 @@ def all_stuff():
     except:
 	leg3_3 = []
 
-    #leg3 = leg3_1 + leg3_2 + leg3_3
-    leg3[0:0] = leg3_1
-    leg3[0:0] = leg3_2
-    leg3[0:0] = leg3_3
+    leg3 = leg3_1 + leg3_2 + leg3_3
 
     try:
         bus_results = async_result1.get()
@@ -174,16 +168,11 @@ def all_stuff():
     #print minute
     #print megabus.megabus(89, 123, 4, 25, 2013, 13, 30, False)
     #total_results = bus_results + flight_results + nj_results + am_results
-    total_results = []
-    total_results[0:0] = bus_results
-    total_results[0:0] = flight_results
-    total_results[0:0] = nj_results
-    total_results[0:0] = am_results
 
     #total_results = bus_results + nj_results + am_results
     #if not (dest_city != dest_city2 and leg3 == []) and not (orig_city != orig_city2 and leg1 == []):
     #    total_results += combine(leg1, leg2, leg3)
-    #total_results = bus_results + nj_results + am_results
+    total_results = bus_results + nj_results + am_results
     if not (dest_city != dest_city2 and leg3 == []) and not (orig_city != orig_city2 and leg1 == []):
         total_results += combine(leg1, leg2, leg3)
     return Response(json.dumps(total_results), mimetype='application/json')
