@@ -268,7 +268,7 @@
 						e.innerHTML += "Arrive at: " + y.arrival + " at " + y.arrival_time + '<br />';
 						e.innerHTML += "Price: " + y.price + '<br />';
 						e.innerHTML += "Carrier: " + y.carrier + '<br />';
-						e.innerHTML += "Tickets: <a href=\"" + y.link + "/" + y.payload + "\">link</a>";
+						e.innerHTML += "Tickets: <a href=\"" + y.link + "/" + y.payload + "\" target=\"_blank\">link</a>";
 						if (j < x.length - 1) {
 							e.innerHTML += "<br/>";
 						}
@@ -279,7 +279,7 @@
 					e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
 					e.innerHTML += "Price: " + x.price + '<br />';
 					e.innerHTML += "Carrier: " + x.carrier + "<br \>";
-					e.innerHTML += "Tickets: <a href=\"" + x.link + + "/" + x.payload + "\">link</a>";
+					e.innerHTML += "Tickets: <a href=\"" + x.link + + "/" + x.payload + "\" target=\"_blank\">link</a>";
 					e.innerHTML += "<hr/>"
 				}
 			}
