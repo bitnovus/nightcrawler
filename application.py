@@ -307,7 +307,7 @@ def njtransit_stuff():
     #print month + " " + day + " " + year
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
-    results = njtransit.njtransit(orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv) 
+    results = njtransit.njtransit(orig_city.njstation, dest_city.njstation, orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv) 
     return Response(json.dumps(results), mimetype='application/json')
 
 @application.route('/amtrak')
