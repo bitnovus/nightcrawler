@@ -73,7 +73,7 @@ def all_stuff():
         # get airport city
 	orig_city2 = db.session.query(City).filter(City.name==get_city(orig_city.aircode[1:])).first()
         leg1_result1 = pool.apply_async(megabus.megabus, (orig_city.megacode, orig_city2.megacode, month, day, year, hour, minute, isArriv))
-        leg1_result2 = pool.apply_async(njtransit.njtransit, (orig_city.njcode, orig_city2.njcode, month, day, year, hour, minute, isArriv))
+        leg1_result2 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, orig_city2.njstation, orig_city.njcode, orig_city2.njcode, month, day, year, hour, minute, isArriv))
         leg1_result3 = pool.apply_async(amtrak.amtrak, (orig_city.amcode, orig_city2.amcode, month, day, year, hour, minute, isArriv))
     else:
 	orig_city2 = orig_city
@@ -85,7 +85,7 @@ def all_stuff():
 	#get airport city
 	dest_city2 = db.session.query(City).filter(City.name==get_city(dest_city.aircode[1:])).first()
         leg3_result1 = pool.apply_async(megabus.megabus, (dest_city2.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
-        leg3_result2 = pool.apply_async(njtransit.njtransit, (dest_city2.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv))
+        leg3_result2 = pool.apply_async(njtransit.njtransit, (dest_city2.njstation, dest_city.njstation, dest_city2.njcode, dest_city2.njcode, month, day, year, hour, minute, isArriv))
         leg3_result3 = pool.apply_async(amtrak.amtrak, (dest_city2.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
     else:
 	dest_city2 = dest_city
@@ -98,7 +98,7 @@ def all_stuff():
 
     async_result1 = pool.apply_async(megabus.megabus, (orig_city.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
     #async_result2 = pool.apply_async(flights.orbitz, (orig_city.aircode, dest_city.aircode, month, day, year, hour, minute, isArriv))
-    async_result3 = pool.apply_async(njtransit.njtransit, (orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv))
+    async_result3 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, dest_city.njstation, orig_city.njcode, dest_city.njcode, month, day, year, hour, minute, isArriv))
     async_result4 = pool.apply_async(amtrak.amtrak, (orig_city.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
 
     leg1 = []
