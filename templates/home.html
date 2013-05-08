@@ -127,13 +127,15 @@
 				if (!am) {
 					hour = hour + 12;
 				}
-			}
+            }
+            var orig_city_value = document.getElementById("originform").value;
+            var dest_city_value = document.getElementById("destform").value;
 
 			$.get(
 				"all",
 				{
-					orig: document.getElementById("originform").value,
-					dest: document.getElementById("destform").value,
+					orig: orig_city_value.substring(0, orig_city_value.indexOf(",")),
+					dest: dest_city_value.substring(0, dest_city_value.indexOf(",")),
 					month: date[0],
 					day: date[1],
 					year: date[2],

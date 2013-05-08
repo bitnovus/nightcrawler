@@ -39,7 +39,7 @@ def all_cities():
     results = []
 
     for i in range(len(cities)):
-        results.append(str(cities[i]) + ", " + str(states[i]))
+        results.append(cities[i][0] + ", " + states[i][0])
 
     return Response(json.dumps(results), mimetype='application/json')
 
