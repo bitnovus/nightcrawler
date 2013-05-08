@@ -345,10 +345,13 @@
 
     <body>
 
-	<div class="modal fade" id="results-modal">
-	    <div class="modal-header">
-		<a class="close" data-dismiss="modal">&times;</a>
-		<h3>Results</h3> <h4 id="results-header"></h4>
+        <div class="modal fade" id="results-modal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h3>Results</h3> <h4 id="results-header"></h4>
+                <iframe height="400px" width="100%" frameBorder="0" scrolling="no"
+                    src="/templates/map.html">
+                </iframe>
                 <div id="sort-options">
                     <label>Sort by:</label>
                     <div class="switch candy blue switch-four">
@@ -356,10 +359,10 @@
                         <label for="sort-by-price" onclick="sortresults(comparebyprice, 1)">Price</label>
 
                         <input id="sort-by-arrival-time" name="sorting" type="radio">
-			<label for="sort-by-arrival-time" onclick="sortresults(comparebyarrival, 2)">Arrival Time</label>
+                        <label for="sort-by-arrival-time" onclick="sortresults(comparebyarrival, 2)">Arrival Time</label>
 
                         <input id="sort-by-departure-time" name="sorting" type="radio">
-			<label for="sort-by-departure-time" onclick="sortresults(comparebydeparture, 3)">Departure Time</label>
+                        <label for="sort-by-departure-time" onclick="sortresults(comparebydeparture, 3)">Departure Time</label>
 
                         <input id="sort-by-elapsed-time" name="sorting" type="radio">
                         <label for="sort-by-elapsed-time" onclick="sortresults(comparebyelapsed, 4)">Elapsed Time</label>
@@ -367,14 +370,14 @@
                         <span class="slide-button"></span>
                     </div>
                 </div>
-		<!--<button onclick="sortresults(comparebyprice)">Sort by Price</button>
-		<button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
-		<button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
-		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>-->
-	    </div>
-	    <div class="modal-body" id="results-div">
-	    </div>
-	</div>
+                <!--<button onclick="sortresults(comparebyprice)">Sort by Price</button>
+                <button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
+                <button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
+                <button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>-->
+            </div>
+            <div class="modal-body" id="results-div">
+            </div>
+        </div>
 	    
         <div class="container">
 
