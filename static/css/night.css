@@ -80,5 +80,6 @@
     left:25%; !important
 }
 #map-modal {
-    right:25%; !important
+    left:75%; !important
+    height: 754px;
 }
