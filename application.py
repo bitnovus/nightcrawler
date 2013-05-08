@@ -34,7 +34,7 @@ def timeline(name=None):
 
 @application.route('/cities')
 def all_cities():
-    cities = db.session.query(City.name).all()
+    cities = db.session.query(City.name, City.state).all()
     results = []
     for city_sublist in cities:
         for city in city_sublist:
