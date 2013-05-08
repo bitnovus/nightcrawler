@@ -76,7 +76,7 @@
     width: auto;
 }
 
-#results-modal-right {
+#results-modal {
     position:relative;
-    left:-560px;
+    left:25%; !important
 }
