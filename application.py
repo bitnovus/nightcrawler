@@ -34,11 +34,12 @@ def timeline(name=None):
 
 @application.route('/cities')
 def all_cities():
-    cities = db.session.query(City.name, City.state).all()
+    cities = db.session.query(City.name).all()
+    states = db.session.query(City.state).all()
     results = []
-    for city_sublist in cities:
-        for city in city_sublist:
-            results.append(city)
+
+    for i in range(len(cities)):
+        results.append(cities[i] + ", " + states[i])
 
     return Response(json.dumps(results), mimetype='application/json')
 
