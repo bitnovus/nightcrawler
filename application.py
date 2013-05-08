@@ -32,6 +32,10 @@ def home_page(name=None):
 def timeline(name=None):
     return render_template('timeline.html', name=name)
 
+@application.route('/map')
+def timeline(name=None):
+    return render_template('map.html', name=name)
+
 @application.route('/cities')
 def all_cities():
     cities = db.session.query(City.name).all()
