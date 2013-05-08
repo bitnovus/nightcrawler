@@ -161,14 +161,14 @@
 
 		function initializeprices(x) {
 			for (var i = 0; i < x.length;x++) {
-				var r = x[0];
+				var r = x[i];
 				if (r.price == undefined) {
 					var sum = 0;
-					for (var j = 0; j < r.length; j++) {
+					for (var j = 1; j < r.length; j++) {
 						var y = r[j];
 						sum += y.price.substring(1);
 					}
-					r.price = sum;
+					r[0].price = sum;
 				}
 			}
 		}
