@@ -75,3 +75,8 @@
 .dropdown {
     width: auto;
 }
+
+#results-modal-right {
+    position:relative;
+    left:-560px;
+}
