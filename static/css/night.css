@@ -75,3 +75,11 @@
 .dropdown {
     width: auto;
 }
+
+#results-modal {
+    left:25%; !important
+}
+#map-modal {
+    left:75%; !important
+    height: 754px;
+}

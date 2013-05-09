@@ -127,13 +127,15 @@
 				if (!am) {
 					hour = hour + 12;
 				}
-			}
+            }
+            var orig_city_value = document.getElementById("originform").value;
+            var dest_city_value = document.getElementById("destform").value;
 
 			$.get(
 				"all",
 				{
-					orig: document.getElementById("originform").value,
-					dest: document.getElementById("destform").value,
+					orig: orig_city_value.substring(0, orig_city_value.indexOf(",")),
+					dest: dest_city_value.substring(0, dest_city_value.indexOf(",")),
 					month: date[0],
 					day: date[1],
 					year: date[2],
@@ -161,14 +163,14 @@
 
 		function initializeprices(x) {
 			for (var i = 0; i < x.length;x++) {
-				var r = x[0];
+				var r = x[i];
 				if (r.price == undefined) {
 					var sum = 0;
-					for (var j = 0; j < r.length; j++) {
+					for (var j = 1; j < r.length; j++) {
 						var y = r[j];
 						sum += y.price.substring(1);
 					}
-					r.price = sum;
+					r[0].price = sum;
 				}
 			}
 		}
@@ -242,7 +244,7 @@
 				return;
 			}
 			results.sort(comparefunction);
-			display();
+            display();
 		}
 
 		function display() {
@@ -291,7 +293,8 @@
 			if (sortedby == 4) {
 				document.getElementById("sort-by-elapsed-time").checked = true;
 			}
-			$("#results-modal").modal("show");
+            $("#results-modal").modal("show");
+            $("#map-modal").modal("show");
 			toggleloadingimage();
 		}
 
@@ -389,11 +392,10 @@
     </head>
 
     <body>
-
-	<div class="modal fade" id="results-modal">
-	    <div class="modal-header">
-		<a class="close" data-dismiss="modal">&times;</a>
-		<h3>Results</h3> <h4 id="results-header"></h4>
+        <div class="modal fade" id="results-modal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h3>Results</h3> <h4 id="results-header"></h4>
                 <div id="sort-options">
                     <label>Sort by:</label>
                     <div class="switch candy blue switch-four">
@@ -401,10 +403,10 @@
                         <label for="sort-by-price" onclick="sortresults(comparebyprice, 1)">Price</label>
 
                         <input id="sort-by-arrival-time" name="sorting" type="radio">
-			<label for="sort-by-arrival-time" onclick="sortresults(comparebyarrival, 2)">Arrival Time</label>
+                        <label for="sort-by-arrival-time" onclick="sortresults(comparebyarrival, 2)">Arrival Time</label>
 
                         <input id="sort-by-departure-time" name="sorting" type="radio">
-			<label for="sort-by-departure-time" onclick="sortresults(comparebydeparture, 3)">Departure Time</label>
+                        <label for="sort-by-departure-time" onclick="sortresults(comparebydeparture, 3)">Departure Time</label>
 
                         <input id="sort-by-elapsed-time" name="sorting" type="radio">
                         <label for="sort-by-elapsed-time" onclick="sortresults(comparebyelapsed, 4)">Elapsed Time</label>
@@ -412,15 +414,25 @@
                         <span class="slide-button"></span>
                     </div>
                 </div>
-		<!--<button onclick="sortresults(comparebyprice)">Sort by Price</button>
-		<button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
-		<button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
-		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>-->
-	    </div>
-	    <div class="modal-body" id="results-div">
-	    </div>
-	</div>
-	    
+                <!--<button onclick="sortresults(comparebyprice)">Sort by Price</button>
+                <button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
+                <button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
+                <button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>-->
+            </div>
+            <div class="modal-body" id="results-div">
+            </div>
+        </div>
+
+        <div class="modal fade" id="map-modal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <iframe height="100%" width="100%" frameBorder="0" scrolling="no"
+                    src="/map">
+                </iframe>
+            </div>
+            <div class="modal-body" id="map-div">
+            </div>
+        </div>       
         <div class="container">
 
             <div class="masthead">
