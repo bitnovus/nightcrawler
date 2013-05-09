@@ -12,6 +12,12 @@ def sanitize_times(times):
 		g.append(t[2:])
 	return g
 
+def sanitize_time(time):
+	return time[2:]
+
+def sanitize_price(price):
+	return price[11:]
+
 def sanitize_prices(prices):
 	g = []
 	for p in prices:
@@ -37,14 +43,33 @@ def get_min(time):
   colon = time.find(':')
   return int(time[colon+1: colon+3])
 
-def package_info(times, prices, start, end, hour, minute, isArriving, link, payload):
-  dictionaries = []
-  for j in range(len(prices)):
-  	if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
-  		dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Amtrak", link = link, payload = payload))
-  	elif ((isArriving is False) and ((comp_times(times[2*j], hour, minute) is False))):
-  		dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "Amtrak", link = link, payload = payload))
-  return dictionaries 
+def mySearch(a, target):
+	indices = []
+	index = 0
+	while index < len(a):
+		if re.search(target, a[index]) is not None:
+			indices.append(index)
+		index += 1
+	indices.append(len(a))
+	return indices
+
+def package_info(a, hour, minute, isArriving, link, payload):
+	dictionaries = []
+	indices = mySearch(a, "\$")
+
+	for i in range(len(indices)):
+		if i+1 < len(indices) and indices[i+1]==indices[i]+5:
+			if isArriving and (comp_times(a[indices[i]+1], hour, minute) and comp_times(a[indices[i]+3], hour, minute)):
+  				dictionaries.append(dict(price = a[indices[i]], departure = a[indices[i]+2], arrival = a[indices[i]+4], departure_time = a[indices[i]+1], arrival_time = a[indices[i]+3], carrier = "Amtrak", link = link, payload = payload))
+  			elif ((isArriving is False) and ((comp_times(a[indices[i]+1], hour, minute) is False))):
+  				dictionaries.append(dict(price = a[indices[i]], departure = a[indices[i]+2], arrival = a[indices[i]+4], departure_time = a[indices[i]+1], arrival_time = a[indices[i]+3], carrier = "Amtrak", link = link, payload = payload))
+		elif i+1 < len(indices) and indices[i+1]==indices[i]+9:
+			if isArriving and (comp_times(a[indices[i]+1], hour, minute) and comp_times(a[indices[i]+7], hour, minute)):
+  				dictionaries.append([dict(price = a[indices[i]], departure = a[indices[i]+2], arrival = a[indices[i]+4], departure_time = a[indices[i]+1], arrival_time = a[indices[i]+3], carrier = "Amtrak", link = link, payload = payload), dict(price = a[indices[i]+5], departure = a[indices[i]+7], arrival = a[indices[i]+9], departure_time = a[indices[i]+6], arrival_time = a[indices[i]+8], carrier = "Amtrak", link = link, payload = payload, legs = 2)])
+  			elif ((isArriving is False) and ((comp_times(a[indices[i]+1], hour, minute) is False))):
+  				dictionaries.append([dict(price = a[indices[i]], departure = a[indices[i]+2], arrival = a[indices[i]+4], departure_time = a[indices[i]+1], arrival_time = a[indices[i]+3], carrier = "Amtrak", link = link, payload = payload, legs = 2), dict(price = a[indices[i]], departure = a[indices[i]+6], arrival = a[indices[i]+8], departure_time = a[indices[i]+5], arrival_time = a[indices[i]+7], carrier = "Amtrak", link = link, payload = payload, legs = 2)])
+  	print dictionaries
+  	return dictionaries 
 
 def sanitize_loc(loc):
 	r = loc.replace('+', ' ')
@@ -52,6 +77,11 @@ def sanitize_loc(loc):
 	r = r.replace('%28', '- ')
 	r = r.replace('%29', '')
 	return r
+
+def sanitize_station(station):
+	s = station[32:]
+	s = s[:-20]
+	return s
 
 def amtrak(start, end, month, day, year, hour, min, isArriving):
 
@@ -67,15 +97,26 @@ def amtrak(start, end, month, day, year, hour, min, isArriving):
 	start = sanitize_loc(start)
 	end = sanitize_loc(end)
 
-	times = re.findall(": [0-9]*[0-9]:[0-9][0-9].*[AP]M", html)
-	times = sanitize_times(times)
-
-	prices = re.findall("CartPrice.>\$[0-9]*\.[0-9][0-9]", html)
-	prices = sanitize_prices(prices)
+	# find all relevant pieces of information, then extract
+	everything = re.findall("(: [0-9]*[0-9]:[0-9][0-9].*[AP]M)|(CartPrice.>\$[0-9]*\.[0-9][0-9])|(\n<!-- mp_trans_disable_start -->.*href)", html)
+	temp = []
+	for i in everything:
+		for j in i:
+			if j != "": temp.append(j)
 	
-	p = package_info(times, prices, start, end, hour, min, isArriving, link, tmp)
+	a = []
+
+	for i in temp:
+		if re.search(": [0-9]*[0-9]:[0-9][0-9].*[AP]M", str(i)) is not None: 
+			a.append(sanitize_time(i))
+		elif re.search("CartPrice.>\$[0-9]*\.[0-9][0-9]", str(i)) is not None: 
+			a.append(sanitize_price(i))
+		elif re.search("<!-- mp_trans_disable_start -->.*href", str(i)) is not None: 
+			a.append(sanitize_station(i))
+	
+	p = package_info(a, hour, min, isArriving, link, tmp)
 	#print p
 	return p
 
 if __name__ == '__main__':
-	print amtrak('Trenton%2C+NJ+%28TRE%29', 'New+York+-+Penn+Station%2C+NY+%28NYP%29', '5', '30', '2013', '10', '30', False)
+	print amtrak('Trenton%2C+NJ+%28TRE%29', 'Boston+-+Back+Bay%2C+MA+%28BBY%29', '5', '30', '2013', '10', '30', False)
