@@ -258,28 +258,33 @@
 				e.innerHTML += "No routes found.";
 			}
 			for (var i = 0; i < results.length; i++) {
-				var x = results[i];
-				if (x.departure == undefined) {
-					for (var j = 1; j < x.length; j++) {
-						var y = x[j];
-						console.log(y);
+				var r = results[i];
+				if (r.departure == undefined) {
+					// multiple legs
+					for (var j = 1; j < r.length; j++) {
+						var leg = r[j];
 						e.innerHTML += "<h5>Leg " + j + "</h5>";
-						e.innerHTML += "Depart from: " + y.departure + " at " + y.departure_time + '<br />';
-						e.innerHTML += "Arrive at: " + y.arrival + " at " + y.arrival_time + '<br />';
-						e.innerHTML += "Price: " + y.price + '<br />';
-						e.innerHTML += "Carrier: " + y.carrier + '<br />';
-						e.innerHTML += "Tickets: <a href=\"" + y.link + "/" + y.payload + "\" target=\"_blank\">link</a>";
-						if (j < x.length - 1) {
+						// multiple stops
+						if (leg.departure == undefined) {
+							for (var k = 0; i < leg.length; k++) {
+								var stop = leg[k];
+								appendData(e, stop);
+								appendLink(e, stop);
+							}
+						} else {
+							appendData(e, leg);
+							appendLink(e, leg);
+						}
+
+						if (j < r.length - 1) {
 							e.innerHTML += "<br/>";
 						}
 					}
 					e.innerHTML += "<hr/>"
 				} else {
-					e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
-					e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
-					e.innerHTML += "Price: " + x.price + '<br />';
-					e.innerHTML += "Carrier: " + x.carrier + "<br \>";
-					e.innerHTML += "Tickets: <a href=\"" + x.link + + "/" + x.payload + "\" target=\"_blank\">link</a>";
+					// one leg
+					appendData(e, r);
+					appendLink(e, r);
 					e.innerHTML += "<hr/>"
 				}
 			}
@@ -289,6 +294,48 @@
 			$("#results-modal").modal("show");
 			toggleloadingimage();
 		}
+
+		function appendData(e, x) {
+			e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
+			e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
+			e.innerHTML += "Price: " + x.price + '<br />';
+			e.innerHTML += "Carrier: " + x.carrier + "<br />";
+			//e.innerHTML += "Tickets: <a href=\"" + x.link + + "/" + x.payload + "\" target=\"_blank\">link</a>";
+		}
+
+		function appendLink(e, x) {
+			e.innerHTML += "Tickets: <a href=\"javascript:post_to_url(" + x.link + ", " + x.payload + ")\">link</a>";
+		}
+
+		function linkRequest(link, payload) {
+			$.post(link, payload, function(data) {var win=window.open('about:blank'); with(win.document) {open(); write(data); close();}});
+		}
+
+		function post_to_url(path, params) {
+		    method = "post"; // Set method to post by default if not specified.
+
+		    // The rest of this code assumes you are not using a library.
+		    // It can be made less wordy if you use one.
+		    var form = document.createElement("form");
+		    form.setAttribute("method", method);
+		    form.setAttribute("action", path);
+		    form.setAttribute("target", "_blank");
+
+		    for(var key in params) {
+			if(params.hasOwnProperty(key)) {
+			    var hiddenField = document.createElement("input");
+			    hiddenField.setAttribute("type", "hidden");
+			    hiddenField.setAttribute("name", key);
+			    hiddenField.setAttribute("value", params[key]);
+
+			    form.appendChild(hiddenField);
+			 }
+		    }
+
+		    document.body.appendChild(form);
+		    form.submit();
+		}
+
 
 		var isLoading = false;
 		function toggleloadingimage() {
