@@ -33,7 +33,7 @@ def timeline(name=None):
     return render_template('timeline.html', name=name)
 
 @application.route('/map')
-def timeline(name=None):
+def show_map(name=None):
     return render_template('map.html', name=name)
 
 @application.route('/cities')
