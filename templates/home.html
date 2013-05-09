@@ -165,11 +165,23 @@
 		function initializeprices(x) {
 			for (var i = 0; i < x.length; x++) {
 				var r = x[i];
-				if (r.price == undefined && r[0].price == undefined) {
+				if (r instanceof Array && r[0].price == undefined) {
 					var sum = 0;
 					for (var j = 1; j < r.length; j++) {
-						var y = r[j];
-						sum += parseFloat(y.price.substring(1));
+						var leg = r[j];
+						if (leg instanceof Array) {
+							for (var k = 0; k < leg.length; ++) {
+								sum += parseFloat(leg[k].price.substring(1));
+							}
+						} else {
+							if (j == 0)
+								continue;
+							sum += parseFloat(leg.price.substring(1));
+						}
+					}
+					dot = sum.indexOf(".");
+					if (dot != -1 && dot == sum.length - 2) {
+						sum = sum + "0";
 					}
 					r[0].price = "$" + sum;
 				}
