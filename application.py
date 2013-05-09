@@ -34,8 +34,8 @@ def timeline(name=None):
 
 @application.route('/map')
 def show_map(name=None):
-    return "nothing to see here"
-    #return render_template('map.html', name=name)
+    #return "nothing to see here"
+    return render_template('map.html', name=name)
 
 @application.route('/cities')
 def all_cities():
