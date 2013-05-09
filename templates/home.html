@@ -262,6 +262,15 @@
 			for (var i = 0; i < results.length; i++) {
 				var r = results[i];
 				if (r.departure == undefined) {
+					if (r[0].departure != undefined) {
+						// multiple stops, one leg
+						for (var j = 0; j < r.length; j++) {
+							stop = r[j];
+							appendData(e, stop);
+							appendLink(e, stop);
+						}
+						continue;
+					}
 					// multiple legs
 					for (var j = 1; j < r.length; j++) {
 						var leg = r[j];
