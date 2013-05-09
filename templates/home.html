@@ -278,12 +278,13 @@
 				if (r instanceof Array) {
 					if (r[0].departure != undefined) {
 						// multiple stops, one leg
+						var stop;
 						for (var j = 0; j < r.length; j++) {
 							stop = r[j];
-							console.log("multiple stops, one leg: " + stop);
 							appendData(e, stop);
-							appendLink(e, stop);
 						}
+						appendPriceCarrier(e, stop);
+						appendLink(e, stop);
 						e.innerHTML += "<hr/>"
 						continue;
 					}
@@ -293,15 +294,16 @@
 						e.innerHTML += "<h5>Leg " + j + "</h5>";
 						// multiple stops
 						if (leg instanceof Array) {
+							var stop;
 							for (var k = 0; k < leg.length; k++) {
-								var stop = leg[k];
-								console.log("multi: " + stop);
+								stop = leg[k];
 								appendData(e, stop);
-								appendLink(e, stop);
 							}
+							appendPriceCarrier(e, stop);
+							appendLink(e, stop);
 						} else {
-							console.log("leg: " + leg);
 							appendData(e, leg);
+							appendPriceCarrier(e, leg);
 							appendLink(e, leg);
 						}
 
@@ -312,8 +314,8 @@
 					e.innerHTML += "<hr/>"
 				} else {
 					// one leg
-					console.log("one leg: " + r);
 					appendData(e, r);
+					appendPriceCarrier(e, r);
 					appendLink(e, r);
 					e.innerHTML += "<hr/>"
 				}
@@ -329,12 +331,15 @@
 		function appendData(e, x) {
 			e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
 			e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
+		}
+
+		function appendPriceCarrier(e, x) {
 			e.innerHTML += "Price: " + x.price + '<br />';
 			e.innerHTML += "Carrier: " + x.carrier + "<br />";
 		}
 
 		function appendLink(e, x) {
-			e.innerHTML += "Tickets: <a href=\"javascript:post_to_url(" + x.link + "&" + x.payload + ")\">link</a>";
+			e.innerHTML += "Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
 		}
 
 		function post_to_url(path) {
