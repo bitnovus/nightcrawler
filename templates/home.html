@@ -275,7 +275,7 @@
 			}
 			for (var i = 0; i < results.length; i++) {
 				var r = results[i];
-				if (r instanceOf Array) {
+				if (r instanceof Array) {
 					if (r[0].departure != undefined) {
 						// multiple stops, one leg
 						for (var j = 0; j < r.length; j++) {
@@ -291,7 +291,7 @@
 						var leg = r[j];
 						e.innerHTML += "<h5>Leg " + j + "</h5>";
 						// multiple stops
-						if (leg instanceOf Array) {
+						if (leg instanceof Array) {
 							for (var k = 0; i < leg.length; k++) {
 								var stop = leg[k];
 								console.log(stop);
