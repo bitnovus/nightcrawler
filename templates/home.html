@@ -179,6 +179,7 @@
 							sum += parseFloat(leg.price.substring(1));
 						}
 					}
+					sum = sum.toString();
 					dot = sum.indexOf(".");
 					if (dot != -1 && dot == sum.length - 2) {
 						sum = sum + "0";
