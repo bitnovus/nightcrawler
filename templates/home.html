@@ -280,6 +280,7 @@
 						// multiple stops, one leg
 						for (var j = 0; j < r.length; j++) {
 							stop = r[j];
+							console.log("multiple stops, one leg: " + stop);
 							appendData(e, stop);
 							appendLink(e, stop);
 						}
@@ -294,11 +295,12 @@
 						if (leg instanceof Array) {
 							for (var k = 0; i < leg.length; k++) {
 								var stop = leg[k];
-								console.log(stop);
+								console.log("multi: " + stop);
 								appendData(e, stop);
 								appendLink(e, stop);
 							}
 						} else {
+							console.log("leg: " + leg);
 							appendData(e, leg);
 							appendLink(e, leg);
 						}
@@ -310,6 +312,7 @@
 					e.innerHTML += "<hr/>"
 				} else {
 					// one leg
+					console.log("one leg: " + r);
 					appendData(e, r);
 					appendLink(e, r);
 					e.innerHTML += "<hr/>"
