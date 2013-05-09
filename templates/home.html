@@ -162,15 +162,15 @@
 		}
 
 		function initializeprices(x) {
-			for (var i = 0; i < x.length;x++) {
+			for (var i = 0; i < x.length; x++) {
 				var r = x[i];
-				if (r.price == undefined) {
+				if (r.price == undefined && r[0].price == undefined) {
 					var sum = 0;
 					for (var j = 1; j < r.length; j++) {
 						var y = r[j];
-						sum += y.price.substring(1);
+						sum += parseFloat(y.price.substring(1));
 					}
-					r[0].price = sum;
+					r[0].price = "$" + sum;
 				}
 			}
 		}
@@ -303,8 +303,8 @@
 			if (sortedby == 4) {
 				document.getElementById("sort-by-elapsed-time").checked = true;
 			}
-            $("#results-modal").modal("show");
-            $("#map-modal").modal("show");
+			$("#results-modal").modal("show");
+			$("#map-modal").modal("show");
 			toggleloadingimage();
 		}
 
@@ -313,37 +313,17 @@
 			e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
 			e.innerHTML += "Price: " + x.price + '<br />';
 			e.innerHTML += "Carrier: " + x.carrier + "<br />";
-			//e.innerHTML += "Tickets: <a href=\"" + x.link + + "/" + x.payload + "\" target=\"_blank\">link</a>";
 		}
 
 		function appendLink(e, x) {
-			e.innerHTML += "Tickets: <a href=\"javascript:post_to_url(" + x.link + ", " + x.payload + ")\">link</a>";
+			e.innerHTML += "Tickets: <a href=\"javascript:post_to_url(" + x.link + "&" + x.payload + ")\">link</a>";
 		}
 
-		function linkRequest(link, payload) {
-			$.post(link, payload, function(data) {var win=window.open('about:blank'); with(win.document) {open(); write(data); close();}});
-		}
-
-		function post_to_url(path, params) {
-		    method = "post"; // Set method to post by default if not specified.
-
-		    // The rest of this code assumes you are not using a library.
-		    // It can be made less wordy if you use one.
+		function post_to_url(path) {
 		    var form = document.createElement("form");
-		    form.setAttribute("method", method);
+		    form.setAttribute("method", "post");
 		    form.setAttribute("action", path);
 		    form.setAttribute("target", "_blank");
-
-		    for(var key in params) {
-			if(params.hasOwnProperty(key)) {
-			    var hiddenField = document.createElement("input");
-			    hiddenField.setAttribute("type", "hidden");
-			    hiddenField.setAttribute("name", key);
-			    hiddenField.setAttribute("value", params[key]);
-
-			    form.appendChild(hiddenField);
-			 }
-		    }
 
 		    document.body.appendChild(form);
 		    form.submit();

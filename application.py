@@ -203,8 +203,14 @@ def combine(leg1, leg2, leg3):
 	result.append(flight)
 	if best3 != []:
 	    result.append(best3)
-	t1 = result[0]['departure_time']
-	t2 = result[len(result)-1]['arrival_time']
+	first = result[0]
+	if str(type(first)).find("list") != -1:
+	    first = first[0]
+	t1 = first['departure_time']
+	last = result[len(result)-1]
+	if str(type(last)).find("list") != -1:
+	    last = last[len(last)-1]
+	t2 = last['arrival_time']
 	d = [{'arrival_time':t2, 'departure_time':t1}]
 	result = d + result
 	results.append(result)
