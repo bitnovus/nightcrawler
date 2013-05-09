@@ -234,13 +234,20 @@ def get_best_leg3(leg3, flight):
     return best
 
 def time_to_minutes(record, departure):
-    departure_hour = get_hour(record['departure_time'])
-    departure_minute = get_minute(record['departure_time'])
+    if str(type(record)).find("list") != -1:
+	# multiple stops
+	first = record[0]
+	last = record[len(record)-1]
+    else:
+	first = record
+	last = record
+    departure_hour = get_hour(first['departure_time'])
+    departure_minute = get_minute(first['departure_time'])
     departure_in_minutes = departure_hour * 60 + departure_minute
     if departure:
 	return departure_in_minutes
-    arrival_hour = get_hour(record['arrival_time'])
-    arrival_minute = get_minute(record['arrival_time'])
+    arrival_hour = get_hour(last['arrival_time'])
+    arrival_minute = get_minute(last['arrival_time'])
     arrival_in_minutes = arrival_hour * 60 + arrival_minute
     if arrival_in_minutes < departure_in_minutes:
 	arrival_in_minutes += 24*60
