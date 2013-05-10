@@ -334,12 +334,22 @@
 		}
 
 		function appendPriceCarrier(e, x) {
-			e.innerHTML += "Price: " + x.price + '<br />';
+			e.innerHTML += "<b>Price: " + x.price + '<br />';
 			e.innerHTML += "Carrier: " + x.carrier + "<br />";
 		}
 
 		function appendLink(e, x) {
-			e.innerHTML += "Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
+			if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
+				e.innerHTML += "<form name = "myform" action = " + x.link + "&" + x.payload + "method = "POST">
+				<input type = "submit" value = "link">
+				</form><br />"}
+
+			else{
+				e.innerHTML += "<form name = "myform" action = " + x.link  + "method = "GET">
+				<input type = "submit" value = "link">
+				</form><br />"}
+
+			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
 		}
 
 		function post_to_url(path) {
