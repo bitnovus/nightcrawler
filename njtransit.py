@@ -54,7 +54,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   req = urllib2.Request(link, urllib.urlencode(payload))
   res = urllib2.urlopen(req)
   html = res.read()
-  #print html
+  price = re.search("\$[0-9]*\.[0-9][0-9]", html).group(0)
 
   packets = re.findall('<td.align=.left..valign=.top..bgcolor=.#.......><span>.*td', html)
   new_packets = []
@@ -63,12 +63,22 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
       p2 = p[54:]
       p2 = p2[:-(len(p2) - p2.index("</span>"))]
       new_packets.append(p2)
-  #print new_packets
+
+  if re.match("Arrive", new_packets[1]) is None:
+    single_stop = []
+    for i in range(0, len(new_packets)/2):
+      single_stop.append([dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(end), 
+        departure_time = new_packets[2 * i][: -1 * (len(new_packets[2 * i]) - new_packets[2 * i].index("<br>"))], 
+        arrival_time = new_packets[2 * i+1], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
+    return single_stop
+
 
   all_routes = []
 
   i = 0
   while i < len(new_packets):
+    if i == len(new_packets) - 1:
+      break
     if re.search("&nbsp;", new_packets[i+2]) is not None or re.search("Arrive", new_packets[i + 2]) is not None:
       k = [new_packets[i], new_packets[i + 1] + new_packets[i+2], new_packets[i + 3]]
       all_routes.append(k)
@@ -78,9 +88,8 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
       all_routes.append(k)
       i += 3
 
-  #print all_routes
 
-  price = re.search("\$[0-9]*\.[0-9][0-9]", html).group(0)
+  
   dictionaries = []
   for r in all_routes:
     if r[1] == '&nbsp;':
@@ -97,7 +106,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
           [dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(instances[1]), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = instances[0][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)), 
           dict(price = price, departure = sanitize_loc(instances[1]), arrival = sanitize_loc(instances[4]), departure_time = instances[2][7:], arrival_time = instances[3][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)),
           dict(price = price, departure = sanitize_loc(instances[1]), arrival = sanitize_loc(instances[4]), departure_time = instances[2][7:], arrival_time = instances[3][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
-    new_dictionaries = []
+  new_dictionaries = []
 
   for d in dictionaries:
     if isArriving and (comp_times(d[0].get("departure_time"), hour, min) and 
@@ -111,4 +120,5 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
 if __name__ == '__main__':
 	#print njtransit('Newark+Penn+Station', 'Princeton+Junction', '107_NEC', '125_NEC', '5', '11', '2013', '23', '59', True)
   #print njtransit('New+York+Penn+Station', 'Princeton+Junction', '105_BNTN', '125_NEC', '5', '11', '2013', '23', '59', True)
-  print njtransit('Newark+Penn+Station', 'Princeton', '107_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
+  #print njtransit('Newark+Penn+Station', 'Princeton', '107_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
+  print njtransit('Princeton+Junction', 'Princeton', '125_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
