@@ -216,7 +216,7 @@ def combine(leg1, leg2, leg3):
 	result = d + result
 	results.append(result)
 	
-    return results
+    return leg3
 
 def get_best_leg1(leg1, flight):
     flight_start = time_to_minutes(flight, True)
