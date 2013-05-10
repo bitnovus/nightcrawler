@@ -75,7 +75,6 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   req = urllib2.Request(link, urllib.urlencode(payload))
   res = urllib2.urlopen(req)
   html = res.read()
-  #print html
 
   packets = re.findall('<td.align=.left..valign=.top..bgcolor=.#.......><span>.*td', html)
   new_packets = []
@@ -96,11 +95,12 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   dictionaries = []
   for r in all_routes:
     if r[1] == '&nbsp;':
-      dictionaries.append([dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(end), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = r[2], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
+      dictionaries.append([dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(end), departure_time = r[0], arrival_time = r[2], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
     else:
       instances = re.findall("Arrive", r[1])
       length = len(instances)
       instances = re.split('<br>', r[1])
+
       if length == 1:
         dictionaries.append([dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(instances[1]), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = instances[0][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)), dict(price = price, departure = instances[1], arrival = end, departure_time = instances[2][7:], arrival_time = r[2], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
       elif length == 2:
@@ -108,41 +108,8 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
           [dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(instances[1]), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = instances[0][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)), 
           dict(price = price, departure = sanitize_loc(instances[1]), arrival = sanitize_loc(instances[4]), departure_time = instances[2][7:], arrival_time = instances[3][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)),
           dict(price = price, departure = sanitize_loc(instances[1]), arrival = sanitize_loc(instances[4]), departure_time = instances[2][7:], arrival_time = instances[3][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
-#  print dictionaries
-
-
-
-  # if (re.search("<b>Transfer</b>", html) is None):
-  #   times = re.findall("[0-9]*[0-9]:[0-9][0-9].[AP]M", html)
-  #   price = re.search("\$[0-9]*\.[0-9][0-9]", html).group(0)
-  #   start = sanitize_loc(start)
-  #   end = sanitize_loc(end)
-  #   p = package_info(times, price, start, end, hour, min, isArriving, link, urllib.urlencode(payload))
-  #   #print p
-  #   return p
-
-  # elif (len(re.findall("<b>Transfer</b>", html)) == 1):
-  #   times = re.findall("[0-9]*[0-9]:[0-9][0-9].[AP]M", html)
-  #   price = re.search("\$[0-9]*\.[0-9][0-9]", html).group(0)
-  #   middleCity = sanitize_middleCity(re.findall("Arrive.*Depart", html)[0])
-  #   start = sanitize_loc(start)
-  #   end = sanitize_loc(end)
-  #   p = package_info_1stop(times, price, middleCity, start, end, hour, min, isArriving, link, urllib.urlencode(payload))
-  #   #print p
-  #   return p
-
-  # elif (len(re.findall("<b>Transfer</b>", html)) == 2):
-  #   times = re.findall("[0-9]*[0-9]:[0-9][0-9].[AP]M", html)
-  #   price = re.search("\$[0-9]*\.[0-9][0-9]", html).group(0)
-  #   middleCity1 = sanitize_middleCity(re.findall("Arrive.*Depart", html)[0])
-  #   middleCity2 = sanitize_middleCity(re.findall("Arrive.*Depart", html)[1])
-  #   start = sanitize_loc(start)
-  #   end = sanitize_loc(end)
-  #   p = package_info_2stop(times, price, middleCity1, middleCity2, start, end, hour, min, isArriving, link, urllib.urlencode(payload))
-  #   #print p
-  #   return p
-
-
+  
+  return dictionaries
 
 if __name__ == '__main__':
 	print njtransit('Newark+Airport', 'Princeton+Junction', '37953_NEC', '125_NEC', '5', '10', '2013', '23', '59', False)
