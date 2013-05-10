@@ -21,7 +21,7 @@ def get_hour(time):
   if re.search("Arrive", time) is not None:
     time = time[7:]
   #print time
-  hour = int(time[0:time.find(":")])
+  hour = int(time[time.find(":") - 2:time.find(":")])
   return hour
 
 def sanitize_middleCity(middleCity):
@@ -118,7 +118,12 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   return new_dictionaries
 
 if __name__ == '__main__':
+
+  print njtransit('Newark+Penn+Station', 'Princeton', '107_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
+
 	#print njtransit('Newark+Penn+Station', 'Princeton+Junction', '107_NEC', '125_NEC', '5', '11', '2013', '23', '59', True)
   #print njtransit('New+York+Penn+Station', 'Princeton+Junction', '105_BNTN', '125_NEC', '5', '11', '2013', '23', '59', True)
   #print njtransit('Newark+Penn+Station', 'Princeton', '107_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
-  print njtransit('Princeton+Junction', 'Princeton', '125_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
+  #print njtransit('Princeton+Junction', 'Princeton', '125_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
+  #print njtransit('New+York+Penn+Station', 'Princeton', '105_BNTN', '124_PRIN', '5', '11', '2013', '23', '59', True)
+  print njtransit('Princeton', 'Newark+Penn+Station', '124_PRIN', '107_NEC', '5', '11', '2013', '23', '59', True)
