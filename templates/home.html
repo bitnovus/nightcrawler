@@ -426,12 +426,12 @@
 
 		function carriertomode(c) {
 			if (c == "Megabus") {
-				return "BUS";
+				return "DRIVING";
 			}
 			if (c == "Amtrak" || c == "NJ Transit") {
-				return "TRAIN";
+				return "TRANSIT";
 			}
-			return "PLANE";
+			return "FLYING";
 		}
 
 		function post_to_url(path) {
