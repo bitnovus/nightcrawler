@@ -59,13 +59,8 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
       p2 = p[54:]
       p2 = p2[:-(len(p2) - p2.index("</span>"))]
       new_packets.append(p2)
-  #print new_packets
 
   all_routes = []
-  # for i in range(0, len(new_packets) / 3):
-  #   n = i * 3
-  #   k = [new_packets[n], new_packets[n + 1], new_packets[n + 2]]
-  #   all_routes.append(k)
 
   i = 0
   while i < len(new_packets):
