@@ -384,7 +384,7 @@
 			toggleloadingimage();
         }
 
-        function showMap(listStuff) {
+        function showMap(stops, modes) {
             var m = document.getElementById("map-div");
             m.innerHTML += '<iframe height="574px" width="100%" frameBorder="0" scrolling="no" src="/map"></iframe>'
 			$("#map-modal").modal("show");
@@ -409,7 +409,7 @@
 				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
 			}
 
-			e.innerHTML += "<button type = \"button\" onclick = \"processmap(" + r + ")\">map</button><br />";
+			e.innerHTML += "<button type = \"button\" onclick = \"showmap(" + r.stops + ", " + r.carriers + ")\">map</button><br />";
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
 		}
 
@@ -421,10 +421,6 @@
 				return "TRAIN";
 			}
 			return "PLANE";
-		}
-
-		function processmap(r) {
-			$.get("", r.stops + r.carriers);
 		}
 
 		function post_to_url(path) {
