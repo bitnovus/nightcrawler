@@ -163,19 +163,17 @@
 		}
 
 		function initializeprices(x) {
-			for (var i = 0; i < x.length; x++) {
+			for (var i = 0; i < x.length; i++) {
 				var r = x[i];
+				r.elapsed_time = getelapsedtime(r);
+				console.log(r);
 				if (r instanceof Array && r[0].price == undefined) {
 					var sum = 0;
 					for (var j = 1; j < r.length; j++) {
 						var leg = r[j];
 						if (leg instanceof Array) {
-							for (var k = 0; k < leg.length; k++) {
-								sum += parseFloat(leg[k].price.substring(1));
-							}
+							sum += parseFloat(leg[0].price.substring(1));
 						} else {
-							if (j == 0)
-								continue;
 							sum += parseFloat(leg.price.substring(1));
 						}
 					}
@@ -184,6 +182,7 @@
 					if (dot != -1 && dot == sum.length - 2) {
 						sum = sum + "0";
 					}
+					console.log(sum);
 					r[0].price = "$" + sum;
 				}
 			}
@@ -232,21 +231,32 @@
 		}
 
 		function comparebyelapsed(a, b) {
-			c = (a.departure_time == undefined) ? a[0] : a;
-			d = (b.departure_time == undefined) ? b[0] : b;
-			a1 = timetominutes(c.departure_time);
-			a2 = timetominutes(c.arrival_time);
-			b1 = timetominutes(d.departure_time);
-			b2 = timetominutes(d.arrival_time);
+			//return getelapsedtime(a) - getelapsedtime(b);
+			return a.elapsed_time - b.elapsed_time;
+		}
+
+		function getelapsedtime(r) {
+			a1 = timetominutes(getrecordtime(r, true));
+			a2 = timetominutes(getrecordtime(r, false));
 			c1 = a2 - a1;
-			c2 = b2 - b1;
 			if (c1 < 0) {
 				c1 = c1 + 24*60;
 			}
-			if (c2 < 0) {
-				c2 = c2 + 24*60;
+			return c1;
+		}
+
+		function getrecordtime(r, departure) {
+			if (r instanceof Array) {
+				if (r[0].departure == undefined) {
+					// multiple legs
+					return (departure ? r[0].departure_time : r[0].arrival_time);
+				} else {
+					// one leg
+					return (departure ? r[0].departure_time : r[r.length-1].arrival_time);
+				}
+			} else {
+				return (deparuture ? r.departure_time : r.arrival_time);
 			}
-			return c1 - c2;
 		}
 
 
@@ -260,6 +270,8 @@
 			results.sort(comparefunction);
             display();
 		}
+
+		var map_data;
 
 		function display() {
 			if (!isLoading) {
@@ -279,16 +291,36 @@
 					if (r[0].departure != undefined) {
 						// multiple stops, one leg
 						var stop;
+						var addcarriers = false;
+						if (r.carriers == undefined) {
+							addcarriers = true;
+							r.carriers = new Array();
+							r.stops = new Array();
+						}
 						for (var j = 0; j < r.length; j++) {
 							stop = r[j];
+							if (addcarriers) {
+								r.carriers[j] = carriertomode(stop.carrier);
+								if (j == 0) {
+									r.stops[0] = r.departure;
+								}
+								r.stops[j+1] = r.arrival;
+							}
 							appendData(e, stop);
 						}
 						appendPriceCarrier(e, stop);
-						appendLink(e, stop);
+						appendLink(e, stop, r);
+						e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 						e.innerHTML += "<hr/>"
 						continue;
 					}
 					// multiple legs
+					var addcarriers = false;
+					if (r.carriers == undefined) {
+						addcarriers = true;
+						r.carriers = new Array();
+						r.stops = new Array();
+					}
 					for (var j = 1; j < r.length; j++) {
 						var leg = r[j];
 						e.innerHTML += "<h5>Leg " + j + "</h5>";
@@ -297,26 +329,50 @@
 							var stop;
 							for (var k = 0; k < leg.length; k++) {
 								stop = leg[k];
+								if (addcarriers) {
+									r.carriers.push(carriertomode(stop.carrier));
+									if (r.stops.length == 0) {
+										r.stops.push(stop.departure);
+									}
+									r.stops.push(stop.arrival);
+								}
 								appendData(e, stop);
 							}
 							appendPriceCarrier(e, stop);
-							appendLink(e, stop);
+							appendLink(e, stop, r);
 						} else {
+							if (addcarriers) {
+								r.carriers.push(carriertomode(leg.carrier));
+								if (r.stops.length == 0) {
+									r.stops.push(leg.departure);
+								}
+								r.stops.push(leg.arrival);
+							}
 							appendData(e, leg);
 							appendPriceCarrier(e, leg);
-							appendLink(e, leg);
+							appendLink(e, leg, r);
 						}
 
 						if (j < r.length - 1) {
 							e.innerHTML += "<br/>";
 						}
 					}
+					e.innerHTML += "<br />Total price: " + r[0].price;
+					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 					e.innerHTML += "<hr/>"
 				} else {
 					// one leg
+					if (r.carriers == undefined) {
+						r.carriers = new Array();
+						r.carriers[0] = carriertomode(r.carrier);
+						r.stops = new Arrray();
+						r.stops[0] = r.departure;
+						r.stops[1] = r.arrival;
+					}
 					appendData(e, r);
 					appendPriceCarrier(e, r);
-					appendLink(e, r);
+					appendLink(e, r, r);
+					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 					e.innerHTML += "<hr/>"
 				}
 			}
@@ -340,12 +396,35 @@
 		}
 
 		function appendPriceCarrier(e, x) {
-			e.innerHTML += "Price: " + x.price + '<br />';
+			e.innerHTML += "<b>Price: " + x.price + '<br />';
 			e.innerHTML += "Carrier: " + x.carrier + "<br />";
 		}
 
-		function appendLink(e, x) {
-			e.innerHTML += "Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
+		function appendLink(e, x, r) {
+			if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
+				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
+			}
+
+			else{
+				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
+			}
+
+			e.innerHTML += "<button type = \"button\" onclick = \"processmap(" + r + ")\">map</button><br />";
+			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
+		}
+
+		function carriertomode(c) {
+			if (c == "Megabus") {
+				return "BUS";
+			}
+			if (c == "Amtrak" || c == "NJ Transit") {
+				return "TRAIN";
+			}
+			return "PLANE";
+		}
+
+		function processmap(r) {
+			$.get("", r.stops + r.carriers);
 		}
 
 		function post_to_url(path) {
