@@ -13,7 +13,9 @@ application = Flask(__name__)
 application.debug=True
 
 application.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') \
-        if os.environ.get('DATABASE_URL') else 'sqlite:///test.db'
+        if os.environ.get('DATABASE_URL') else '**REDACTED**'
+
+        #if os.environ.get('DATABASE_URL') else 'sqlite:///test.db'
 
 db = SQLAlchemy(application)
 
