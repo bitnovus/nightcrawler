@@ -246,7 +246,7 @@
 		}
 
 		function getrecordtime(r, departure) {
-			if (r instaneof Array) {
+			if (r instanceof Array) {
 				if (r[0].departure == undefined) {
 					// multiple legs
 					return (departure ? r[0].departure_time : r[0].arrival_time);
