@@ -309,7 +309,8 @@
 							appendData(e, stop);
 						}
 						appendPriceCarrier(e, stop);
-						appendLink(e, stop, r);
+						appendLink(e, stop);
+						appendMap(e, i);
 						e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 						e.innerHTML += "<hr/>"
 						continue;
@@ -339,7 +340,7 @@
 								appendData(e, stop);
 							}
 							appendPriceCarrier(e, stop);
-							appendLink(e, stop, r);
+							appendLink(e, stop);
 						} else {
 							if (addcarriers) {
 								r.carriers.push(carriertomode(leg.carrier));
@@ -350,13 +351,14 @@
 							}
 							appendData(e, leg);
 							appendPriceCarrier(e, leg);
-							appendLink(e, leg, r);
+							appendLink(e, leg);
 						}
 
 						if (j < r.length - 1) {
 							e.innerHTML += "<br/>";
 						}
 					}
+					appendMap(e, i);
 					e.innerHTML += "<br />Total price: " + r[0].price;
 					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 					e.innerHTML += "<hr/>"
@@ -371,7 +373,8 @@
 					}
 					appendData(e, r);
 					appendPriceCarrier(e, r);
-					appendLink(e, r, r);
+					appendLink(e, r);
+					appendMap(e, i);
 					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 					e.innerHTML += "<hr/>"
 				}
@@ -400,7 +403,7 @@
 			e.innerHTML += "Carrier: " + x.carrier + "<br />";
 		}
 
-		function appendLink(e, x, r) {
+		function appendLink(e, x) {
 			if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
 				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
 			}
@@ -409,8 +412,16 @@
 				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
 			}
 
-			e.innerHTML += "<button type = \"button\" onclick = \"showmap(" + r.stops + ", " + r.carriers + ")\">map</button><br />";
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
+		}
+
+		function appendMap(e, i) {
+			e.innerHTML += "<button type = \"button\" onclick = \"showmap(" + i + ")\">map</button><br />";
+		}
+
+		function callMap(i) {
+			r = results[i];
+			showmap(r.stops, r.carriers);
 		}
 
 		function carriertomode(c) {
