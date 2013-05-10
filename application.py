@@ -90,7 +90,6 @@ def all_stuff():
     if dest_city.aircode.find("*") != -1:
 	#get airport city
 	dest_city2 = db.session.query(City).filter(City.name==get_city(dest_city.aircode[1:])).first()
-	return dest_city2
         leg3_result1 = pool.apply_async(megabus.megabus, (dest_city2.megacode, dest_city.megacode, month, day, year, hour, minute, isArriv))
         leg3_result2 = pool.apply_async(njtransit.njtransit, (dest_city2.njstation, dest_city.njstation, dest_city2.njcode, dest_city2.njcode, month, day, year, hour, minute, isArriv))
         leg3_result3 = pool.apply_async(amtrak.amtrak, (dest_city2.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
@@ -219,7 +218,7 @@ def combine(leg1, leg2, leg3):
 	result = d + result
 	results.append(result)
 	
-    return leg3
+    return results
 
 def get_best_leg1(leg1, flight):
     flight_start = time_to_minutes(flight, True)
