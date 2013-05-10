@@ -94,7 +94,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
 
   for d in dictionaries:
     if isArriving and (comp_times(d[0].get("departure_time"), hour, min) and 
-      comp_times(d[len(dictionaries) - 1].get("arrival_time"), hour, min)):
+      comp_times(d[len(d) - 1].get("arrival_time"), hour, min)):
       new_dictionaries.append(d)
     elif ((isArriving is False) and (comp_times(d[0].get("departure_time"), hour, min) is False)):
       new_dictionaries.append(d)
