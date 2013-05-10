@@ -165,6 +165,7 @@
 		function initializeprices(x) {
 			for (var i = 0; i < x.length; i++) {
 				var r = x[i];
+				r.elapsed_time = getelapsedtime(r);
 				console.log(r);
 				if (r instanceof Array && r[0].price == undefined) {
 					var sum = 0;
@@ -230,21 +231,32 @@
 		}
 
 		function comparebyelapsed(a, b) {
-			c = (a.departure_time == undefined) ? a[0] : a;
-			d = (b.departure_time == undefined) ? b[0] : b;
-			a1 = timetominutes(c.departure_time);
-			a2 = timetominutes(c.arrival_time);
-			b1 = timetominutes(d.departure_time);
-			b2 = timetominutes(d.arrival_time);
+			//return getelapsedtime(a) - getelapsedtime(b);
+			return a.elapsed_time - b.elapsed_time;
+		}
+
+		function getelapsedtime(r) {
+			a1 = timetominutes(getrecordtime(r, true));
+			a2 = timetominutes(getrecordtime(r, false));
 			c1 = a2 - a1;
-			c2 = b2 - b1;
 			if (c1 < 0) {
 				c1 = c1 + 24*60;
 			}
-			if (c2 < 0) {
-				c2 = c2 + 24*60;
+			return c1;
+		}
+
+		function getrecordtime(r, departure) {
+			if (r instaneof Array) {
+				if (r[0].departure == undefined) {
+					// multiple legs
+					return (departure ? r[0].departure_time : r[0].arrival_time);
+				} else {
+					// one leg
+					return (departure ? r[0].departure_time : r[r.length-1].arrival_time);
+				}
+			} else {
+				return (deparuture ? r.departure_time : r.arrival_time);
 			}
-			return c1 - c2;
 		}
 
 
@@ -309,7 +321,7 @@
 							e.innerHTML += "<br/>";
 						}
 					}
-					e.innerHTML += "Total price: " + r[0].price;
+					e.innerHTML += "<br />Total price: " + r[0].price;
 					e.innerHTML += "<hr/>"
 				} else {
 					// one leg
