@@ -359,8 +359,8 @@
 						}
 					}
 					appendMap(e, i);
-					e.innerHTML += "<br />Total price: " + r[0].price;
-					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
+					e.innerHTML += "<br /><b>Total price: " + r[0].price + "</b>";
+					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + "</b>";
 					e.innerHTML += "<hr/>"
 				} else {
 					// one leg
@@ -375,7 +375,7 @@
 					appendPriceCarrier(e, r);
 					appendLink(e, r);
 					appendMap(e, i);
-					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
+					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + "</b>";
 					e.innerHTML += "<hr/>"
 				}
 			}
@@ -435,11 +435,11 @@
 
 		function appendLink(e, x) {
 			if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
-				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
+				e.innerHTML += "<form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 			}
 
 			else{
-				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
+				e.innerHTML += "<form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 			}
 
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
