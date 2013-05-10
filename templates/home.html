@@ -14,7 +14,7 @@
         <link href="{{url_for('static', filename='css/toggle-switch.css') }}" rel="stylesheet">
         <style type="text/css">
             body {
-                padding-top: 20px;
+                padding-top: 10px;
                 padding-bottom: 60px;
             }
 
@@ -29,15 +29,15 @@
 
             /* Main marketing message and sign up button */
             .jumbotron {
-                margin: 80px 0;
+                margin: 10px 0;
                 text-align: center;
             }
             .jumbotron h1 {
-                font-size: 100px;
+                font-size: 4em;
                 line-height: 1;
             }
             .jumbotron .lead {
-                font-size: 24px;
+                font-size: 1em;
                 line-height: 1.25;
             }
             .jumbotron .btn {
@@ -47,10 +47,10 @@
 
             /* Supporting marketing content */
             .marketing {
-                margin: 60px 0;
+                margin: 10px 0;
             }
             .marketing p + h4 {
-                margin-top: 28px;
+                margin-top: 18px;
             }
 
 
@@ -255,7 +255,7 @@
 					return (departure ? r[0].departure_time : r[r.length-1].arrival_time);
 				}
 			} else {
-				return (deparuture ? r.departure_time : r.arrival_time);
+				return (departure ? r.departure_time : r.arrival_time);
 			}
 		}
 
@@ -367,7 +367,7 @@
 					if (r.carriers == undefined) {
 						r.carriers = new Array();
 						r.carriers[0] = carriertomode(r.carrier);
-						r.stops = new Arrray();
+						r.stops = new Array();
 						r.stops[0] = r.departure;
 						r.stops[1] = r.arrival;
 					}
@@ -389,7 +389,37 @@
 
         function showMap(stops, modes) {
             var m = document.getElementById("map-div");
-            m.innerHTML += '<iframe height="574px" width="100%" frameBorder="0" scrolling="no" src="/map"></iframe>'
+            var temp_map_div = "";
+            temp_map_div += '<iframe height=\"574px\" width=\"100%\" frameBorder=\"0\" scrolling=\"no\" src=\"/map?stops=';
+            console.log("stops " + stops);
+            console.log("modes " + modes);
+
+            temp_map_div += "["
+
+            for (var i = 0; i < stops.length; i++) {
+                temp_map_div += "'";
+                temp_map_div += stops[i];
+                temp_map_div += "'";
+                temp_map_div += ',';
+            }
+            temp_map_div = temp_map_div.substring(0, temp_map_div.length-1);
+            temp_map_div += "]";
+
+            temp_map_div += '&modes=';
+            temp_map_div += "["
+            for (var i = 0; i < modes.length; i++) {
+                temp_map_div += "'";
+                temp_map_div += modes[i];
+                temp_map_div += "'";
+                temp_map_div += ',';
+            }
+            temp_map_div = temp_map_div.substring(0, temp_map_div.length-1);
+            temp_map_div += "]";
+            temp_map_div += '"';
+            temp_map_div += '></iframe>';
+            console.log(temp_map_div);
+            m.innerHTML = temp_map_div;
+            
 			$("#map-modal").modal("show");
         }
 
@@ -416,12 +446,13 @@
 		}
 
 		function appendMap(e, i) {
-			e.innerHTML += "<button type = \"button\" onclick = \"showmap(" + i + ")\">map</button><br />";
+			e.innerHTML += "<button type = \"button\" onclick = \"callMap(" + i + ")\">map</button><br />";
 		}
 
 		function callMap(i) {
-			r = results[i];
-			showmap(r.stops, r.carriers);
+            r = results[i];
+            console.log("callMapi = " + r);
+			showMap(r.stops, r.carriers);
 		}
 
 		function carriertomode(c) {
@@ -541,18 +572,9 @@
             <div class="masthead">
                     <img src="{{url_for('static', filename='img/Slide1.png') }}" class="logoStuff"> 
                     <img src="{{url_for('static', filename='img/Slide2.png') }}" class="logoStuff">
-                <!--<h3 class="muted">Nightcrawler</h3> -->
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <div class="container">
-                            <ul class="nav">
-                                <li class="active"><a href="home">Home</a></li>
-                                <li><a href="timeline">Timeline</a></li>
-                                <li><a href="/">About</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- /.navbar -->
+                    <!--<h3 class="muted">Nightcrawler</h3> -->
+                    <hr></hr>
+
             </div>
 
             <!-- Jumbotron -->
@@ -638,5 +660,16 @@
             <script src="{{url_for('static', filename='assets/js/bootstrap-typeahead.js') }}"></script>-->
 
         </body>
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <ul class="nav">
+                                <li class="active"><a href="home">Home</a></li>
+                                <li><a href="timeline">Timeline</a></li>
+                                <li><a href="/">About</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- /.navbar -->
     </html>
 

@@ -87,3 +87,6 @@
     height: 8em;
     text-align: center;
 }
+#map-div {
+    max-height: 600px; !important
+}
