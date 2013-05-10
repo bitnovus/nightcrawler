@@ -29,34 +29,6 @@ def get_min(time):
   colon = time.find(':')
   return int(time[colon+1: colon+3])
 
-def package_info(times, price2, start, end, hour, minute, isArriving, link, payload):
-  dictionaries = []
-  for j in range(len(times)/2):
-  	if isArriving and (comp_times(times[2*j], hour, minute) and comp_times(times[2*j+1], hour, minute)):
-  		dictionaries.append(dict(price = price2, departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "NJ Transit", link = link, payload = payload))
-  	elif ((isArriving is False) and ((comp_times(times[2*j], hour, minute) is False))):
-  		dictionaries.append(dict(price = price2, departure = start, arrival = end, departure_time = times[2*j], arrival_time = times[2*j+1], carrier = "NJ Transit", link = link, payload = payload))
-  return dictionaries 
-
-def package_info_1stop(times, price2, middleCity, start, end, hour, minute, isArriving, link, payload):
-  dictionaries = []
-  for j in range(len(times)/4):
-    if isArriving and (comp_times(times[4*j], hour, minute) and comp_times(times[4*j+3], hour, minute)):
-      dictionaries.append([dict(price = price2, departure = start, arrival = middleCity, departure_time = times[4*j], arrival_time = times[4*j+1], carrier = "NJ Transit", link = link, payload = payload), dict(price = price2, departure = middleCity, arrival = end, departure_time = times[4*j+2], arrival_time = times[4*j+3], carrier = "NJ Transit", link = link, payload = payload)])
-    elif ((isArriving is False) and ((comp_times(times[4*j], hour, minute) is False))):
-      dictionaries.append([dict(price = price2, departure = start, arrival = middleCity, departure_time = times[4*j], arrival_time = times[4*j+1], carrier = "NJ Transit", link = link, payload = payload), dict(price = price2, departure = middleCity, arrival = end, departure_time = times[4*j+2], arrival_time = times[4*j+3], carrier = "NJ Transit", link = link, payload = payload)])
-  return dictionaries 
-
-def package_info_2stop(times, price2, middleCity1, middleCity2, start, end, hour, minute, isArriving, link, payload):
-  dictionaries = []
-  for j in range(len(times)/6):
-    if isArriving and (comp_times(times[6*j], hour, minute) and comp_times(times[6*j+5], hour, minute)):
-      dictionaries.append([dict(price = price2, departure = start, arrival = middleCity1, departure_time = times[6*j], arrival_time = times[6*j+1], carrier = "NJ Transit", link = link, payload = payload), dict(price = price2, departure = middleCity1, arrival = middleCity2, departure_time = times[6*j+2], arrival_time = times[6*j+3], carrier = "NJ Transit", link = link, payload = payload), dict(price = price2, departure = middleCity2, arrival = end, departure_time = times[6*j+4], arrival_time = times[6*j+5], carrier = "NJ Transit", link = link, payload = payload)])
-    elif ((isArriving is False) and ((comp_times(times[6*j], hour, minute) is False))):
-      dictionaries.append([dict(price = price2, departure = start, arrival = middleCity1, departure_time = times[6*j], arrival_time = times[6*j+1], carrier = "NJ Transit", link = link, payload = payload), dict(price = price2, departure = middleCity1, arrival = middleCity2, departure_time = times[6*j+2], arrival_time = times[6*j+3], carrier = "NJ Transit", link = link, payload = payload), dict(price = price2, departure = middleCity2, arrival = end, departure_time = times[6*j+4], arrival_time = times[6*j+5], carrier = "NJ Transit", link = link, payload = payload)])
-  print dictionaries
-  return dictionaries 
-
 def sanitize_loc(loc):
 	r = loc.replace('+', ' ')
 	return r
@@ -78,7 +50,6 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
 
   packets = re.findall('<td.align=.left..valign=.top..bgcolor=.#.......><span>.*td', html)
   new_packets = []
-  index = 0
   for p in packets:
     if (re.search('minutes', p) is None):
       p2 = p[54:]
@@ -95,7 +66,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   dictionaries = []
   for r in all_routes:
     if r[1] == '&nbsp;':
-      dictionaries.append([dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(end), departure_time = r[0], arrival_time = r[2], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
+      dictionaries.append([dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(end), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = r[2], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
     else:
       instances = re.findall("Arrive", r[1])
       length = len(instances)
@@ -108,8 +79,17 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
           [dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(instances[1]), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = instances[0][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)), 
           dict(price = price, departure = sanitize_loc(instances[1]), arrival = sanitize_loc(instances[4]), departure_time = instances[2][7:], arrival_time = instances[3][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)),
           dict(price = price, departure = sanitize_loc(instances[1]), arrival = sanitize_loc(instances[4]), departure_time = instances[2][7:], arrival_time = instances[3][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
-  
-  return dictionaries
+    new_dictionaries = []
+
+  for d in dictionaries:
+    if isArriving and (comp_times(d[0].get("departure_time"), hour, min) and 
+      comp_times(d[len(dictionaries) - 1].get("arrival_time"), hour, min)):
+      new_dictionaries.append(d)
+    elif ((isArriving is False) and (comp_times(d[0].get("departure_time"), hour, min) is False)):
+      new_dictionaries.append(d)
+
+
+  return new_dictionaries
 
 if __name__ == '__main__':
-	print njtransit('Newark+Airport', 'Princeton+Junction', '37953_NEC', '125_NEC', '5', '10', '2013', '23', '59', False)
+	print njtransit('Newark+Airport', 'Princeton+Junction', '37953_NEC', '125_NEC', '5', '10', '2013', '14', '59', False)
