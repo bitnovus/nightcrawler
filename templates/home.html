@@ -311,7 +311,7 @@
 						appendPriceCarrier(e, stop);
 						appendLink(e, stop);
 						appendMap(e, i);
-						e.innerHTML += "<br />Elapsed time: " + r.elapsed_time + "minutes";
+						e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + "minutes</b>";
 						e.innerHTML += "<hr/>"
 						continue;
 					}
@@ -360,7 +360,7 @@
 					}
 					appendMap(e, i);
 					e.innerHTML += "<br /><b>Total price: " + r[0].price + "</b>";
-					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + "</b>";
+					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + "minutes </b>";
 					e.innerHTML += "<hr/>"
 				} else {
 					// one leg
@@ -375,7 +375,7 @@
 					appendPriceCarrier(e, r);
 					appendLink(e, r);
 					appendMap(e, i);
-					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + "</b>";
+					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + "minutes </b>";
 					e.innerHTML += "<hr/>"
 				}
 			}
