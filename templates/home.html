@@ -295,6 +295,7 @@
 						}
 						appendPriceCarrier(e, stop);
 						appendLink(e, stop);
+						e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 						e.innerHTML += "<hr/>"
 						continue;
 					}
@@ -322,12 +323,14 @@
 						}
 					}
 					e.innerHTML += "<br />Total price: " + r[0].price;
+					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 					e.innerHTML += "<hr/>"
 				} else {
 					// one leg
 					appendData(e, r);
 					appendPriceCarrier(e, r);
 					appendLink(e, r);
+					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 					e.innerHTML += "<hr/>"
 				}
 			}
