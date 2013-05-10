@@ -14,7 +14,7 @@
         <link href="{{url_for('static', filename='css/toggle-switch.css') }}" rel="stylesheet">
         <style type="text/css">
             body {
-                padding-top: 20px;
+                padding-top: 10px;
                 padding-bottom: 60px;
             }
 
@@ -29,15 +29,15 @@
 
             /* Main marketing message and sign up button */
             .jumbotron {
-                margin: 80px 0;
+                margin: 10px 0;
                 text-align: center;
             }
             .jumbotron h1 {
-                font-size: 100px;
+                font-size: 4em;
                 line-height: 1;
             }
             .jumbotron .lead {
-                font-size: 24px;
+                font-size: 1em;
                 line-height: 1.25;
             }
             .jumbotron .btn {
@@ -47,10 +47,10 @@
 
             /* Supporting marketing content */
             .marketing {
-                margin: 60px 0;
+                margin: 10px 0;
             }
             .marketing p + h4 {
-                margin-top: 28px;
+                margin-top: 18px;
             }
 
 
@@ -534,18 +534,9 @@
             <div class="masthead">
                     <img src="{{url_for('static', filename='img/Slide1.png') }}" class="logoStuff"> 
                     <img src="{{url_for('static', filename='img/Slide2.png') }}" class="logoStuff">
-                <!--<h3 class="muted">Nightcrawler</h3> -->
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <div class="container">
-                            <ul class="nav">
-                                <li class="active"><a href="home">Home</a></li>
-                                <li><a href="timeline">Timeline</a></li>
-                                <li><a href="/">About</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div><!-- /.navbar -->
+                    <!--<h3 class="muted">Nightcrawler</h3> -->
+                    <hr></hr>
+
             </div>
 
             <!-- Jumbotron -->
@@ -631,5 +622,16 @@
             <script src="{{url_for('static', filename='assets/js/bootstrap-typeahead.js') }}"></script>-->
 
         </body>
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <ul class="nav">
+                                <li class="active"><a href="home">Home</a></li>
+                                <li><a href="timeline">Timeline</a></li>
+                                <li><a href="/">About</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- /.navbar -->
     </html>
 
