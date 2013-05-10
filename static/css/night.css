@@ -86,3 +86,6 @@
 .logoStuff {
     height: 8em;
 }
+#map-div {
+    max-height: 600px; !important
+}

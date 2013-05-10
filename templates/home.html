@@ -255,7 +255,7 @@
 					return (departure ? r[0].departure_time : r[r.length-1].arrival_time);
 				}
 			} else {
-				return (deparuture ? r.departure_time : r.arrival_time);
+				return (departure ? r.departure_time : r.arrival_time);
 			}
 		}
 
@@ -367,7 +367,7 @@
 					if (r.carriers == undefined) {
 						r.carriers = new Array();
 						r.carriers[0] = carriertomode(r.carrier);
-						r.stops = new Arrray();
+						r.stops = new Array();
 						r.stops[0] = r.departure;
 						r.stops[1] = r.arrival;
 					}
@@ -389,12 +389,37 @@
 
         function showMap(stops, modes) {
             var m = document.getElementById("map-div");
-            m.innerHTML += '<iframe height="574px" width="100%" frameBorder="0" scrolling="no" src="/map?stops=';
-            m.innerHTML += stops;
-            m.innerHTML += "&modes=";
-            m.innerHTML += modes;
-            m.innerHTML += '"';
-            m.innerHTML += '></iframe>'
+            var temp_map_div = "";
+            temp_map_div += '<iframe height=\"574px\" width=\"100%\" frameBorder=\"0\" scrolling=\"no\" src=\"/map?stops=';
+            console.log("stops " + stops);
+            console.log("modes " + modes);
+
+            temp_map_div += "["
+
+            for (var i = 0; i < stops.length; i++) {
+                temp_map_div += "'";
+                temp_map_div += stops[i];
+                temp_map_div += "'";
+                temp_map_div += ',';
+            }
+            temp_map_div = temp_map_div.substring(0, temp_map_div.length-1);
+            temp_map_div += "]";
+
+            temp_map_div += '&modes=';
+            temp_map_div += "["
+            for (var i = 0; i < modes.length; i++) {
+                temp_map_div += "'";
+                temp_map_div += modes[i];
+                temp_map_div += "'";
+                temp_map_div += ',';
+            }
+            temp_map_div = temp_map_div.substring(0, temp_map_div.length-1);
+            temp_map_div += "]";
+            temp_map_div += '"';
+            temp_map_div += '></iframe>';
+            console.log(temp_map_div);
+            m.innerHTML = temp_map_div;
+            
 			$("#map-modal").modal("show");
         }
 
@@ -421,11 +446,12 @@
 		}
 
 		function appendMap(e, i) {
-			e.innerHTML += "<button type = \"button\" onclick = \"showMap(" + i + ")\">map</button><br />";
+			e.innerHTML += "<button type = \"button\" onclick = \"callMap(" + i + ")\">map</button><br />";
 		}
 
 		function callMap(i) {
-			r = results[i];
+            r = results[i];
+            console.log("callMapi = " + r);
 			showMap(r.stops, r.carriers);
 		}
 

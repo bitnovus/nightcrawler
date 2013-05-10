@@ -35,20 +35,20 @@ def timeline(name=None):
 @application.route('/map')
 def show_map(name=None):
     test_route = ["Princeton Junction, NJ", "Newark Airport, NJ", "Logan Airport, MA"]
-    test_methods = ["DRIVING", "FLYING"]
+    test_modes = ["DRIVING", "FLYING"]
 
     route = request.args.get('stops')
-    methods = request.args.get('methods')
+    modes = request.args.get('modes')
 
     if not route:
         route = test_route
-    if not methods:
-        methods = test_methods
+    if not modes:
+        modes = test_modes
 
     print route
-    print methods
+    print modes
 
-    return render_template('map.html', stops=Markup(route), modes=Markup(methods))
+    return render_template('map.html', stops=Markup(route), modes=Markup(modes))
 
 @application.route('/cities')
 def all_cities():
