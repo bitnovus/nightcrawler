@@ -38,8 +38,11 @@ def sanitize_loc(loc):
 	return r
 
 def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArriving):
-
-  date = str(month) + '%2F' + str(day) + '%2F' + str(year)
+  #date = str(month) + '%2F' + str(day) + '%2F' + str(year)
+  #date = "05/11/2013"
+  if len(month) == 1:
+    month = "0" + month
+  date = month + "/" + day + "/" + year
   payload = {'selOrigin': codeStart, 
   'selDestination': codeEnd, 
   'datepicker' : date, 
@@ -51,6 +54,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   req = urllib2.Request(link, urllib.urlencode(payload))
   res = urllib2.urlopen(req)
   html = res.read()
+  #print html
 
   packets = re.findall('<td.align=.left..valign=.top..bgcolor=.#.......><span>.*td', html)
   new_packets = []
@@ -59,6 +63,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
       p2 = p[54:]
       p2 = p2[:-(len(p2) - p2.index("</span>"))]
       new_packets.append(p2)
+  #print new_packets
 
   all_routes = []
 
@@ -72,6 +77,8 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
       k = [new_packets[i], new_packets[i + 1], new_packets[i + 2]]
       all_routes.append(k)
       i += 3
+
+  #print all_routes
 
   price = re.search("\$[0-9]*\.[0-9][0-9]", html).group(0)
   dictionaries = []
@@ -99,8 +106,9 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
     elif ((isArriving is False) and (comp_times(d[0].get("departure_time"), hour, min) is False)):
       new_dictionaries.append(d)
 
-
   return new_dictionaries
 
 if __name__ == '__main__':
-	print njtransit('Newark+Airport', 'Princeton', '37953_NEC', '124_PRIN', '5', '11', '2013', '14', '59', False)
+	#print njtransit('Newark+Penn+Station', 'Princeton+Junction', '107_NEC', '125_NEC', '5', '11', '2013', '23', '59', True)
+  #print njtransit('New+York+Penn+Station', 'Princeton+Junction', '105_BNTN', '125_NEC', '5', '11', '2013', '23', '59', True)
+  print njtransit('Newark+Penn+Station', 'Princeton', '107_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
