@@ -271,6 +271,8 @@
             display();
 		}
 
+		var map_data;
+
 		function display() {
 			if (!isLoading) {
 				toggleloadingimage();
@@ -289,17 +291,36 @@
 					if (r[0].departure != undefined) {
 						// multiple stops, one leg
 						var stop;
+						var addcarriers = false;
+						if (r.carriers == undefined) {
+							addcarriers = true;
+							r.carriers = new Array();
+							r.stops = new Array();
+						}
 						for (var j = 0; j < r.length; j++) {
 							stop = r[j];
+							if (addcarriers) {
+								r.carriers[j] = carriertomode(stop.carrier);
+								if (j == 0) {
+									r.stops[0] = r.departure;
+								}
+								r.stops[j+1] = r.arrival;
+							}
 							appendData(e, stop);
 						}
 						appendPriceCarrier(e, stop);
-						appendLink(e, stop);
+						appendLink(e, stop, r);
 						e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 						e.innerHTML += "<hr/>"
 						continue;
 					}
 					// multiple legs
+					var addcarriers = false;
+					if (r.carriers == undefined) {
+						addcarriers = true;
+						r.carriers = new Array();
+						r.stops = new Array();
+					}
 					for (var j = 1; j < r.length; j++) {
 						var leg = r[j];
 						e.innerHTML += "<h5>Leg " + j + "</h5>";
@@ -308,14 +329,28 @@
 							var stop;
 							for (var k = 0; k < leg.length; k++) {
 								stop = leg[k];
+								if (addcarriers) {
+									r.carriers.push(carriertomode(stop.carrier));
+									if (r.stops.length == 0) {
+										r.stops.push(stop.departure);
+									}
+									r.stops.push(stop.arrival);
+								}
 								appendData(e, stop);
 							}
 							appendPriceCarrier(e, stop);
-							appendLink(e, stop);
+							appendLink(e, stop, r);
 						} else {
+							if (addcarriers) {
+								r.carriers.push(carriertomode(leg.carrier));
+								if (r.stops.length == 0) {
+									r.stops.push(leg.departure);
+								}
+								r.stops.push(leg.arrival);
+							}
 							appendData(e, leg);
 							appendPriceCarrier(e, leg);
-							appendLink(e, leg);
+							appendLink(e, leg, r);
 						}
 
 						if (j < r.length - 1) {
@@ -327,9 +362,16 @@
 					e.innerHTML += "<hr/>"
 				} else {
 					// one leg
+					if (r.carriers == undefined) {
+						r.carriers = new Array();
+						r.carriers[0] = carriertomode(r.carrier);
+						r.stops = new Arrray();
+						r.stops[0] = r.departure;
+						r.stops[1] = r.arrival;
+					}
 					appendData(e, r);
 					appendPriceCarrier(e, r);
-					appendLink(e, r);
+					appendLink(e, r, r);
 					e.innerHTML += "<br />Elapsed time: " + r.elapsed_time;
 					e.innerHTML += "<hr/>"
 				}
@@ -352,7 +394,7 @@
 			e.innerHTML += "Carrier: " + x.carrier + "<br />";
 		}
 
-		function appendLink(e, x) {
+		function appendLink(e, x, r) {
 			if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
 				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
 			}
@@ -361,7 +403,22 @@
 				e.innerHTML += "Tickets: <form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"link\"></form><br />";
 			}
 
+			e.innerHTML += "<button type = \"button\" onclick = \"processmap(" + r + ")\">map</button><br />";
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
+		}
+
+		function carriertomode(c) {
+			if (c == "Megabus") {
+				return "BUS";
+			}
+			if (c == "Amtrak" || c == "NJ Transit") {
+				return "TRAIN";
+			}
+			return "PLANE";
+		}
+
+		function processmap(r) {
+			$.get("", r.stops + r.carriers);
 		}
 
 		function post_to_url(path) {
