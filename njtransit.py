@@ -100,7 +100,7 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
       instances = re.split('<br>', r[1])
 
       if length == 1:
-        dictionaries.append([dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(instances[1]), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = instances[0][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)), dict(price = price, departure = instances[1], arrival = end, departure_time = instances[2][7:], arrival_time = r[2], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
+        dictionaries.append([dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(instances[1]), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = instances[0][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)), dict(price = price, departure = instances[1], arrival = sanitize_loc(end), departure_time = instances[2][7:], arrival_time = r[2], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload))])
       elif length == 2:
         dictionaries.append(
           [dict(price = price, departure = sanitize_loc(start), arrival = sanitize_loc(instances[1]), departure_time = r[0][: -1 * (len(r[0]) - r[0].index("<br>"))], arrival_time = instances[0][7:], carrier = "NJ Transit", link = link, payload = urllib.urlencode(payload)), 
@@ -119,11 +119,12 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
 
 if __name__ == '__main__':
 
-  print njtransit('Newark+Penn+Station', 'Princeton', '107_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
+  #print njtransit('Newark+Penn+Station', 'Princeton', '107_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
 
 	#print njtransit('Newark+Penn+Station', 'Princeton+Junction', '107_NEC', '125_NEC', '5', '11', '2013', '23', '59', True)
   #print njtransit('New+York+Penn+Station', 'Princeton+Junction', '105_BNTN', '125_NEC', '5', '11', '2013', '23', '59', True)
   #print njtransit('Newark+Penn+Station', 'Princeton', '107_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
   #print njtransit('Princeton+Junction', 'Princeton', '125_NEC', '124_PRIN', '5', '11', '2013', '23', '59', True)
   #print njtransit('New+York+Penn+Station', 'Princeton', '105_BNTN', '124_PRIN', '5', '11', '2013', '23', '59', True)
-  print njtransit('Princeton', 'Newark+Penn+Station', '124_PRIN', '107_NEC', '5', '11', '2013', '23', '59', True)
+  #print njtransit('Princeton', 'Newark+Penn+Station', '124_PRIN', '107_NEC', '5', '11', '2013', '23', '59', True)
+  print njtransit('Princeton', 'Newark+Airport', '124_PRIN', '37953_NEC', '5', '11', '2013', '23', '59', True)
