@@ -17,6 +17,10 @@ def comp_times(time, hour, min):
   return False
 
 def get_hour(time):
+  #print time
+  if re.search("Arrive", time) is not None:
+    time = time[7:]
+  #print time
   hour = int(time[0:time.find(":")])
   return hour
 
@@ -55,12 +59,24 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
       p2 = p[54:]
       p2 = p2[:-(len(p2) - p2.index("</span>"))]
       new_packets.append(p2)
+  #print new_packets
 
   all_routes = []
-  for i in range(0, len(new_packets) / 3):
-    n = i * 3
-    k = [new_packets[n], new_packets[n + 1], new_packets[n + 2]]
-    all_routes.append(k)
+  # for i in range(0, len(new_packets) / 3):
+  #   n = i * 3
+  #   k = [new_packets[n], new_packets[n + 1], new_packets[n + 2]]
+  #   all_routes.append(k)
+
+  i = 0
+  while i < len(new_packets):
+    if re.search("&nbsp;", new_packets[i+2]) is not None or re.search("Arrive", new_packets[i + 2]) is not None:
+      k = [new_packets[i], new_packets[i + 1] + new_packets[i+2], new_packets[i + 3]]
+      all_routes.append(k)
+      i += 4
+    else:
+      k = [new_packets[i], new_packets[i + 1], new_packets[i + 2]]
+      all_routes.append(k)
+      i += 3
 
   price = re.search("\$[0-9]*\.[0-9][0-9]", html).group(0)
   dictionaries = []
@@ -92,4 +108,4 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   return new_dictionaries
 
 if __name__ == '__main__':
-	print njtransit('Newark+Airport', 'Princeton+Junction', '37953_NEC', '125_NEC', '5', '10', '2013', '14', '59', False)
+	print njtransit('Newark+Airport', 'Princeton', '37953_NEC', '124_PRIN', '5', '10', '2013', '14', '59', False)
