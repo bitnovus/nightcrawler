@@ -165,6 +165,7 @@
 		function initializeprices(x) {
 			for (var i = 0; i < x.length; x++) {
 				var r = x[i];
+				console.log(r);
 				if (r instanceof Array && r[0].price == undefined) {
 					var sum = 0;
 					for (var j = 1; j < r.length; j++) {
