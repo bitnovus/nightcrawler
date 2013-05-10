@@ -389,7 +389,12 @@
 
         function showMap(stops, modes) {
             var m = document.getElementById("map-div");
-            m.innerHTML += '<iframe height="574px" width="100%" frameBorder="0" scrolling="no" src="/map"></iframe>'
+            m.innerHTML += '<iframe height="574px" width="100%" frameBorder="0" scrolling="no" src="/map?stops=';
+            m.innerHTML += stops;
+            m.innerHTML += "&modes=";
+            m.innerHTML += modes;
+            m.innerHTML += '"';
+            m.innerHTML += '></iframe>'
 			$("#map-modal").modal("show");
         }
 
@@ -416,12 +421,12 @@
 		}
 
 		function appendMap(e, i) {
-			e.innerHTML += "<button type = \"button\" onclick = \"showmap(" + i + ")\">map</button><br />";
+			e.innerHTML += "<button type = \"button\" onclick = \"showMap(" + i + ")\">map</button><br />";
 		}
 
 		function callMap(i) {
 			r = results[i];
-			showmap(r.stops, r.carriers);
+			showMap(r.stops, r.carriers);
 		}
 
 		function carriertomode(c) {
