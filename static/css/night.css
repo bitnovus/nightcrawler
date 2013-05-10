@@ -85,7 +85,8 @@
 }
 .logoStuff {
     height: 8em;
-    text-align: center;
+    position: relative;
+    left: 25%
 }
 #map-div {
     max-height: 600px; !important
