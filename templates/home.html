@@ -323,10 +323,16 @@
 			if (sortedby == 4) {
 				document.getElementById("sort-by-elapsed-time").checked = true;
 			}
-			$("#results-modal").modal("show");
-			$("#map-modal").modal("show");
+            $("#results-modal").modal("show");
+
 			toggleloadingimage();
-		}
+        }
+
+        function showMap(listStuff) {
+            var m = document.getElementById("map-div");
+            m.innerHTML += '<iframe height="574px" width="100%" frameBorder="0" scrolling="no" src="/map"></iframe>'
+			$("#map-modal").modal("show");
+        }
 
 		function appendData(e, x) {
 			e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
@@ -439,9 +445,7 @@
         <div class="modal fade" id="map-modal">
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">&times;</a>
-                <iframe height="574px" width="100%" frameBorder="0" scrolling="no"
-                    src="/map">
-                </iframe>
+
             </div>
             <div class="modal-body" id="map-div">
             </div>
@@ -449,7 +453,9 @@
         <div class="container">
 
             <div class="masthead">
-                <h3 class="muted">Nightcrawler</h3>
+                    <img src="{{url_for('static', filename='img/Slide1.png') }}" class="logoStuff"> 
+                    <img src="{{url_for('static', filename='img/Slide2.png') }}" class="logoStuff">
+                <!--<h3 class="muted">Nightcrawler</h3> -->
                 <div class="navbar">
                     <div class="navbar-inner">
                         <div class="container">
