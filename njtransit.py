@@ -103,4 +103,4 @@ def njtransit(start, end, codeStart, codeEnd, month, day, year, hour, min, isArr
   return new_dictionaries
 
 if __name__ == '__main__':
-	print njtransit('Newark+Airport', 'Princeton', '37953_NEC', '124_PRIN', '5', '10', '2013', '14', '59', False)
+	print njtransit('Newark+Airport', 'Princeton', '37953_NEC', '124_PRIN', '5', '11', '2013', '14', '59', False)
