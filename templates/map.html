@@ -11,10 +11,11 @@
             var directionsService = new google.maps.DirectionsService();
             var map;
             var temp_results;
+            var sync_check;
             var geocoder = new google.maps.Geocoder();
 
-            var stops = [ "Princeton Junction, NJ", "Newark Airport, NJ", "Logan Airport, MA" ]
-            var travel_methods = [ "DRIVING", "FLYING" ]
+            var stops = {{ stops }};
+            var travel_methods = {{modes}};
 
             function initialize() {
                 directionsDisplay = new google.maps.DirectionsRenderer();
@@ -31,42 +32,52 @@
 
 
             }
-            function storeAndDisplayResults(results, status) {
+            function storeAndDisplayResults(results, status, callback) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     var marker = new google.maps.Marker({
                         map: map,
                         position: results[0].geometry.location
                     });
-                    window.temp_results.push(marker)
+                    temp_results.push(marker)
+                    sync_check++;
+                    incrementCheck();
                 } 
                 else {
                     console.log('Geocode was not successful for the following reason: ' + status);
                 }
             }
 
-            function codeAddress(address) {
-                geocoder.geocode( { 'address': address }, storeAndDisplayResults) ;
+            function codeAddress(address, callback) {
+                geocoder.geocode( { 'address': address }, storeAndDisplayResults);
             }
 
-            function calcRoute( mode, startpoint, endpoint ) {
-                if (mode == "FLYING") {
-                    window.temp_results = new Array();
-                    codeAddress(startpoint);
-                    codeAddress(endpoint);
+            function incrementCheck() {
+                console.log(sync_check);
 
-                    start = window.temp_results[0].getPosition();
-                    end = window.temp_results[1].getPosition();
+                if (sync_check >= 2) {
+                    start = temp_results[0].getPosition();
+                    end = temp_results[1].getPosition();
 
                     flightPlanCoordinates = [ start, end ]
                     var flightPath = new google.maps.Polyline({
                         path: flightPlanCoordinates,
-                        strokeColor: '#FF0000',
+                        strokeColor: '#00AAFF',
                         strokeOpacity: 1.0,
-                        strokeWeight: 2
+                        strokeWeight: 4
                     });
 
                     flightPath.setMap(map);
 
+                }
+            }
+
+            function calcRoute( mode, startpoint, endpoint ) {
+                if (mode == "FLYING") {
+                    temp_results = new Array();
+                    sync_check = 0;
+
+                    codeAddress(startpoint, incrementCheck);
+                    codeAddress(endpoint, incrementCheck);
                 }
 
                 else {

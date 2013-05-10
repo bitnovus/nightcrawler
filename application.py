@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, Response, request
+from flask import Flask, render_template, jsonify, Response, request, Markup
 from flask.ext.sqlalchemy import SQLAlchemy
 from models import City
 import os, megabus, flights, json, njtransit, amtrak
@@ -34,8 +34,21 @@ def timeline(name=None):
 
 @application.route('/map')
 def show_map(name=None):
-    #return "nothing to see here"
-    return render_template('map.html', name=name)
+    test_route = ["Princeton Junction, NJ", "Newark Airport, NJ", "Logan Airport, MA"]
+    test_methods = ["DRIVING", "FLYING"]
+
+    route = request.args.get('stops')
+    methods = request.args.get('methods')
+
+    if not route:
+        route = test_route
+    if not methods:
+        methods = test_methods
+
+    print route
+    print methods
+
+    return render_template('map.html', stops=Markup(route), modes=Markup(methods))
 
 @application.route('/cities')
 def all_cities():
