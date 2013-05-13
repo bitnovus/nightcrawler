@@ -89,14 +89,15 @@ def all_stuff():
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
 
-    if orig_city == "Princeton":
+    #if origin == "Princeton":
 	# Princeton to Princeton Junction
-	pj = db.session.query(City).filter(City.name=="Princeton Junction").first()
-	p_result1 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, pj.njstation, orig_city.njcode, pj.njcode, month, day, year, hour, minute, isArriv))
-	p_result2 = pool.apply_async(amtrak.amtrak, (pj.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
-    else:
-	p_result1 = []
-	p_result2 = []
+	#pj = db.session.query(City).filter(City.name=='Newark').first()
+	#return pj
+	#p_result1 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, pj.njstation, orig_city.njcode, pj.njcode, month, day, year, hour, minute, isArriv))
+	#p_result2 = pool.apply_async(amtrak.amtrak, (pj.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
+    #else:
+	#p_result1 = []
+	#p_result2 = []
 
     if orig_city.aircode.find("*") != -1:
         # get airport city
@@ -171,14 +172,14 @@ def all_stuff():
 
     leg3 = leg3_1 + leg3_2 + leg3_3
 
-    try:
-	princeton_leg1 = p_result1.get()
-    except:
-	princeton_leg1 = []
-    try:
-	princeton_leg2 = p_result2.get()
-    except:
-	princeton_leg2 = []
+    #try:
+	#princeton_leg1 = p_result1.get()
+    #except:
+	#princeton_leg1 = []
+    #try:
+	#princeton_leg2 = p_result2.get()
+    #except:
+	#princeton_leg2 = []
 
     try:
         bus_results = async_result1.get()
@@ -213,8 +214,8 @@ def all_stuff():
     total_results = bus_results + nj_results + am_results
     if not (dest_city != dest_city2 and leg3 == []) and not (orig_city != orig_city2 and leg1 == []):
         total_results += combine(leg1, leg2, leg3)
-    if princeton_leg1 != [] and princeton_leg2 != []:
-	total_results += combine(princeton_leg1, princeton_leg2, [])
+    #if princeton_leg1 != [] and princeton_leg2 != []:
+	#total_results += combine(princeton_leg1, princeton_leg2, [])
     return Response(json.dumps(total_results), mimetype='application/json')
 
 def combine(leg1, leg2, leg3):
