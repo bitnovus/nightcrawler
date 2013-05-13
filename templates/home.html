@@ -166,8 +166,17 @@
 			);
 		}
 
-		function validatelocation(loc) {
-			return true;
+		function validatelocation(x) {
+			var loc = x;
+			var comma = x.indexOf(",");
+			if (comma != -1) {
+				loc = loc.substring(0, comma);
+			}
+			loc = loc.toLowerCase();
+			for (var p in places) {
+				comma = p.indexOf(",");
+				p = p.substring(0, comma);
+			}
 		}
 
 		function initializeprices(x) {
