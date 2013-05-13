@@ -89,15 +89,15 @@ def all_stuff():
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
 
-    if origin == "Princeton":
+    #if origin == "Princeton":
 	# Princeton to Princeton Junction
-	pj = db.session.query(City).filter(City.name=='Newark').first()
-	return pj
-	p_result1 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, pj.njstation, orig_city.njcode, pj.njcode, month, day, year, hour, minute, isArriv))
-	p_result2 = pool.apply_async(amtrak.amtrak, (pj.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
-    else:
-	p_result1 = []
-	p_result2 = []
+	#pj = db.session.query(City).filter(City.name=='Newark').first()
+	#return pj
+	#p_result1 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, pj.njstation, orig_city.njcode, pj.njcode, month, day, year, hour, minute, isArriv))
+	#p_result2 = pool.apply_async(amtrak.amtrak, (pj.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
+    #else:
+	#p_result1 = []
+	#p_result2 = []
 
     if orig_city.aircode.find("*") != -1:
         # get airport city
