@@ -166,7 +166,11 @@
 			);
 		}
 
-		function validatelocation(x) {
+		function validatelocation(loc) {
+			return true;
+		}
+
+		/*function validatelocation(x) {
 			var loc = x;
 			var comma = x.indexOf(",");
 			if (comma != -1) {
@@ -177,7 +181,7 @@
 				comma = p.indexOf(",");
 				p = p.substring(0, comma);
 			}
-		}
+		}*/
 
 		function initializeprices(x) {
 			for (var i = 0; i < x.length; i++) {
@@ -451,6 +455,7 @@
 		}
 
 		function appendLink(e, x) {
+<<<<<<< HEAD
             if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
                 console.log(x.link);
 				e.innerHTML += "<form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
@@ -459,6 +464,14 @@
             else{
                 console.log(x.link);
 				e.innerHTML += "<form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
+=======
+			if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
+				e.innerHTML += "<form name = \"myform\" action=" + x.link + "?" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
+			}
+
+			else{
+				e.innerHTML += "<form name = \"myform\" action =" + x.link  + " method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
+>>>>>>> a77d8402f99002de8213d8228911148e8943537f
 			}
 
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
