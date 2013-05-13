@@ -107,6 +107,12 @@
 		var sortedby;
 		function submit()
 		{
+			var orig_city_value = document.getElementById("originform").value;
+			var dest_city_value = document.getElementById("destform").value;
+			if (!validatelocation(orig_city_value) {
+				console.log("invalid origin");
+			}
+
 			toggleloadingimage();
 			var arrive = false;
 			if (document.getElementById("arriveby").checked) {
@@ -129,8 +135,6 @@
 					hour = hour + 12;
 				}
             }
-            var orig_city_value = document.getElementById("originform").value;
-            var dest_city_value = document.getElementById("destform").value;
 
 			$.get(
 				"all",
@@ -160,6 +164,10 @@
 					//toggleloadingimage();
 				}
 			);
+		}
+
+		function validatelocation(loc) {
+			return true;
 		}
 
 		function initializeprices(x) {
