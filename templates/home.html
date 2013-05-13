@@ -137,7 +137,6 @@
 				return;
 			}
 
-			toggleloadingimage();
 			var arrive = false;
 			if (document.getElementById("arriveby").checked) {
 				arrive = true;
@@ -158,6 +157,7 @@
 				window.alert("The minute you have entered is invalid.");
 				return;
 			}
+			toggleloadingimage();
 			if (hour != "") {
 				hour = hour*1;
 				if (hour == 12) {
@@ -166,7 +166,7 @@
 				if (!am) {
 					hour = hour + 12;
 				}
-            }
+			}
 
 			$.get(
 				"all",
