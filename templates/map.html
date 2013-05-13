@@ -96,6 +96,9 @@
                         if (status == google.maps.DirectionsStatus.OK) {
                             directionsDisplay.setDirections(response);
                         }
+                        else {
+                            console.log('Geocode was not successful for the following reason: ' + status);
+                        }
                     });
                 }
             }
