@@ -434,11 +434,13 @@
 		}
 
 		function appendLink(e, x) {
-			if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
+            if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
+                console.log(x.link);
 				e.innerHTML += "<form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 			}
 
-			else{
+            else{
+                console.log(x.link);
 				e.innerHTML += "<form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 			}
 
