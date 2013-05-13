@@ -19,7 +19,7 @@ application.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') \
 
 db = SQLAlchemy(application)
 
-pool = ThreadPool(processes=10)
+pool = ThreadPool(processes=12)
 #=========================================================
 
 @application.route('/')
@@ -89,6 +89,12 @@ def all_stuff():
     orig_city = db.session.query(City).filter(City.name==origin).first()
     dest_city = db.session.query(City).filter(City.name==destination).first()
 
+    if orig_city == "Princeton":
+	# Princeton to Princeton Junction
+	pj = db.session.query(City).filter(City.name==get_city("Princeton+Junction")).first()
+	p_result1 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, pj.njstation, orig_city.njcode, pj.njcode, month, day, year, hour, minute, isArriv))
+	p_result2 = pool.apply_async(amtrak.amtrak, (pj.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
+	
 
     if orig_city.aircode.find("*") != -1:
         # get airport city

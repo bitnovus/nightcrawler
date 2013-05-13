@@ -112,16 +112,16 @@
 			var date = document.getElementById("datepicker").value.split("/");
 			if (validatelocation(orig_city_value) == null) {
 				console.log("invalid origin");
-				Window.alert("The origin value you have entered is not a supported location.");
+				window.alert("The origin value you have entered is not a supported location.");
 				return;
 			}
 			if (validatelocation(dest_city_value) == null) {
 				console.log("invalid destination");
-				Window.alert("The destination value you have entered is not a supported location.");
+				window.alert("The destination value you have entered is not a supported location.");
 				return;
 			}
 			if (!validatedate(date)) {
-				Window.alert("The date you have entered is invalid.");
+				window.alert("The date you have entered is invalid.");
 				return;
 			}
 
@@ -185,7 +185,8 @@
 				loc = loc.substring(0, comma);
 			}
 			loc = loc.toLowerCase();
-			for (var p in places) {
+			for (var i = 0; i < places.length; i++) {
+				p = places[i];
 				comma = p.indexOf(",");
 				p2 = p.substring(0, comma);
 				p2 = p2.toLowerCase();
@@ -508,7 +509,7 @@
 
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
 	    }
-		}
+	}
 
 		function appendMap(e, i) {
 			e.innerHTML += "<button type = \"button\" onclick = \"callMap(" + i + ")\">map</button><br />";
