@@ -137,6 +137,15 @@
 
 			var am = document.getElementById("AM").selected;
 			var hour = document.getElementById("hour").value;
+			var minute = document.getElementById("minute").value;
+			if (hour != "" && (isNaN(hour) || hour < 0 || hour > 12)) {
+				window.alert("The hour you have entered is invalid.");
+				return;
+			}
+			if (minute != "" && (isNaN(minute) || minute < 0 || minute > 59)) {
+				window.alert("The minute you have entered is invalid.");
+				return;
+			}
 			if (hour != "") {
 				hour = hour*1;
 				if (hour == 12) {

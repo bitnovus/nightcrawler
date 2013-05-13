@@ -91,7 +91,7 @@ def all_stuff():
 
     if orig_city == "Princeton":
 	# Princeton to Princeton Junction
-	pj = db.session.query(City).filter(City.name==get_city("Princeton Junction")).first()
+	pj = db.session.query(City).filter(City.name=="Princeton+Junction").first()
 	p_result1 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, pj.njstation, orig_city.njcode, pj.njcode, month, day, year, hour, minute, isArriv))
 	p_result2 = pool.apply_async(amtrak.amtrak, (pj.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
     else:
