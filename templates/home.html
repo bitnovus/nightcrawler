@@ -109,12 +109,13 @@
 		{
 			var orig_city_value = document.getElementById("originform").value;
 			var dest_city_value = document.getElementById("destform").value;
-			if (validatelocation(orig_city_value == null)) {
+			var date = document.getElementById("datepicker").value.split("/");
+			if (validatelocation(orig_city_value) == null) {
 				console.log("invalid origin");
 				Window.alert("The origin value you have entered is not a supported location.");
 				return;
 			}
-			if (validatelocation(dest_city_value == null)) {
+			if (validatelocation(dest_city_value) == null) {
 				console.log("invalid destination");
 				Window.alert("The destination value you have entered is not a supported location.");
 				return;
@@ -130,7 +131,6 @@
 				speed = true;
 			}
 
-			var date = document.getElementById("datepicker").value.split("/");
 			var am = document.getElementById("AM").selected;
 			var hour = document.getElementById("hour").value;
 			if (hour != "") {
@@ -190,6 +190,10 @@
 				}
 			}
 			return null;
+		}
+
+		function validatedate(x) {
+
 		}
 
 		function initializeprices(x) {
