@@ -1,0 +1,571 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns:asp="http://www.microsoft.com"><head><title>
+
+</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="description" /><link rel="stylesheet" type="text/css" href="css/style.css?v=3" /><link rel="stylesheet" type="text/css" href="css/CmsForm.css" /><link rel="stylesheet" type="text/css" href="css/buttons.css" /><!--[if IE 7]><link rel="stylesheet" href="css/style-ie7.css" type="text/css" media="screen" /><![endif]--><link rel="stylesheet" type="text/css" href="css/jquery-ui/jquery-ui-1.8.17.custom.css" /><link rel="icon" href="favicon-sm.ico" type="image/x-icon" /><link rel="shortcut icon" href="images/favicon-sm.ico" type="image/x-icon" /><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"> </script><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"> </script><script type="text/javascript" src="App_Javascript/jquery.lib.js"> </script><!--<!- -[if IE 6]>--><script type="text/javascript" src="App_Javascript/jquery.fixBoxModel.min.js"> </script><!--<![endif]- ->--><script type="text/javascript" src="App_Javascript/swfobject.js"> </script><script type="text/javascript" src="App_Javascript/Validation.js"> </script><script type="text/javascript" src="scripts/buttons.js"> </script><script type="text/javascript" src="scripts/mb.js"> </script><meta name="msvalidate.01" content="24E0F8A6A8C667C7C9A769B18A337597" /><meta name="google-site-verification" content="IjaJ5vR_TcYLyuiMY7LkuEJUmMc49y-HANCnpqrszbk" /><script type="text/javascript">
+
+					var _gaq = _gaq || [];
+					_gaq.push(['_setAccount', 'UA-25472218-1']);
+					_gaq.push(['_setDomainName', '.megabus.com']);
+					_gaq.push(['_trackPageview']);
+
+					(function() {
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+					})();
+
+				</script></head><body><form name="ctl01" method="post" action="JourneyResults.aspx?originCode=89&amp;destinationCode=123&amp;outboundDepartureDate=4%2f17%2f2013&amp;inboundDepartureDate=&amp;passengerCount=1&amp;transportType=0&amp;concessionCount=0&amp;nusCount=0&amp;outboundWheelchairSeated=0&amp;outboundOtherDisabilityCount=0&amp;inboundWheelchairSeated=0&amp;inboundOtherDisabilityCount=0&amp;outboundPcaCount=0&amp;inboundPcaCount=0&amp;promotionCode=&amp;withReturn=0" id="ctl01">
+<input type="hidden" name="UserStatus_ScriptManager1_HiddenField" id="UserStatus_ScriptManager1_HiddenField" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTEzODIwNTc4NzcPZBYCAgMPZBYIAgMPZBYEAgIPDxYCHgRUZXh0BR9XZWxjb21lLCBZb3UgYXJlIG5vdCBsb2dnZWQgaW4uZGQCBg8PFgIfAAUQVmlldyAgQmFza2V0ICgwKWRkAgUPZBYGAgEPDxYGHgtOYXZpZ2F0ZVVybAUWaHR0cDovL3VrLm1lZ2FidXMuY29tLx4IQ3NzQ2xhc3NlHgRfIVNCAgJkZAIDDw8WBh8BBRZodHRwOi8vdXMubWVnYWJ1cy5jb20vHwIFB2N1cnJlbnQfAwICZGQCBQ8PFgYfAQUWaHR0cDovL2NhLm1lZ2FidXMuY29tLx8CZR8DAgJkZAIHD2QWAgIDDxAPFgIeC18hRGF0YUJvdW5kZ2QQFQIHRW5nbGlzaAdFc3Bhbm9sFQICZW4CZXMUKwMCZ2dkZAIJD2QWBgIPDw8WAh8ABfgCWW91IHNlYXJjaGVkIGZvciB0cmlwcyBsZWF2aW5nIDwhLS0gbXBfdHJhbnNfc2NoZWR1bGVfZGlzYWJsZV9zdGFydCAtLT48c3Ryb25nPkFsYmFueSwgTlk8L3N0cm9uZz48IS0tIG1wX3RyYW5zX3NjaGVkdWxlX2Rpc2FibGVfZW5kIC0tPiBvbiANCgkJCQkJPHN0cm9uZz48IS0tIG1wX3RyYW5zIC0tPldlZG5lc2RheSBBcHJpbCAxNywgMjAxMzwhLS0gbXBfdHJhbnMgLS0+PC9zdHJvbmc+IHRvIA0KCQkJCQk8IS0tIG1wX3RyYW5zX3NjaGVkdWxlX2Rpc2FibGVfc3RhcnQgLS0+PHN0cm9uZz5OZXcgWW9yaywgTlk8L3N0cm9uZz48IS0tIG1wX3RyYW5zX3NjaGVkdWxlX2Rpc2FibGVfZW5kIC0tPiAgZm9yICA8c3Ryb25nPjEgcGFzc2VuZ2VyPC9zdHJvbmc+LmRkAhEPDxYEHgRkYXRlBgCAbKMVCdAIHgJzZAYAWEka1v7PiGRkAhUPDxYCHgdWaXNpYmxlaGRkGAIFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYCBS9Kb3VybmV5UmVzeWx0cyRPdXRib3VuZExpc3QkYnRuU29ydERldGFpbHNJbWFnZQUtSm91cm5leVJlc3lsdHMkT3V0Ym91bmRMaXN0JGJ0blNvcnRQcmljZUltYWdlBRdVc2VyU3RhdHVzJG12VXNlclN0YXR1cw8PZGZkwm4+BeAX6sLYMV8jIt2JjLVSSZs=" />
+
+
+<script src="/App_Javascript/motionpoint_es.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function switchLanguage(lang) {
+	MP.SrcUrl = unescape('mp_js_orgin_url'); MP.UrlLang = 'mp_js_current_lang'; MP.init();
+	MP.switchLanguage(MP.UrlLang == lang ? 'en' : lang);
+	return false;
+}//]]>
+</script>
+
+<script src="/scripts/popup.js" type="text/javascript"></script>
+<script src="/scripts/journeyresults.js" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=4F4CJg5iA6GN-_2znVzcRlvdxucMzIZNzrHJOuTefYlo-dVD3xxfD9ZkoXVVBCo-uH_CUwn0XMi8rR0f9qDdgH9WaWddTbU080i1dupoUVfrtqb1BF0Nr9iUSKU5XjHu8BiADDHEEFCAditX5_LyIJHXv4k1&amp;t=ffffffffb868b5f4" type="text/javascript"></script>
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWDgKGsPPvDALo5PJhAujknmEClObTtAoCzceelg4CsfyYwAsC+/uXVQL8ypiaDgKWu//oBAKP36r9DAKkyubxCQKugtByAp29jpcNAuuDivME+5W5OS8Wj5HNX0A4lHVxj3tw5qo=" /><div id="ctl14_UpdateProgress1" style="display:none;">
+	
+        <div style="display: block; height: 0px">
+            <div id="CanvasLoaderBackground" class="canvas_loader_background"> &nbsp;</div>
+            <div id="canvasloader-container" style="position:absolute; text-align:center; width:100%; z-index:10000000">
+            	<img src="images/mega-anim1.gif" id="ctl14_Img1" style="margin:320px auto; width:245px; height:179px;" />
+            </div>
+        </div>
+    
+</div>
+<span xmlns:empcms="http://www.emperordesign.co.uk"></span><div id="wrapper"><div id="imageLoader"><img src="images/home-on.png" alt="Home" /><img src="images/bus-on.png" alt="Bus Stops" /><img src="images/service-on.png" alt="Service Advisories" /><img src="images/customer-on.png" alt="Customer Service" /></div><div id="header"><div class="toplinks"><div class="topcurve_left"> </div><div class="topcurve_middle">
+
+<p><span id="UserStatus_lblWelcome">Welcome, You are not logged in.</span></p>
+
+<ul>
+
+    <li><a id="UserStatus_hypLogIn" href="login.aspx">Login</a></li>
+    <li class="last"><a id="UserStatus_hypRegister" href="register.aspx">Register</a></li>
+   
+</ul>
+
+<p class="view_basket"><a id="UserStatus_hypBasket" href="ViewBasket.aspx">View  Basket (0)</a></p></div><div class="topcurve_right"> </div></div></div><div id="container"><div class="mainContent"><a href="Default.aspx" id="logo"><img src="images/megabus_main_logo_en.gif" alt="megabus.com" title="megabus.com" /></a><div id="navigation"><div id="country">
+<ul>
+	<li class="uk">
+			<a id="CountryLinks1_hlUK" title="UK" href="http://uk.megabus.com/">UK</a>
+	</li>
+	<li class="usa">
+			<a id="CountryLinks1_hlUSA" title="USA" class="current" href="http://us.megabus.com/">USA</a>
+	</li>
+	<li class="canada">
+			<a id="CountryLinks1_hlCanada" title="Canada" href="http://ca.megabus.com/">Canada</a>
+	</li>
+</ul></div><div class="socialmedia"><img src="images/megabus-socialmedia-bg.png" alt="megabus.com" title="megabus.com" /><div id="socialmediaicons"><ul><li><a target="_blank" href="http://www.facebook.com/megabus.com.officialpage"><img src="images/megabus-socialmedia-facebook.png" alt="facebook" title="facebook" /></a></li><li><a target="_blank" href="https://twitter.com/megabus"><img src="images/megabus-socialmedia-twitter.png" alt="twitter" title="twitter" /></a></li><li><a target="_blank" href="http://megabus.tumblr.com"><img src="images/megabus-socialmedia-tumbler.png" alt="tumbler" title="tumbler" /></a></li></ul></div></div><ul><li class="home"><a title="Home" href="Default.aspx"><span>Home</span></a></li><li class="BusStops"><a title="Bus Stops" href="BusStops.aspx"><span>Bus Stops</span></a></li><li class="ServiceAdvisories"><a title="Service Advisories" href="ServiceAdvisories.aspx"><span>Service Advisories</span></a></li><li class="CustomerService last&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;"><a title="Customer Services" href="useful-links.aspx"><span>Customer Services</span></a></li></ul></div><div class="cont_wraper"><div class="cont_topcurve">
+<div class="lang_selector">
+	<label for="ctl16_ddlLanguage" id="ctl16_lblLanguageSelector">Select Language</label>
+	<select name="ctl16$ddlLanguage" id="ctl16_ddlLanguage" onchange="switchLanguage(this.options[this.selectedIndex].value);">
+	<option value="en">English</option>
+	<option value="es">Espanol</option>
+
+</select>
+</div></div><div class="cont_middlecurve"><div class="insideBg"><div class="content_div"><div class="search_buy"><h1>Your trip results</h1><div class="content"><div class="background"> 
+<!-- mp_trans_disable_start -->
+<span id="JourneyResylts_lblError" style="display: none;"></span>
+<!-- mp_trans_disable_end -->
+<div class="intro_text">
+	
+
+	
+	
+	
+	
+	
+</div>
+
+<div class="search_params">
+	<p><span id="JourneyResylts_lblSearchParams">You searched for trips leaving <!-- mp_trans_schedule_disable_start --><strong>Albany, NY</strong><!-- mp_trans_schedule_disable_end --> on 
+					<strong><!-- mp_trans -->Wednesday April 17, 2013<!-- mp_trans --></strong> to 
+					<!-- mp_trans_schedule_disable_start --><strong>New York, NY</strong><!-- mp_trans_schedule_disable_end -->  for  <strong>1 passenger</strong>.</span></p>
+</div>
+
+
+
+
+<div class="journeyresult">
+	<div class="title">
+		<span id="JourneyResylts_OutboundList_lblJourneyName">Outbound Trip</span>
+	</div>
+	<div class="dates">
+		<a id="JourneyResylts_OutboundList_btnPreviousDay" class="left" href="javascript:__doPostBack('JourneyResylts$OutboundList$btnPreviousDay','')">Previous day</a>Wednesday April 17, 2013<a id="JourneyResylts_OutboundList_btnNextDay" class="right" href="javascript:__doPostBack('JourneyResylts$OutboundList$btnNextDay','')">Next day</a>
+	</div>
+	
+	<div class="content">
+		<div id="JourneyResylts_OutboundList_main_div" class="JourneyList">
+			
+				<ul class="heading">
+					<li class="one">
+						<p>
+							Select</p>
+					</li>
+					<li class="two">
+						<p>
+							<input type="image" name="JourneyResylts$OutboundList$btnSortDetailsImage" id="JourneyResylts_OutboundList_btnSortDetailsImage" src="images/sort-ascending.gif" border="0" /><a id="JourneyResylts_OutboundList_btnSortDetails" href="javascript:__doPostBack('JourneyResylts$OutboundList$btnSortDetails','')">Details</a>
+						</p>
+					</li>
+					<li class="three">
+						<p>
+							Duration</p>
+					</li>
+					<li class="four">
+						<p>
+							Carrier</p>
+					</li>
+					<li class="pass">
+						<p style="width:27px; float:left;">
+							Pass</p>
+						<span class="tooltip icon-help">
+							<span class="tip">
+								Number of passengers
+							</span>
+						</span>
+
+					</li>
+					<li class="five">
+						<p>
+							<input type="image" name="JourneyResylts$OutboundList$btnSortPriceImage" id="JourneyResylts_OutboundList_btnSortPriceImage" src="images/sort-descending.gif" border="0" /><a id="JourneyResylts_OutboundList_btnSortPrice" href="javascript:__doPostBack('JourneyResylts$OutboundList$btnSortPrice','')">Price</a>
+						</p>
+					</li>
+					<li class="six">
+						<p>
+							Schedule</p>
+					</li>
+				</ul>
+			
+			
+					<ul id="JourneyResylts_OutboundList_GridViewResults_ctl00_row_item" class="journey standard">
+						<li class="one">
+							<p>
+								<input name="JourneyResylts_OutboundList_rbl" id="JourneyResylts_OutboundList_GridViewResults_ctl00_rdoChoose" type="radio" value="1453457" class="searchSelect" />
+							</p>
+						</li>
+						<li class="two">
+							<p>
+								<strong>Departs</strong>
+								7:10 AM
+								<!-- mp_trans_schedule_disable_start -->
+								Albany, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								SUNY Albany - Collins Circle
+							</p>
+							<p class="arrive">
+								<strong>Arrives</strong>
+								10:15 AM
+								<!-- mp_trans_schedule_disable_start -->
+								New York, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								7th Ave & 28th St.
+							</p>
+						</li>
+						<li class="three">
+							<p>
+								3hrs 5mins</p>
+						</li>
+						<li class="four">
+							<img id="JourneyResylts_OutboundList_GridViewResults_ctl00_imgCarrier" title="Megabus NE" src="images/carriers/megabus_sm.gif" alt="Megabus NE" border="0" />
+						</li>
+						<li	class="pass">
+							<p>1</p>
+						</li>
+						<li class="five">
+							<p>
+								$15.00</p>
+						</li>
+						<li class="six">
+							<a id="JourneyResylts_OutboundList_GridViewResults_ctl00_hlViewJourney" class="popuplink" Title="Schedule Details for this Trip" href="support/viewschedule.aspx?journeyId=1453457">View</a>
+						</li>
+						<li>
+							
+						</li>
+					</ul>
+					
+				
+					<ul id="JourneyResylts_OutboundList_GridViewResults_ctl01_row_item" class="journey standard">
+						<li class="one">
+							<p>
+								<input name="JourneyResylts_OutboundList_rbl" id="JourneyResylts_OutboundList_GridViewResults_ctl01_rdoChoose" type="radio" value="1453455" class="searchSelect" />
+							</p>
+						</li>
+						<li class="two">
+							<p>
+								<strong>Departs</strong>
+								7:30 AM
+								<!-- mp_trans_schedule_disable_start -->
+								Albany, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								Rensselaer Station
+							</p>
+							<p class="arrive">
+								<strong>Arrives</strong>
+								10:15 AM
+								<!-- mp_trans_schedule_disable_start -->
+								New York, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								7th Ave & 28th St.
+							</p>
+						</li>
+						<li class="three">
+							<p>
+								2hrs 45mins</p>
+						</li>
+						<li class="four">
+							<img id="JourneyResylts_OutboundList_GridViewResults_ctl01_imgCarrier" title="Megabus NE" src="images/carriers/megabus_sm.gif" alt="Megabus NE" border="0" />
+						</li>
+						<li	class="pass">
+							<p>1</p>
+						</li>
+						<li class="five">
+							<p>
+								$15.00</p>
+						</li>
+						<li class="six">
+							<a id="JourneyResylts_OutboundList_GridViewResults_ctl01_hlViewJourney" class="popuplink" Title="Schedule Details for this Trip" href="support/viewschedule.aspx?journeyId=1453455">View</a>
+						</li>
+						<li>
+							
+						</li>
+					</ul>
+					
+				
+					<ul id="JourneyResylts_OutboundList_GridViewResults_ctl02_row_item" class="journey standard">
+						<li class="one">
+							<p>
+								<input name="JourneyResylts_OutboundList_rbl" id="JourneyResylts_OutboundList_GridViewResults_ctl02_rdoChoose" type="radio" value="2940775" class="searchSelect" />
+							</p>
+						</li>
+						<li class="two">
+							<p>
+								<strong>Departs</strong>
+								10:40 AM
+								<!-- mp_trans_schedule_disable_start -->
+								Albany, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								SUNY Albany - Collins Circle
+							</p>
+							<p class="arrive">
+								<strong>Arrives</strong>
+								1:45 PM
+								<!-- mp_trans_schedule_disable_start -->
+								New York, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								7th Ave & 28th St.
+							</p>
+						</li>
+						<li class="three">
+							<p>
+								3hrs 5mins</p>
+						</li>
+						<li class="four">
+							<img id="JourneyResylts_OutboundList_GridViewResults_ctl02_imgCarrier" title="Megabus NE" src="images/carriers/megabus_sm.gif" alt="Megabus NE" border="0" />
+						</li>
+						<li	class="pass">
+							<p>1</p>
+						</li>
+						<li class="five">
+							<p>
+								$15.00</p>
+						</li>
+						<li class="six">
+							<a id="JourneyResylts_OutboundList_GridViewResults_ctl02_hlViewJourney" class="popuplink" Title="Schedule Details for this Trip" href="support/viewschedule.aspx?journeyId=2940775">View</a>
+						</li>
+						<li>
+							
+						</li>
+					</ul>
+					
+				
+					<ul id="JourneyResylts_OutboundList_GridViewResults_ctl03_row_item" class="journey standard">
+						<li class="one">
+							<p>
+								<input name="JourneyResylts_OutboundList_rbl" id="JourneyResylts_OutboundList_GridViewResults_ctl03_rdoChoose" type="radio" value="2940773" class="searchSelect" />
+							</p>
+						</li>
+						<li class="two">
+							<p>
+								<strong>Departs</strong>
+								11:00 AM
+								<!-- mp_trans_schedule_disable_start -->
+								Albany, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								Rensselaer Station
+							</p>
+							<p class="arrive">
+								<strong>Arrives</strong>
+								1:45 PM
+								<!-- mp_trans_schedule_disable_start -->
+								New York, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								7th Ave & 28th St.
+							</p>
+						</li>
+						<li class="three">
+							<p>
+								2hrs 45mins</p>
+						</li>
+						<li class="four">
+							<img id="JourneyResylts_OutboundList_GridViewResults_ctl03_imgCarrier" title="Megabus NE" src="images/carriers/megabus_sm.gif" alt="Megabus NE" border="0" />
+						</li>
+						<li	class="pass">
+							<p>1</p>
+						</li>
+						<li class="five">
+							<p>
+								$15.00</p>
+						</li>
+						<li class="six">
+							<a id="JourneyResylts_OutboundList_GridViewResults_ctl03_hlViewJourney" class="popuplink" Title="Schedule Details for this Trip" href="support/viewschedule.aspx?journeyId=2940773">View</a>
+						</li>
+						<li>
+							
+						</li>
+					</ul>
+					
+				
+					<ul id="JourneyResylts_OutboundList_GridViewResults_ctl04_row_item" class="journey standard">
+						<li class="one">
+							<p>
+								<input name="JourneyResylts_OutboundList_rbl" id="JourneyResylts_OutboundList_GridViewResults_ctl04_rdoChoose" type="radio" value="1460045" class="searchSelect" />
+							</p>
+						</li>
+						<li class="two">
+							<p>
+								<strong>Departs</strong>
+								4:40 PM
+								<!-- mp_trans_schedule_disable_start -->
+								Albany, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								SUNY Albany - Collins Circle
+							</p>
+							<p class="arrive">
+								<strong>Arrives</strong>
+								7:45 PM
+								<!-- mp_trans_schedule_disable_start -->
+								New York, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								7th Ave & 28th St.
+							</p>
+						</li>
+						<li class="three">
+							<p>
+								3hrs 5mins</p>
+						</li>
+						<li class="four">
+							<img id="JourneyResylts_OutboundList_GridViewResults_ctl04_imgCarrier" title="Megabus NE" src="images/carriers/megabus_sm.gif" alt="Megabus NE" border="0" />
+						</li>
+						<li	class="pass">
+							<p>1</p>
+						</li>
+						<li class="five">
+							<p>
+								$14.00</p>
+						</li>
+						<li class="six">
+							<a id="JourneyResylts_OutboundList_GridViewResults_ctl04_hlViewJourney" class="popuplink" Title="Schedule Details for this Trip" href="support/viewschedule.aspx?journeyId=1460045">View</a>
+						</li>
+						<li>
+							
+						</li>
+					</ul>
+					
+				
+					<ul id="JourneyResylts_OutboundList_GridViewResults_ctl05_row_item" class="journey standard">
+						<li class="one">
+							<p>
+								<input name="JourneyResylts_OutboundList_rbl" id="JourneyResylts_OutboundList_GridViewResults_ctl05_rdoChoose" type="radio" value="1460043" class="searchSelect" />
+							</p>
+						</li>
+						<li class="two">
+							<p>
+								<strong>Departs</strong>
+								5:00 PM
+								<!-- mp_trans_schedule_disable_start -->
+								Albany, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								Rensselaer Station
+							</p>
+							<p class="arrive">
+								<strong>Arrives</strong>
+								7:45 PM
+								<!-- mp_trans_schedule_disable_start -->
+								New York, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								7th Ave & 28th St.
+							</p>
+						</li>
+						<li class="three">
+							<p>
+								2hrs 45mins</p>
+						</li>
+						<li class="four">
+							<img id="JourneyResylts_OutboundList_GridViewResults_ctl05_imgCarrier" title="Megabus NE" src="images/carriers/megabus_sm.gif" alt="Megabus NE" border="0" />
+						</li>
+						<li	class="pass">
+							<p>1</p>
+						</li>
+						<li class="five">
+							<p>
+								$14.00</p>
+						</li>
+						<li class="six">
+							<a id="JourneyResylts_OutboundList_GridViewResults_ctl05_hlViewJourney" class="popuplink" Title="Schedule Details for this Trip" href="support/viewschedule.aspx?journeyId=1460043">View</a>
+						</li>
+						<li>
+							
+						</li>
+					</ul>
+					
+				
+					<ul id="JourneyResylts_OutboundList_GridViewResults_ctl06_row_item" class="journey standard">
+						<li class="one">
+							<p>
+								<input name="JourneyResylts_OutboundList_rbl" id="JourneyResylts_OutboundList_GridViewResults_ctl06_rdoChoose" type="radio" value="1462241" class="searchSelect" />
+							</p>
+						</li>
+						<li class="two">
+							<p>
+								<strong>Departs</strong>
+								9:25 PM
+								<!-- mp_trans_schedule_disable_start -->
+								Albany, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								SUNY Albany - Collins Circle
+							</p>
+							<p class="arrive">
+								<strong>Arrives</strong>
+								12:30 AM
+								<!-- mp_trans_schedule_disable_start -->
+								New York, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								7th Ave & 28th St.
+							</p>
+						</li>
+						<li class="three">
+							<p>
+								3hrs 5mins</p>
+						</li>
+						<li class="four">
+							<img id="JourneyResylts_OutboundList_GridViewResults_ctl06_imgCarrier" title="Megabus NE" src="images/carriers/megabus_sm.gif" alt="Megabus NE" border="0" />
+						</li>
+						<li	class="pass">
+							<p>1</p>
+						</li>
+						<li class="five">
+							<p>
+								$15.00</p>
+						</li>
+						<li class="six">
+							<a id="JourneyResylts_OutboundList_GridViewResults_ctl06_hlViewJourney" class="popuplink" Title="Schedule Details for this Trip" href="support/viewschedule.aspx?journeyId=1462241">View</a>
+						</li>
+						<li>
+							
+						</li>
+					</ul>
+					
+				
+					<ul id="JourneyResylts_OutboundList_GridViewResults_ctl07_row_item" class="journey standard">
+						<li class="one">
+							<p>
+								<input name="JourneyResylts_OutboundList_rbl" id="JourneyResylts_OutboundList_GridViewResults_ctl07_rdoChoose" type="radio" value="1462239" class="searchSelect" />
+							</p>
+						</li>
+						<li class="two">
+							<p>
+								<strong>Departs</strong>
+								9:45 PM
+								<!-- mp_trans_schedule_disable_start -->
+								Albany, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								Rensselaer Station
+							</p>
+							<p class="arrive">
+								<strong>Arrives</strong>
+								12:30 AM
+								<!-- mp_trans_schedule_disable_start -->
+								New York, NY
+								<!-- mp_trans_schedule_disable_end -->
+								,<!-- mp_trans -->
+								7th Ave & 28th St.
+							</p>
+						</li>
+						<li class="three">
+							<p>
+								2hrs 45mins</p>
+						</li>
+						<li class="four">
+							<img id="JourneyResylts_OutboundList_GridViewResults_ctl07_imgCarrier" title="Megabus NE" src="images/carriers/megabus_sm.gif" alt="Megabus NE" border="0" />
+						</li>
+						<li	class="pass">
+							<p>1</p>
+						</li>
+						<li class="five">
+							<p>
+								$15.00</p>
+						</li>
+						<li class="six">
+							<a id="JourneyResylts_OutboundList_GridViewResults_ctl07_hlViewJourney" class="popuplink" Title="Schedule Details for this Trip" href="support/viewschedule.aspx?journeyId=1462239">View</a>
+						</li>
+						<li>
+							
+						</li>
+					</ul>
+					
+				
+			
+		</div>
+	</div>
+	<div class="footer">
+		<a id="JourneyResylts_OutboundList_btnPreviousDayBottom" class="left" href="javascript:__doPostBack('JourneyResylts$OutboundList$btnPreviousDayBottom','')">Previous day</a><span id="JourneyResylts_OutboundList_lblSelectedDayBottom" class="boldtext">Wednesday April 17, 2013</span><a id="JourneyResylts_OutboundList_btnNextDayBottom" class="right" href="javascript:__doPostBack('JourneyResylts$OutboundList$btnNextDayBottom','')">Next day</a>
+	</div>
+</div>
+
+
+<div class="search_params">
+	<p><span id="JourneyResylts_lblReturnParams"></span></p>
+</div>
+
+
+
+
+<div class="buttons">
+	<input type="submit" name="JourneyResylts$btnSearchAgain" value="Search Again" id="JourneyResylts_btnSearchAgain" class="btn_searchagain" />
+	<input type="submit" name="JourneyResylts$btnCancel" value="Cancel" id="JourneyResylts_btnCancel" class="btn_cancel" />
+	<input type="submit" name="JourneyResylts$btnAdd" value="Add Journey(s) to basket" id="JourneyResylts_btnAdd" disabled="disabled" class="addJourneyButton" />
+</div>
+</div><div class="wide_footer"> </div></div></div></div></div></div><div class="cont_bottomcurve"> </div></div></div><div class="bottomcurve"><div class="bottom_links"><p>Brought to you by</p><div><a href="http://www.stagecoach.com/" class="external"><img src="images/stagecoach_group.gif" alt="stagecoach group" class="small" /></a><a href="http://www.coachusa.com/" class="external"><img src="images/logo_coachusa.gif" alt="coach usa" /></a><a href="http://www.coachcanada.com/" class="external"><img src="images/logo_coach_canada.gif" alt="coach canada" /></a></div><ul class="bottom_lnks"><li class="first"><a title="About megabus" href="about-us.aspx">About megabus</a></li><li><a title="Customers with Disabilities" href="passengers-with-disabilities.aspx">Customers with Disabilities</a></li><li><a title="Contact Us" href="ContactUs.aspx">Contact Us</a></li><li><a title="Media" href="mediapage.aspx">Media</a></li><li><a title="Sitemap" href="sitemap.aspx">Sitemap</a></li><li><a title="Using This Website" href="accessibility.aspx">Using This Website</a></li><li><a title="Terms &amp; Conditions" href="terms.aspx">Terms &amp; Conditions</a></li></ul></div><div class="copyright_note"><p>
+				© 2012 Stagecoach Group PLC
+			</p></div><div class="shopping_icons"><a href="http://www.worldpay.com" class="external"><img src="images/poweredByWorldPay.gif" alt="Powered By WorldPay" title="Powered By WorldPay" /><img src="images/us_amex.gif" alt="American Express" title="American Express" /><img src="images/us_mastercard.gif" alt="MasterCard" title="MasterCard" /><img src="images/us_visa_credit.gif" alt="Visa Credit" title="Visa Credit" /><img src="images/us_visa_debit.gif" alt="Visa Debit" title="Visa Debit" /></a></div></div><div id="footer"><div class="container"><div class="footer_links"><div class="column1_1"><h5>Explore megabus.com</h5><ul><li><a title="About megabus" href="about-us.aspx">About megabus</a></li><li><a title="Customer Service" href="useful-links.aspx">Customer Service</a></li><li><a title="Bus Stops" href="busStops.aspx">Bus Stops</a></li><li><a title="FAQs" href="faq.aspx">FAQs</a></li><li><a title="Press Releases" href="press-releases.aspx">Press Releases</a></li><li><a title="Safety and Training" href="safetyandtraining.aspx">Safety and Training</a></li></ul></div><div class="column1_2"><h5>Our network</h5><ul><li><a title="Dallas - Houston" href="?SearchAndBuy1_ddlTravellingTo=318&amp;SearchAndBuy1_ddlLeavingFrom=317">Dallas - Houston</a></li><li><a title="Dallas - San Antonio" href="?SearchAndBuy1_ddlTravellingTo=321&amp;SearchAndBuy1_ddlLeavingFrom=317">Dallas - San Antonio</a></li><li><a title="Dallas - Austin" href="/?SearchAndBuy1_ddlTravellingTo=320&amp;SearchAndBuy1_ddlLeavingFrom=317">Dallas - Austin</a></li><li><a title="Houston - San Antonio" href="/?SearchAndBuy1_ddlTravellingTo=321&amp;SearchAndBuy1_ddlLeavingFrom=318">Houston - San Antonio</a></li><li><a title="Houston - New Orleans" href="/?SearchAndBuy1_ddlTravellingTo=303&amp;SearchAndBuy1_ddlLeavingFrom=318">Houston - New Orleans</a></li></ul></div><div class="column1_3"><h5>Stagecoach Group in North America</h5><ul><li><a title="Stagecoach Group" href="http://www.Stagecoach.com">Stagecoach Group</a></li><li><a title="megabus Canada" href="http://ca.megabus.com/">megabus Canada</a></li><li><a title="Coach USA" href="http://www.coachusa.com">Coach USA</a></li><li><a title="Coach Canada" href="http://www.coachcanada.com">Coach Canada</a></li><li><a title="Newark Liberty Airport Express" href="http://www.coachusa.com/olympia/ss.newarkairport.asp">Newark Liberty Airport Express</a></li><li><a title="Chicago Trolley" href="http://www.coachusa.com/chicagotrolley/">Chicago Trolley</a></li><li><a title="megabus UK" href="http://www.megabus.com/uk/">megabus UK</a></li></ul></div><div class="column1_4"><h5>Other websites</h5><ul><li><a title="Facebook" href="http://www.facebook.com/megabus.com.officialpage">Facebook</a></li><li><a title="Twitter" href="http://twitter.com/megabus">Twitter</a></li><li><a title="Tumblr" href="http://megabus.tumblr.com/">Tumblr</a></li></ul></div></div></div><div class="footer_bottomcurve"> </div></div></div></div>
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.initialize();
+//]]>
+</script>
+</form></body></html>
