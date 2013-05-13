@@ -120,6 +120,10 @@
 				Window.alert("The destination value you have entered is not a supported location.");
 				return;
 			}
+			if (!validatedate(date)) {
+				Window.alert("The date you have entered is invalid.");
+				return;
+			}
 
 			toggleloadingimage();
 			var arrive = false;
@@ -193,7 +197,25 @@
 		}
 
 		function validatedate(x) {
-
+			if (date.length != 3) {
+				return false;
+			}
+			if (!date[0].isNumeric() || !date[1].isNumeric() || !date[2].isNumeric()) {
+				return false;
+			}
+			var month = parseInt(date[0]);
+			if (month < 1 || month > 12) {
+				return false;
+			}
+			var day = parseInt(date[1]);
+			if (day < 1 || day > 31) {
+				return false;
+			}
+			today = new Date();
+			if (year < today.getFullYear()) {
+				return false;
+			}
+			return true;
 		}
 
 		function initializeprices(x) {
@@ -468,7 +490,6 @@
 		}
 
 		function appendLink(e, x) {
-<<<<<<< HEAD
             if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
                 console.log(x.link);
 				e.innerHTML += "<form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
@@ -484,7 +505,6 @@
 
 			else{
 				e.innerHTML += "<form name = \"myform\" action =" + x.link  + " method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
->>>>>>> a77d8402f99002de8213d8228911148e8943537f
 			}
 
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
