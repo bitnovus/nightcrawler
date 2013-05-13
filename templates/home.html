@@ -201,7 +201,7 @@
 			if (x.length != 3) {
 				return false;
 			}
-			if (!isNaN(x[0]) || !isNaN(x[1]) || !isNaN(x[2])) {
+			if (isNaN(x[0]) || isNaN(x[1]) || isNaN(x[2])) {
 				return false;
 			}
 			var month = parseInt(x[0]);
