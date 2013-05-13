@@ -457,7 +457,7 @@
         function showMap(stops, modes) {
             var m = document.getElementById("map-div");
             var temp_map_div = "";
-            temp_map_div += '<iframe height=\"574px\" width=\"100%\" frameBorder=\"0\" scrolling=\"no\" src=\"/map?stops=';
+            temp_map_div += '<iframe align="right" height=\"100%\" width=\"50%\" frameBorder=\"0\" scrolling=\"yes\" src=\"/map?stops=';
             console.log("stops " + stops);
             console.log("modes " + modes);
 
@@ -496,21 +496,13 @@
 		}
 
 		function appendPriceCarrier(e, x) {
-			e.innerHTML += "<b>Price: " + x.price + '<br />';
+			e.innerHTML += "Price: " + x.price + '<br />';
 			e.innerHTML += "Carrier: " + x.carrier + "<br />";
 		}
 
 		function appendLink(e, x) {
             if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
-                console.log(x.link);
-				e.innerHTML += "<form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
-			}
-
-            else{
-                console.log(x.link);
-				e.innerHTML += "<form name = \"myform\" action = " + x.link  + "method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
-			if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
-				e.innerHTML += "<form name = \"myform\" action=" + x.link + "?" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
+				e.innerHTML += "<form name = \"myform\" action = " + x.link + "?" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 			}
 
 			else{
