@@ -94,7 +94,9 @@ def all_stuff():
 	pj = db.session.query(City).filter(City.name==get_city("Princeton+Junction")).first()
 	p_result1 = pool.apply_async(njtransit.njtransit, (orig_city.njstation, pj.njstation, orig_city.njcode, pj.njcode, month, day, year, hour, minute, isArriv))
 	p_result2 = pool.apply_async(amtrak.amtrak, (pj.amcode, dest_city.amcode, month, day, year, hour, minute, isArriv))
-	
+    else:
+	p_result1 = []
+	p_result2 = []
 
     if orig_city.aircode.find("*") != -1:
         # get airport city
@@ -170,6 +172,15 @@ def all_stuff():
     leg3 = leg3_1 + leg3_2 + leg3_3
 
     try:
+	princeton_leg1 = p_result1.get()
+    except:
+	princeton_leg1 = []
+    try:
+	princeton_leg2 = p_result2.get()
+    except:
+	princeton_leg2 = []
+
+    try:
         bus_results = async_result1.get()
     except:
         bus_results = []
@@ -202,6 +213,8 @@ def all_stuff():
     total_results = bus_results + nj_results + am_results
     if not (dest_city != dest_city2 and leg3 == []) and not (orig_city != orig_city2 and leg1 == []):
         total_results += combine(leg1, leg2, leg3)
+    if princeton_leg1 != [] and princeton_leg2 != []:
+	total_results += combine(princeton_leg1, princeton_leg2, [])
     return Response(json.dumps(total_results), mimetype='application/json')
 
 def combine(leg1, leg2, leg3):
@@ -230,8 +243,8 @@ def combine(leg1, leg2, leg3):
 	if str(type(first)).find("list") != -1:
 	    first = first[0]
 	t1 = first['departure_time']
-	last = result[len(result)-1]
 
+	last = result[len(result)-1]
 	if str(type(last)).find("list") != -1:
 	    last = last[len(last)-1]
 	t2 = last['arrival_time']
@@ -240,6 +253,7 @@ def combine(leg1, leg2, leg3):
 	results.append(result)
 	
     return results
+
 
 def get_best_leg1(leg1, flight):
     flight_start = time_to_minutes(flight, True)

@@ -198,17 +198,17 @@
 		}
 
 		function validatedate(x) {
-			if (date.length != 3) {
+			if (x.length != 3) {
 				return false;
 			}
-			if (!date[0].isNumeric() || !date[1].isNumeric() || !date[2].isNumeric()) {
+			if (!x[0].isNumeric() || !x[1].isNumeric() || !x[2].isNumeric()) {
 				return false;
 			}
-			var month = parseInt(date[0]);
+			var month = parseInt(x[0]);
 			if (month < 1 || month > 12) {
 				return false;
 			}
-			var day = parseInt(date[1]);
+			var day = parseInt(x[1]);
 			if (day < 1 || day > 31) {
 				return false;
 			}
