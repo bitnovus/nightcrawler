@@ -109,8 +109,15 @@
 		{
 			var orig_city_value = document.getElementById("originform").value;
 			var dest_city_value = document.getElementById("destform").value;
-			if (!validatelocation(orig_city_value) {
+			if (validatelocation(orig_city_value == null)) {
 				console.log("invalid origin");
+				Window.alert("The origin value you have entered is not a supported location.");
+				return;
+			}
+			if (validatelocation(dest_city_value == null)) {
+				console.log("invalid destination");
+				Window.alert("The destination value you have entered is not a supported location.");
+				return;
 			}
 
 			toggleloadingimage();
@@ -166,11 +173,8 @@
 			);
 		}
 
-		function validatelocation(loc) {
-			return true;
-		}
 
-		/*function validatelocation(x) {
+		function validatelocation(x) {
 			var loc = x;
 			var comma = x.indexOf(",");
 			if (comma != -1) {
@@ -179,9 +183,14 @@
 			loc = loc.toLowerCase();
 			for (var p in places) {
 				comma = p.indexOf(",");
-				p = p.substring(0, comma);
+				p2 = p.substring(0, comma);
+				p2 = p2.toLowerCase();
+				if (loc == p2) {
+					return p2;
+				}
 			}
-		}*/
+			return null;
+		}
 
 		function initializeprices(x) {
 			for (var i = 0; i < x.length; i++) {
@@ -621,7 +630,7 @@
                 <label>Destination</label>  
                 <input type="text" class="span3" placeholder="e.g. Princeton" id="destform">
 		<label>Date</label>
-		<input type="text" id="datepicker" readonly="readonly">
+		<input type="text" id="datepicker">
                 <!--<input type="text" class="span3" id="month" placeholder="e.g. MM">
                 <input type="text" class="span3" id="day" placeholder="e.g. DD">
                 <input type="text" class="span3" id="year" placeholder="e.g. YYYY">-->
