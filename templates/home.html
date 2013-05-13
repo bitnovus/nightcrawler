@@ -457,7 +457,8 @@
         function showMap(stops, modes) {
             var m = document.getElementById("map-div");
             var temp_map_div = "";
-            temp_map_div += '<iframe align="right" height=\"100%\" width=\"50%\" frameBorder=\"0\" scrolling=\"yes\" src=\"/map?stops=';
+            temp_map_div += '<iframe width=\"100%\" onLoad=
+            "calcHeight();\" src=\"/map?stops=\" frameBorder=\"0\" scrolling=\"no\" height=\"1';
             console.log("stops " + stops);
             console.log("modes " + modes);
 
@@ -501,14 +502,19 @@
 		}
 
 		function appendLink(e, x) {
-            if ((x.carrier == "Amtrak") || (x.carrier == "NJ Transit")){
+            if (x.carrier == "Amtrak"){
 				e.innerHTML += "<form name = \"myform\" action = " + x.link + "?" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 			}
 
-			else{
-				e.innerHTML += "<form name = \"myform\" action =" + x.link  + " method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
+			else if (x.carrier == "NJ Transit"){
+				e.innerHTML += "<form name = \"myform\" action = " + x.link + "&" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 			}
 
+			else{
+				e.innerHTML += "<form><input type = \"button\" value = \"Tickets\" onClick=\"window.location.href=\'" + x.link + "\'\"></form><br />";
+				// "<form name = \"myform\" action =" + x.link  + " method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
+
+			}
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
 	    }
 	
@@ -596,7 +602,7 @@
     </head>
 
     <body>
-        <div class="modal fade" id="results-modal">
+        <div ="modal fade" id="results-modal">
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">&times;</a>
                 <h3>Results</h3> <h4 id="results-header"></h4>
@@ -653,9 +659,9 @@
 
             <div class="well offset1 span7">  
                 <label>Origin</label>
-                <input type="text" class="span3" placeholder="e.g. New York City" id="originform">  
+                <input type="text" class="span3" placeholder="e.g. New York, NY" id="originform">  
                 <label>Destination</label>  
-                <input type="text" class="span3" placeholder="e.g. Princeton" id="destform">
+                <input type="text" class="span3" placeholder="e.g. Princeton, NJ" id="destform">
 		<label>Date</label>
 		<input type="text" id="datepicker">
                 <!--<input type="text" class="span3" id="month" placeholder="e.g. MM">
