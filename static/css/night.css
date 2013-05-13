@@ -76,13 +76,26 @@
     width: auto;
 }
 
-#results-modal {
-    left:25%; !important
+@media screen and (min-width: 960px) {
+    #results-modal {
+        left:25%; !important
+    }
+    #map-modal {
+        left:75%; !important
+        height: 754px;
+    }
 }
-#map-modal {
-    left:75%; !important
-    height: 754px;
+
+@media screen and (min-width: 400px) {
+    #results-modal {
+        top: 5%; !important
+    }
+    #map-modal {
+        top: 5%; !important
+        height: 754px;
+    }
 }
+
 .logoStuff {
     height: 8em;
     position: relative;

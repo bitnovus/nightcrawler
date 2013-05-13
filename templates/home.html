@@ -472,10 +472,17 @@
 			toggleloadingimage();
         }
 
-        function showMap(stops, modes) {
+function showMap(stops, modes) {
+			var header = document.getElementById("map-header");
+			header.innerHTML = document.getElementById("originform").value + " to " +
+				document.getElementById("destform").value;
+
             var m = document.getElementById("map-div");
             var temp_map_div = "";
-            temp_map_div += '<iframe width=\"100%\" onLoad=\"calcHeight();\" src=\"/map?stops=\" frameBorder=\"0\" scrolling=\"no\" height=\"1\"></iframe>';
+            //temp_map_div += '<iframe width=\"100%\" onLoad=\"calcHeight();\" src=\"/map?stops=\" frameBorder=\"0\" scrolling=\"no\" height=\"1\"></iframe>';
+            //temporary for testing
+            temp_map_div += '<iframe width=\"100%\" src=\"/map?stops=';
+
             console.log("stops " + stops);
             console.log("modes " + modes);
 
@@ -500,8 +507,8 @@
             }
             temp_map_div = temp_map_div.substring(0, temp_map_div.length-1);
             temp_map_div += "]";
-            temp_map_div += '"';
-            temp_map_div += '></iframe>';
+
+            temp_map_div += '\" frameBorder=\"0\" scrolling=\"no\" height=\"574px\"></iframe>'
             console.log(temp_map_div);
             m.innerHTML = temp_map_div;
             
@@ -653,6 +660,7 @@
         <div class="modal fade" id="map-modal">
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">&times;</a>
+                <h4 id="map-header"></h4>
 
             </div>
             <div class="modal-body" id="map-div">
