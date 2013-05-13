@@ -510,9 +510,10 @@
 			}
 
 			else{
-				e.innerHTML += "<form name = \"myform\" action =" + x.link  + " method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
-			}
+				e.innerHTML += "<form><input type = \"button\" value = \"Tickets\" onClick=\"window.location.href=\'" + x.link + "\'\"></form><br />";
+				// "<form name = \"myform\" action =" + x.link  + " method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 
+			}
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
 	    }
 	}
