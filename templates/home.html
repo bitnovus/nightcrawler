@@ -105,20 +105,32 @@
 	<script type="text/javascript">
 		var results;
 		var sortedby;
+		var orig_state;
+		var dest_state;
 		function submit()
 		{
 			var orig_city_value = document.getElementById("originform").value;
 			var dest_city_value = document.getElementById("destform").value;
 			var date = document.getElementById("datepicker").value.split("/");
-			if (validatelocation(orig_city_value) == null) {
+			orig_city_value = validatelocation(orig_city_value);
+			if (orig_city_value == null) {
 				console.log("invalid origin");
 				window.alert("The origin value you have entered is not a supported location.");
 				return;
+			} else {
+				comma = orig_city_value.indexOf(",");
+			        orig_state = orig_city_value.substring(comma+1);
+			        orig_city_value = orig_city_value.substring(0, comma);
 			}
-			if (validatelocation(dest_city_value) == null) {
+			dest_city_value = validatelocation(dest_city_value);
+			if (dest_city_value == null) {
 				console.log("invalid destination");
 				window.alert("The destination value you have entered is not a supported location.");
 				return;
+			} else {
+				comma = dest_city_value.indexOf(",");
+			        dest_state = dest_city_value.substring(comma+1);
+			        dest_city_value = dest_city_value.substring(0, comma);
 			}
 			if (!validatedate(date)) {
 				window.alert("The date you have entered is invalid.");
@@ -159,8 +171,8 @@
 			$.get(
 				"all",
 				{
-					orig: orig_city_value.substring(0, orig_city_value.indexOf(",")),
-					dest: dest_city_value.substring(0, dest_city_value.indexOf(",")),
+					orig: orig_city_value,
+					dest: dest_city_value,
 					month: date[0],
 					day: date[1],
 					year: date[2],
@@ -200,7 +212,7 @@
 				p2 = p.substring(0, comma);
 				p2 = p2.toLowerCase();
 				if (loc == p2) {
-					return p2;
+					return p;
 				}
 			}
 			return null;
@@ -369,9 +381,12 @@
 							if (addcarriers) {
 								r.carriers[j] = carriertomode(stop.carrier);
 								if (j == 0) {
-									r.stops[0] = r.departure;
+									r.stops[0] = r.departure + ", " + orig_state;
 								}
 								r.stops[j+1] = r.arrival;
+								if (j == r.length-1) {
+									r.stops[j+1] += ", " + dest_state;
+								}
 							}
 							appendData(e, stop);
 						}
@@ -400,7 +415,7 @@
 								if (addcarriers) {
 									r.carriers.push(carriertomode(stop.carrier));
 									if (r.stops.length == 0) {
-										r.stops.push(stop.departure);
+										r.stops.push(stop.departure + ", " + orig_state);
 									}
 									r.stops.push(stop.arrival);
 								}
@@ -412,7 +427,7 @@
 							if (addcarriers) {
 								r.carriers.push(carriertomode(leg.carrier));
 								if (r.stops.length == 0) {
-									r.stops.push(leg.departure);
+									r.stops.push(leg.departure + ", " + orig_state);
 								}
 								r.stops.push(leg.arrival);
 							}
@@ -425,6 +440,9 @@
 							e.innerHTML += "<br/>";
 						}
 					}
+					if (addtocarriers) {
+						r.stops[r.stops.length-1] += ", " + dest_state;
+					}
 					appendMap(e, i);
 					e.innerHTML += "<br /><b>Total price: " + r[0].price + "</b>";
 					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes </b>";
@@ -435,8 +453,8 @@
 						r.carriers = new Array();
 						r.carriers[0] = carriertomode(r.carrier);
 						r.stops = new Array();
-						r.stops[0] = r.departure;
-						r.stops[1] = r.arrival;
+						r.stops[0] = r.departure + ", " + orig_state;
+						r.stops[1] = r.arrival + ", " + dest_state;
 					}
 					appendData(e, r);
 					appendPriceCarrier(e, r);
@@ -454,11 +472,17 @@
 			toggleloadingimage();
         }
 
-        function showMap(stops, modes) {
+function showMap(stops, modes) {
+			var header = document.getElementById("map-header");
+			header.innerHTML = document.getElementById("originform").value + " to " +
+				document.getElementById("destform").value;
+
             var m = document.getElementById("map-div");
             var temp_map_div = "";
-            temp_map_div += '<iframe width=\"100%\" onLoad=
-            "calcHeight();\" src=\"/map?stops=\" frameBorder=\"0\" scrolling=\"no\" height=\"1></iframe>';
+            //temp_map_div += '<iframe width=\"100%\" onLoad=\"calcHeight();\" src=\"/map?stops=\" frameBorder=\"0\" scrolling=\"no\" height=\"1\"></iframe>';
+            //temporary for testing
+            temp_map_div += '<iframe width=\"100%\" src=\"/map?stops=';
+
             console.log("stops " + stops);
             console.log("modes " + modes);
 
@@ -483,8 +507,8 @@
             }
             temp_map_div = temp_map_div.substring(0, temp_map_div.length-1);
             temp_map_div += "]";
-            temp_map_div += '"';
-            temp_map_div += '></iframe>';
+
+            temp_map_div += '\" frameBorder=\"0\" scrolling=\"no\" height=\"574px\"></iframe>'
             console.log(temp_map_div);
             m.innerHTML = temp_map_div;
             
@@ -511,7 +535,7 @@
 			}
 
 			else{
-				e.innerHTML += "<form><input type = \"button\" value = \"Tickets\" onClick=\"window.location.href=\'" + x.link + "\'\"></form><br />";
+				e.innerHTML += "<form target=\"_blank\"><input type = \"button\" value = \"Tickets\" onClick=\"window.location.href=\'" + x.link + "\'\"></form><br />";
 				// "<form name = \"myform\" action =" + x.link  + " method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 
 			}
@@ -636,6 +660,7 @@
         <div class="modal fade" id="map-modal">
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">&times;</a>
+                <h4 id="map-header"></h4>
 
             </div>
             <div class="modal-body" id="map-div">
