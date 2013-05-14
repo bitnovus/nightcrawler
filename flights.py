@@ -1,5 +1,6 @@
 #!/bin/env python
 import urllib2, re
+from multiprocessing.pool import ThreadPool
 
 def sanitize_departures(departures):
   g = []
@@ -84,8 +85,6 @@ def flights(start, end, month, day, year, hour, minute, isArriving, byPrice):
   #print p
   return p
 
-
-
 def contains(list, check):
   for i in list:
     if i == check:
@@ -94,9 +93,15 @@ def contains(list, check):
 
 def orbitz(start, end, month, day, year, hour, minute, isArriving):
 
-  first = flights(start, end, month, day, year, hour, minute, isArriving, True)
-  second = flights(start, end, month, day, year, hour, minute, isArriving, False)
-  print first
+  pool = ThreadPool(processes = 2)
+  result1 = pool.apply_async(flights, (start, end, month, day, year, hour, minute, isArriving, True))
+  result2 = pool.apply_async(flights, (start, end, month, day, year, hour, minute, isArriving, False))
+
+  first = result1.get()
+  second = result2.get()
+#  first = flights(start, end, month, day, year, hour, minute, isArriving, True)
+#  second = flights(start, end, month, day, year, hour, minute, isArriving, False)
+  #print first
   for s in second:
     if contains(first, s) is False:
       first.append(s)
