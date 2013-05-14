@@ -369,19 +369,9 @@
 							if (addcarriers) {
 								r.carriers[j] = carriertomode(stop.carrier);
 								if (j == 0) {
-<<<<<<< HEAD
-									//r.stops[0] = r.departure + " " + orig_state;
 									r.stops[0] = r.departure;
 								}
 								r.stops[j+1] = r.arrival;
-								if (j == r.length-1) {
-									//r.stops[j+1] += " " + dest_state;
-								}
-=======
-									r.stops[0] = r.departure;
-								}
-								r.stops[j+1] = r.arrival;
->>>>>>> 23a51cb8e6e4c5cafc30de9226927ee24d3acde8
 							}
 							appendData(e, stop);
 						}
@@ -410,10 +400,6 @@
 								if (addcarriers) {
 									r.carriers.push(carriertomode(stop.carrier));
 									if (r.stops.length == 0) {
-<<<<<<< HEAD
-										//r.stops.push(stop.departure + " " + orig_state);
-=======
->>>>>>> 23a51cb8e6e4c5cafc30de9226927ee24d3acde8
 										r.stops.push(stop.departure);
 									}
 									r.stops.push(stop.arrival);
@@ -427,10 +413,6 @@
 								r.carriers.push(carriertomode(leg.carrier));
 								if (r.stops.length == 0) {
 									r.stops.push(leg.departure);
-<<<<<<< HEAD
-									//r.stops.push(leg.departure + " " + orig_state);
-=======
->>>>>>> 23a51cb8e6e4c5cafc30de9226927ee24d3acde8
 								}
 								r.stops.push(leg.arrival);
 							}
