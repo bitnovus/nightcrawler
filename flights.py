@@ -1,5 +1,6 @@
 #!/bin/env python
 import urllib2, re
+from multiprocessing.pool import ThreadPool
 
 def sanitize_departures(departures):
   g = []
@@ -72,7 +73,7 @@ def flights(start, end, month, day, year, hour, minute, isArriving, byPrice):
     s = 'http://www.orbitz.com/shop/home?type=air&ar.type=oneWay&ar.ow.leaveSlice.orig.dl=&ar.ow.leaveSlice.dest.dl=&ar.ow.leaveSlice.orig.key='+ str(start) + '&_ar.ow.leaveSlice.originRadius=0&ar.ow.leaveSlice.dest.key='+ str(end) + '&_ar.ow.leaveSlice.destinationRadius=0&ar.ow.leaveSlice.date='+ str(month) + '%2F' + str(day) + '%2F' + str(year) + '&ar.ow.leaveSlice.time=Anytime&ar.ow.numAdult=1&ar.ow.numSenior=0&ar.ow.numChild=0&ar.ow.child%5B0%5D=&ar.ow.child%5B1%5D=&ar.ow.child%5B2%5D=&ar.ow.child%5B3%5D=&ar.ow.child%5B4%5D=&ar.ow.child%5B5%5D=&ar.ow.child%5B6%5D=&ar.ow.child%5B7%5D=&_ar.ow.nonStop=0&_ar.ow.narrowSel=0&ar.ow.narrow=airlines&ar.ow.carriers%5B0%5D=&ar.ow.carriers%5B1%5D=&ar.ow.carriers%5B2%5D=&ar.ow.cabin=C&search=Search+Flights&view.sortType=AIR_JOURNEY_DURATION'
   html = urllib2.urlopen(s).read()
   times = re.findall("[0-9]*[0-9]:[0-9][0-9].*[AP]M </span>", html)
-  times_s = sanitize_times(times)
+  times_s = sanitize_times(tmes)
 
   prices = re.findall("money-symbol.*\.[0-9][0-9]", html)
   prices_s = sanitize_prices(prices)
@@ -84,8 +85,6 @@ def flights(start, end, month, day, year, hour, minute, isArriving, byPrice):
   #print p
   return p
 
-
-
 def contains(list, check):
   for i in list:
     if i == check:
@@ -94,13 +93,18 @@ def contains(list, check):
 
 def orbitz(start, end, month, day, year, hour, minute, isArriving):
 
-  first = flights(start, end, month, day, year, hour, minute, isArriving, True)
-  second = flights(start, end, month, day, year, hour, minute, isArriving, False)
-  print first
+  pool = ThreadPool(processes = 2)
+  result1 = pool.apply_async(flights, (start, end, month, day, year, hour, minute, isArriving, True))
+  result2 = pool.apply_async(flights, (start, end, month, day, year, hour, minute, isArriving, False))
+
+  first = result1.get()
+  second = result2.get()
+  # first = flights(start, end, month, day, year, hour, minute, isArriving, True)
+  # second = flights(start, end, month, day, year, hour, minute, isArriving, False)
   for s in second:
     if contains(first, s) is False:
       first.append(s)
-  if True: return first
+  return first
 
 if __name__ == '__main__':
     print orbitz("EWR", "BOS", 5, 30, 2013, 18, 30, False)
