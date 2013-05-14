@@ -586,6 +586,13 @@ function showMap(stops, modes) {
 			//$( ".loading img" ).fadeToggle();
 		}
 
+		function detectIE() {
+			var isIE = /*@cc_on!@*/false;
+			if (isIE) {
+				$.blockUI({message: 'Internet explorer is not supported. Please use Firefox, Chrome, or Safari.'});
+			}
+		}
+
 		var places = [];
 		function loadCities() {
 			$.get("cities", function (data, status) {
@@ -596,6 +603,7 @@ function showMap(stops, modes) {
 		};
 
 		$(document).ready(loadCities());
+		$(document).ready(detectIE());
 
 		$(function() {
 			$.datepicker.setDefaults({minDate: 0});
