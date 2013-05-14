@@ -106,11 +106,13 @@
 		var results;
 		var sortedby;
 		var orig_state;
-		var dest_state;
+        var dest_state;
+        var orig_city_value;
+        var dest_city_value;
 		function submit()
 		{
-			var orig_city_value = document.getElementById("originform").value;
-			var dest_city_value = document.getElementById("destform").value;
+			orig_city_value = document.getElementById("originform").value;
+			dest_city_value = document.getElementById("destform").value;
 			var date = document.getElementById("datepicker").value.split("/");
 			orig_city_value = validatelocation(orig_city_value);
 			if (orig_city_value == null) {
@@ -517,6 +519,10 @@ function showMap(stops, modes) {
             temp_map_div += orig_state.toString();
             temp_map_div += "&deststate=";
             temp_map_div += dest_state.toString();
+            temp_map_div += "&origcity=";
+            temp_map_div += orig_city_value.toString();
+            temp_map_div += "&destcity=";
+            temp_map_div += dest_city_value.toString();
 
             temp_map_div += '\" frameBorder=\"0\" scrolling=\"no\" height=\"574px\"></iframe>'
             console.log(temp_map_div);

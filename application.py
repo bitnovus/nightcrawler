@@ -43,6 +43,8 @@ def show_map(name=None):
     input_modes = request.args.get('modes')
     origstate = request.args.get('origstate')
     deststate = request.args.get('deststate')
+    origcity = request.args.get('origcity')
+    destcity = request.args.get('destcity')
 
     regex = re.compile("(\'.*?\')")
     print input_stops
@@ -56,13 +58,17 @@ def show_map(name=None):
 
     for i in range(0, len(old_stops_list)):
         temp_stop = old_stops_list[i][:-1]
-        if modes_list[min(i, len(modes_list)-1)] != "\'TRANSIT\'":
+        if modes_list[min(i, len(modes_list)-1)] != "\'TRANSIT\'" and len(temp_stop) != 4:
             print i
             temp_stop += ' '
             if i == 0:
+                temp_stop += origcity
                 temp_stop += origstate
             elif i == len(old_stops_list)-1:
+                temp_stop += destcity
                 temp_stop += deststate
+
+        temp_stop = temp_stop.replace("b/t", "")
         temp_stop += "'"
         new_stops_list.append(temp_stop)
 
