@@ -91,7 +91,6 @@
                         origin: startpoint,
                         destination: endpoint,
                         travelMode: google.maps.TravelMode[mode]
-                        departure_time:
                     };
                     directionsService.route(request, function(response, status) {
                         if (status == google.maps.DirectionsStatus.OK) {
