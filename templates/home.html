@@ -443,12 +443,6 @@
 							e.innerHTML += "<br/>";
 						}
 					}
-<<<<<<< HEAD
-					if (addcarriers) {
-						//r.stops[r.stops.length-1] += " " + dest_state;
-					}
-=======
->>>>>>> 23a51cb8e6e4c5cafc30de9226927ee24d3acde8
 					appendMap(e, i);
 					e.innerHTML += "<br /><b>Total price: " + r[0].price + "</b>";
 					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes </b>";
@@ -460,13 +454,7 @@
 						r.carriers[0] = carriertomode(r.carrier);
 						r.stops = new Array();
 						r.stops[0] = r.departure;
-<<<<<<< HEAD
-						//r.stops[0] = r.departure + " " + orig_state;
 						r.stops[1] = r.arrival;
-						//r.stops[1] = r.arrival + " " + dest_state;
-=======
-						r.stops[1] = r.arrival;
->>>>>>> 23a51cb8e6e4c5cafc30de9226927ee24d3acde8
 					}
 					appendData(e, r);
 					appendPriceCarrier(e, r);
@@ -512,7 +500,6 @@
             }
             temp_map_div = temp_map_div.substring(0, temp_map_div.length-1);
             temp_map_div += "]";
-<<<<<<< HEAD
 
             temp_map_div += "&origstate=";
             temp_map_div += orig_state.toString();
@@ -520,10 +507,6 @@
             temp_map_div += dest_state.toString();
 
             temp_map_div += '\" frameBorder=\"0\" scrolling=\"no\" height=\"574px\"></iframe>'
-=======
-            temp_map_div += '"';
-            temp_map_div += '></iframe>';
->>>>>>> 23a51cb8e6e4c5cafc30de9226927ee24d3acde8
             console.log(temp_map_div);
             m.innerHTML = temp_map_div;
             
