@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify, Response, request, Markup
 from flask.ext.sqlalchemy import SQLAlchemy
 from models import City
-import os, megabus, flights, json, njtransit, amtrak
+import os, megabus, flights, json, njtransit, amtrak, re
 from multiprocessing.pool import ThreadPool
 
 #=========================================================
@@ -36,21 +36,51 @@ def timeline(name=None):
 
 @application.route('/map')
 def show_map(name=None):
-    test_route = ["Princeton Junction, NJ", "Newark Airport, NJ", "Logan Airport, MA"]
+    test_stops = ["Princeton Junction, NJ", "Newark Airport, NJ", "Logan Airport, MA"]
     test_modes = ["DRIVING", "FLYING"]
 
-    route = request.args.get('stops')
-    modes = request.args.get('modes')
+    input_stops = request.args.get('stops')
+    input_modes = request.args.get('modes')
+    origstate = request.args.get('origstate')
+    deststate = request.args.get('deststate')
 
-    if not route:
-        route = test_route
+    regex = re.compile("(\'.*?\')")
+    print input_stops
+
+    old_stops_list = regex.findall(input_stops)
+    modes_list = regex.findall(input_modes)
+
+    new_stops_list = []
+
+    #print old_stops_list
+
+    for i in range(0, len(old_stops_list)):
+        temp_stop = old_stops_list[i][:-1]
+        if modes_list[min(i, len(modes_list)-1)] != "\'TRANSIT\'":
+            print i
+            temp_stop += ' '
+            if i == 0:
+                temp_stop += origstate
+            elif i == len(old_stops_list)-1:
+                temp_stop += deststate
+        temp_stop += "'"
+        new_stops_list.append(temp_stop)
+
+    stops = ','.join(new_stops_list)
+    modes = ','.join(modes_list)
+
+    stops = "[" + stops + "]"
+    modes = "[" + modes + "]"
+
+    if not stops:
+        stops = test_stops
     if not modes:
         modes = test_modes
 
-    print route
-    print modes
+    #print stops
+    #print modes
 
-    return render_template('map.html', stops=Markup(route), modes=Markup(modes))
+    return render_template('map.html', stops=Markup(stops), modes=Markup(modes))
 
 @application.route('/cities')
 def all_cities():

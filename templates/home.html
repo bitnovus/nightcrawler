@@ -490,7 +490,7 @@ function showMap(stops, modes) {
 
             for (var i = 0; i < stops.length; i++) {
                 temp_map_div += "'";
-                temp_map_div += stops[i];
+                temp_map_div += escape(stops[i]);
                 temp_map_div += "'";
                 temp_map_div += ',';
             }
@@ -507,6 +507,11 @@ function showMap(stops, modes) {
             }
             temp_map_div = temp_map_div.substring(0, temp_map_div.length-1);
             temp_map_div += "]";
+
+            temp_map_div += "&origstate=";
+            temp_map_div += orig_state.toString();
+            temp_map_div += "&deststate=";
+            temp_map_div += dest_state.toString();
 
             temp_map_div += '\" frameBorder=\"0\" scrolling=\"no\" height=\"574px\"></iframe>'
             console.log(temp_map_div);
