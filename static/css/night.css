@@ -104,3 +104,9 @@
 #map-div {
     max-height: 600px; !important
 }
+#hour {
+    width: 5ex;
+}
+#minute {
+    width: 5ex;
+}
