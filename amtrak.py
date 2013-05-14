@@ -89,7 +89,7 @@ def amtrak(start, end, month, day, year, hour, min, isArriving):
 	months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 
-	date = weekdays[int(calendar.weekday(int(year), int(month), int(day)))] + '%2C+' + months[int(month)] + '+' + str(day) + '%2C+' + str(year)
+	date = weekdays[int(calendar.weekday(int(year), int(month), int(day)))] + '%2C+' + months[int(month)-1] + '+' + str(day) + '%2C+' + str(year)
 	tmp = "xwdf_origin=%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D%2FtravelSelection%2FjourneySelection%5B1%5D%2FdepartLocation%2Fsearch&wdf_origin=" + start + "&xwdf_destination=%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D%2FtravelSelection%2FjourneySelection%5B1%5D%2FarriveLocation%2Fsearch&wdf_destination=" + end + "&%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D%2FtripRequirements%2FjourneyRequirements%5B1%5D%2FdepartDate.date=" + date + "&%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D%2FtripRequirements%2FallJourneyRequirements%2FnumberOfTravellers%5B%40key%3D%27Adult%27%5D=1&_handler%3Damtrak.presentation.handler.request.rail.AmtrakRailSearchRequestHandler%2F_xpath%3D%2FsessionWorkflow%2FproductWorkflow%5B%40product%3D%27Rail%27%5D.x=24"
 	link = "http://tickets.amtrak.com/itd/amtrak"
 	html = urllib2.urlopen(link, tmp).read()
