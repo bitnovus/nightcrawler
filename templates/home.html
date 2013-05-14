@@ -469,7 +469,7 @@ function showMap(stops, modes) {
 
             for (var i = 0; i < stops.length; i++) {
                 temp_map_div += "'";
-                temp_map_div += stops[i];
+                temp_map_div += escape(stops[i]);
                 temp_map_div += "'";
                 temp_map_div += ',';
             }
