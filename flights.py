@@ -84,16 +84,23 @@ def flights(start, end, month, day, year, hour, minute, isArriving, byPrice):
   #print p
   return p
 
-def orbitz(start, end, month, day, year, hour, minute, isArriving):
-  first = flights(start, end, month, day, year, hour, minute, isArriving, True)
-  print len(first)
-  second = flights(start, end, month, day, year, hour, minute, isArriving, False)
-  print len(second)
-  combo = first + second
-  combo = [dict(tupleized) for tupleized in set(tuple(item.items()) for item in combo)]
-  print len(combo)
-  return combo
 
+
+def contains(list, check):
+  for i in list:
+    if i == check:
+      return True
+  return False
+
+def orbitz(start, end, month, day, year, hour, minute, isArriving):
+
+  first = flights(start, end, month, day, year, hour, minute, isArriving, True)
+  second = flights(start, end, month, day, year, hour, minute, isArriving, False)
+  print first
+  for s in second:
+    if contains(first, s) is False:
+      first.append(s)
+  if True: return first
 
 if __name__ == '__main__':
     print orbitz("EWR", "BOS", 5, 30, 2013, 18, 30, False)
