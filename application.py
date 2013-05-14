@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, Response, request, Markup, send_from_directory
+from flask import Flask, render_template, jsonify, Response, request, Markup, send_from_directory, redirect
 from flask.ext.sqlalchemy import SQLAlchemy
 from models import City
 import os, megabus, flights, json, njtransit, amtrak, re
@@ -23,9 +23,13 @@ db = SQLAlchemy(application)
 pool = ThreadPool(processes=14)
 #=========================================================
 
-@application.route('/')
+@application.route('/about')
 def landing_page(name=None):
     return render_template('landing.html', name=name)
+
+@application.route('/')
+def redirect_to_home(code=301):
+    return redirect("home", code)
 
 @application.route('/home')
 def home_page(name=None):
