@@ -64,9 +64,12 @@ def package_info(times, prices, carriers, start, end, hour, minute, isArriving, 
         dictionaries.append(dict(price = prices[j], departure = start, arrival = end, departure_time = times[2 * j], arrival_time = times[2 * j+ 1], carrier = carriers[j], link = s, payload = ""))
   return dictionaries
 
-def orbitz(start, end, month, day, year, hour, minute, isArriving):
-  s = 'http://www.orbitz.com/shop/home?type=air&ar.type=oneWay&ar.ow.leaveSlice.orig.dl=&ar.ow.leaveSlice.dest.dl=&ar.ow.leaveSlice.orig.key='+ str(start) + '&_ar.ow.leaveSlice.originRadius=0&ar.ow.leaveSlice.dest.key='+ str(end) + '&_ar.ow.leaveSlice.destinationRadius=0&ar.ow.leaveSlice.date='+ str(month) + '%2F' + str(day) + '%2F' + str(year) + '&ar.ow.leaveSlice.time=Anytime&ar.ow.numAdult=1&ar.ow.numSenior=0&ar.ow.numChild=0&ar.ow.child%5B0%5D=&ar.ow.child%5B1%5D=&ar.ow.child%5B2%5D=&ar.ow.child%5B3%5D=&ar.ow.child%5B4%5D=&ar.ow.child%5B5%5D=&ar.ow.child%5B6%5D=&ar.ow.child%5B7%5D=&_ar.ow.nonStop=0&_ar.ow.narrowSel=0&ar.ow.narrow=airlines&ar.ow.carriers%5B0%5D=&ar.ow.carriers%5B1%5D=&ar.ow.carriers%5B2%5D=&ar.ow.cabin=C&search=Search+Flights&view.numResults=500'
-
+def flights(start, end, month, day, year, hour, minute, isArriving, byPrice):
+  s = ''
+  if byPrice:
+    s = 'http://www.orbitz.com/shop/home?type=air&ar.type=oneWay&ar.ow.leaveSlice.orig.dl=&ar.ow.leaveSlice.dest.dl=&ar.ow.leaveSlice.orig.key='+ str(start) + '&_ar.ow.leaveSlice.originRadius=0&ar.ow.leaveSlice.dest.key='+ str(end) + '&_ar.ow.leaveSlice.destinationRadius=0&ar.ow.leaveSlice.date='+ str(month) + '%2F' + str(day) + '%2F' + str(year) + '&ar.ow.leaveSlice.time=Anytime&ar.ow.numAdult=1&ar.ow.numSenior=0&ar.ow.numChild=0&ar.ow.child%5B0%5D=&ar.ow.child%5B1%5D=&ar.ow.child%5B2%5D=&ar.ow.child%5B3%5D=&ar.ow.child%5B4%5D=&ar.ow.child%5B5%5D=&ar.ow.child%5B6%5D=&ar.ow.child%5B7%5D=&_ar.ow.nonStop=0&_ar.ow.narrowSel=0&ar.ow.narrow=airlines&ar.ow.carriers%5B0%5D=&ar.ow.carriers%5B1%5D=&ar.ow.carriers%5B2%5D=&ar.ow.cabin=C&search=Search+Flights'
+  else:
+    s = 'http://www.orbitz.com/shop/home?type=air&ar.type=oneWay&ar.ow.leaveSlice.orig.dl=&ar.ow.leaveSlice.dest.dl=&ar.ow.leaveSlice.orig.key='+ str(start) + '&_ar.ow.leaveSlice.originRadius=0&ar.ow.leaveSlice.dest.key='+ str(end) + '&_ar.ow.leaveSlice.destinationRadius=0&ar.ow.leaveSlice.date='+ str(month) + '%2F' + str(day) + '%2F' + str(year) + '&ar.ow.leaveSlice.time=Anytime&ar.ow.numAdult=1&ar.ow.numSenior=0&ar.ow.numChild=0&ar.ow.child%5B0%5D=&ar.ow.child%5B1%5D=&ar.ow.child%5B2%5D=&ar.ow.child%5B3%5D=&ar.ow.child%5B4%5D=&ar.ow.child%5B5%5D=&ar.ow.child%5B6%5D=&ar.ow.child%5B7%5D=&_ar.ow.nonStop=0&_ar.ow.narrowSel=0&ar.ow.narrow=airlines&ar.ow.carriers%5B0%5D=&ar.ow.carriers%5B1%5D=&ar.ow.carriers%5B2%5D=&ar.ow.cabin=C&search=Search+Flights&view.sortType=AIR_JOURNEY_DURATION'
   html = urllib2.urlopen(s).read()
   times = re.findall("[0-9]*[0-9]:[0-9][0-9].*[AP]M </span>", html)
   times_s = sanitize_times(times)
@@ -81,5 +84,16 @@ def orbitz(start, end, month, day, year, hour, minute, isArriving):
   #print p
   return p
 
+def orbitz(start, end, month, day, year, hour, minute, isArriving):
+  first = flights(start, end, month, day, year, hour, minute, isArriving, True)
+  print len(first)
+  second = flights(start, end, month, day, year, hour, minute, isArriving, False)
+  print len(second)
+  combo = first + second
+  combo = [dict(tupleized) for tupleized in set(tuple(item.items()) for item in combo)]
+  print len(combo)
+  return combo
+
+
 if __name__ == '__main__':
-    print orbitz("EWR", "MIA", 5, 30, 2013, 17, 30, False)
+    print orbitz("EWR", "BOS", 5, 30, 2013, 18, 30, False)
