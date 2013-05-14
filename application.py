@@ -3,6 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from models import City
 import os, megabus, flights, json, njtransit, amtrak, re
 from multiprocessing.pool import ThreadPool
+from werkzeug.routing import BaseConverter
 
 #=========================================================
 
@@ -424,7 +425,20 @@ def amtrak_stuff():
 
 @application.route('/favicon.ico')
 def favicon():
-        return send_from_directory(os.path.join(application.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(os.path.join(application.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+@application.route('/timeline.html')
+def sub_timeline():
+    return send_from_directory(os.path.join(application.root_path, 'submission_directory'), 'timeline.html', mimetype='text/html')
+
+class RegexConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
+
+application.url_map.converters['regex'] = RegexConverter
+@application.route('/<regex("[a-zA-Z0-9]+.png"):picName>')
+def image_routes(picName):
+    return send_from_directory(os.path.join(application.root_path, 'submission_directory'), picName, mimetype='image/png')
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0', debug=True)
