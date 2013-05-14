@@ -587,9 +587,12 @@ function showMap(stops, modes) {
 		}
 
 		function detectIE() {
+			var isFirefox = typeof InstallTrigger !== 'undefined';
+			var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+			var isChrome = !!window.chrome;
 			var isIE = /*@cc_on!@*/false;
-			if (isIE) {
-				$.blockUI({message: 'Internet explorer is not supported. Please use Firefox, Chrome, or Safari.'});
+			if (!isFirefox && !isSafari && !isChrome) {
+				$.blockUI({message: 'Your browser is not supported. Please use Firefox, Chrome, or Safari.'});
 			}
 		}
 
