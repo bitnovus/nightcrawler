@@ -137,7 +137,6 @@
 				return;
 			}
 
-			toggleloadingimage();
 			var arrive = false;
 			if (document.getElementById("arriveby").checked) {
 				arrive = true;
@@ -158,6 +157,7 @@
 				window.alert("The minute you have entered is invalid.");
 				return;
 			}
+			toggleloadingimage();
 			if (hour != "") {
 				hour = hour*1;
 				if (hour == 12) {
@@ -166,7 +166,7 @@
 				if (!am) {
 					hour = hour + 12;
 				}
-            }
+			}
 
 			$.get(
 				"all",
@@ -381,11 +381,11 @@
 							if (addcarriers) {
 								r.carriers[j] = carriertomode(stop.carrier);
 								if (j == 0) {
-									r.stops[0] = r.departure + ", " + orig_state;
+									r.stops[0] = r.departure + " " + orig_state;
 								}
 								r.stops[j+1] = r.arrival;
 								if (j == r.length-1) {
-									r.stops[j+1] += ", " + dest_state;
+									r.stops[j+1] += " " + dest_state;
 								}
 							}
 							appendData(e, stop);
@@ -415,7 +415,7 @@
 								if (addcarriers) {
 									r.carriers.push(carriertomode(stop.carrier));
 									if (r.stops.length == 0) {
-										r.stops.push(stop.departure + ", " + orig_state);
+										r.stops.push(stop.departure + " " + orig_state);
 									}
 									r.stops.push(stop.arrival);
 								}
@@ -427,7 +427,7 @@
 							if (addcarriers) {
 								r.carriers.push(carriertomode(leg.carrier));
 								if (r.stops.length == 0) {
-									r.stops.push(leg.departure + ", " + orig_state);
+									r.stops.push(leg.departure + " " + orig_state);
 								}
 								r.stops.push(leg.arrival);
 							}
@@ -440,8 +440,8 @@
 							e.innerHTML += "<br/>";
 						}
 					}
-					if (addtocarriers) {
-						r.stops[r.stops.length-1] += ", " + dest_state;
+					if (addcarriers) {
+						r.stops[r.stops.length-1] += " " + dest_state;
 					}
 					appendMap(e, i);
 					e.innerHTML += "<br /><b>Total price: " + r[0].price + "</b>";
@@ -453,8 +453,8 @@
 						r.carriers = new Array();
 						r.carriers[0] = carriertomode(r.carrier);
 						r.stops = new Array();
-						r.stops[0] = r.departure + ", " + orig_state;
-						r.stops[1] = r.arrival + ", " + dest_state;
+						r.stops[0] = r.departure + " " + orig_state;
+						r.stops[1] = r.arrival + " " + dest_state;
 					}
 					appendData(e, r);
 					appendPriceCarrier(e, r);
@@ -535,7 +535,7 @@ function showMap(stops, modes) {
 			}
 
 			else{
-				e.innerHTML += "<form target=\"_blank\"><input type = \"button\" value = \"Tickets\" onClick=\"window.location.href=\'" + x.link + "\'\"></form><br />";
+				e.innerHTML += "<form><input type = \"button\" value = \"Tickets\" onClick=\"window.open(\'" + x.link + "\', \'newWindow\');\"></form><br />";
 				// "<form name = \"myform\" action =" + x.link  + " method = \"GET\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 
 			}
