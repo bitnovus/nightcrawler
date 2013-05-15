@@ -46,11 +46,6 @@
     float: left;
 }
 
-#switchbar {
-    padding: 0 0 10px 0;
-    width: 60%;
-}
-
 .ui-menu .ui-menu-item {
     margin:0;
     padding: 0;
@@ -76,6 +71,20 @@
     width: auto;
 }
 
+@media screen and (min-width: 400px) {
+    #results-modal {
+        top: 5%; !important
+    }
+    #map-modal {
+        top: 5%; !important
+        height: 754px;
+    }
+    #switchbar {
+        padding: 0 0 10px 0;
+        width: 100%;
+    }
+}
+
 @media screen and (min-width: 960px) {
     #results-modal {
         left:25%; !important
@@ -88,15 +97,9 @@
         position: relative;
         left: 12%;
     }
-}
-
-@media screen and (min-width: 400px) {
-    #results-modal {
-        top: 5%; !important
-    }
-    #map-modal {
-        top: 5%; !important
-        height: 754px;
+    #switchbar {
+        padding: 0 0 10px 0;
+        width: 60%;
     }
 }
 
