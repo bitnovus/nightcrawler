@@ -309,12 +309,19 @@
 			sortedby = sorttype;
             var e = document.getElementById(specdiv);
             e.style.display = "none";
-			var header = document.getElementById("results-header");
-			header.innerHTML = document.getElementById("originform").value + " to " +
-				document.getElementById("destform").value + " on " + document.getElementById("datepicker").value;
+            var header = document.getElementById("results-header");
+            header.innerHTML = "";
+            header.appendChild(document.createTextNode(document.getElementById("originform").value));
+            header.appendChild(document.createTextNode(" to "));
+            header.appendChild(document.createTextNode(document.getElementById("destform").value));
+            header.appendChild(document.createTextNode(" on "));
+            header.appendChild(document.createTextNode(document.getElementById("datepicker").value));
+
+			/*header.innerHTML = document.getElementById("originform").value + " to " +
+				document.getElementById("destform").value + " on " + document.getElementById("datepicker").value;*/
 			e.innerHTML = "";
-			if (results_array.length == 0) {
-				e.innerHTML += "No routes found.";
+            if (results_array.length == 0) {
+                e.appendChild(document.createTextNode("No routes found."));
 			}
 			for (var i = 0; i < results_array.length; i++) {
 				var r = results_array[i];
@@ -345,9 +352,14 @@
 						}
 						appendPriceCarrier(e, stop);
 						appendLink(e, stop);
-						appendMap(e, i, sortedby);
-						e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes</b>";
-						e.innerHTML += "<hr/>"
+                        appendMap(e, i, sortedby);
+                        e.appendChild(document.createElement('br'));
+                        var bold_elapsed_time = document.createElement('b')
+                        bold_elapsed_time.appendChild(document.createTextNode("Elapsed time: " + r.elapsed_time + " minutes"));
+                        e.appendChild(bold_elapsed_time);
+                        e.appendChild(document.createElement('hr'));
+						//e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes</b>";
+						//e.innerHTML += "<hr/>"
 						continue;
 					}
 					// multiple legs
@@ -358,8 +370,11 @@
 						r.stops = new Array();
 					}
 					for (var j = 1; j < r.length; j++) {
-						var leg = r[j];
-						e.innerHTML += "<h5>Leg " + j + "</h5>";
+                        var leg = r[j];
+                        var leg_node = document.createElement('h5');
+                        leg_node.appendChild(document.createTextNode("Leg " + j));
+                        e.appendChild(leg_node);
+						//e.innerHTML += "<h5>Leg " + j + "</h5>";
 						// multiple stops
 						if (leg instanceof Array) {
 							var stop;
@@ -391,17 +406,29 @@
 							appendLink(e, leg);
 						}
 
-						if (j < r.length - 1) {
-							e.innerHTML += "<br/>";
+                        if (j < r.length - 1) {
+                            e.appendChild(document.createElement('br'));
 						}
 					}
 					if (addcarriers) {
 						//r.stops[r.stops.length-1] += " " + dest_state;
 					}
-					appendMap(e, i, sortedby);
-					e.innerHTML += "<br /><b>Total price: " + r[0].price + "</b>";
-					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes </b>";
-					e.innerHTML += "<hr/>"
+                    appendMap(e, i, sortedby);
+                    
+                    e.appendChild(document.createElement('br'));
+                    var total_price_node = document.createElement('b')
+                    total_price_node.appendChild(document.createTextNode("Total price: "));
+                    total_price_node.appendChild(document.createTextNode(r[0].price));
+                    e.appendChild(total_price_node);
+                    e.appendChild(document.createElement('br'));
+                    var elapsed_time_node = document.createElement('b')
+                    elapsed_time_node.appendChild(document.createTextNode("Elapsed time: " + r.elapsed_time + " minutes"));
+                    e.appendChild(elapsed_time_node);
+                    e.appendChild(document.createElement('hr'));
+
+					//e.innerHTML += "<br /><b>Total price: " + r[0].price + "</b>";
+					//e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes </b>";
+					//e.innerHTML += "<hr/>"
 				} else {
 					// one leg
 					if (r.carriers == undefined) {
@@ -416,9 +443,15 @@
 					appendData(e, r);
 					appendPriceCarrier(e, r);
 					appendLink(e, r);
-					appendMap(e, i, sortedby);
-					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes </b>";
-					e.innerHTML += "<hr/>"
+                    appendMap(e, i, sortedby);
+
+                    e.appendChild(document.createElement('br'));
+                    var elapsed_time_node = document.createElement('b')
+                    elapsed_time_node.appendChild(document.createTextNode("Elapsed time: " + r.elapsed_time + " minutes"));
+                    e.appendChild(elapsed_time_node);
+                    e.appendChild(document.createElement('hr'));
+					//e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes </b>";
+					//e.innerHTML += "<hr/>"
 				}
 			}
 			if (sortedby == 4) {
@@ -481,17 +514,31 @@
 			$("#map-modal").modal("show");
         }
 
-		function appendData(e, x) {
-			e.innerHTML += "Depart from: " + x.departure + " at " + x.departure_time + '<br />';
-			e.innerHTML += "Arrive at: " + x.arrival + " at " + x.arrival_time + '<br />';
+        function appendData(e, x) {
+            e.appendChild(document.createTextNode("Depart from: "));
+            e.appendChild(document.createTextNode(x.departure));
+            e.appendChild(document.createTextNode(" at "));
+            e.appendChild(document.createTextNode(x.departure_time));
+            e.appendChild(document.createElement('br'));
+
+            e.appendChild(document.createTextNode("Arrive at: "));
+            e.appendChild(document.createTextNode(x.arrival));
+            e.appendChild(document.createTextNode(" at "));
+            e.appendChild(document.createTextNode(x.arrival_time));
+            e.appendChild(document.createElement('br'));
 		}
 
-		function appendPriceCarrier(e, x) {
-			e.innerHTML += "Price: " + x.price + '<br />';
-			e.innerHTML += "Carrier: " + x.carrier + "<br />";
+        function appendPriceCarrier(e, x) {
+            e.appendChild(document.createTextNode("Price: "));
+            e.appendChild(document.createTextNode(x.price));
+            e.appendChild(document.createElement('br'));
+
+            e.appendChild(document.createTextNode("Carrier: "));
+            e.appendChild(document.createTextNode(x.carrier));
+            e.appendChild(document.createElement('br'));
 		}
 
-		function appendLink(e, x) {
+		/*function appendLink(e, x) {
             if (x.carrier == "Amtrak"){
 				e.innerHTML += "<form name = \"myform\" action = " + x.link + "?" + x.payload + " method = \"POST\" target=\"_blank\"><input type = \"submit\" value = \"Tickets\"></form><br />";
 			}
@@ -506,11 +553,56 @@
 
 			}
 			//"Tickets: <a href=\"#\" target =\"_blank\" onclick=\"post_to_url(" + x.link + "&" + x.payload + ")\">link</a><br />";
+        }*/
+        function appendLink(e, x) {
+            var tF = document.createElement('form');
+            var tI = document.createElement('input');
+            tI.setAttribute("value", "Tickets");
+            if (x.carrier == "Amtrak"){
+                tF.setAttribute("name", "myform");
+                tF.setAttribute("action", (x.link + "?" + x.payload));
+                tF.setAttribute("method", "POST");
+                tF.setAttribute("target", "_blank");
+                tI.setAttribute("type", "submit");
+                tI.setAttribute("class", "btn");
+                tF.appendChild(tI);
+                e.appendChild(tF);
+                e.appendChild(document.createElement('br'));
+			}
+
+            else if (x.carrier == "NJ Transit"){
+                tF.setAttribute("name", "myform");
+                tF.setAttribute("action", (x.link + "&" + x.payload));
+                tF.setAttribute("method", "POST");
+                tF.setAttribute("target", "_blank");
+                tI.setAttribute("type", "submit");
+                tI.setAttribute("class", "btn");
+                tF.appendChild(tI);
+                e.appendChild(tF);
+                e.appendChild(document.createElement('br'));
+			}
+
+            else{
+                var newWindow = "window.open(" + "'" +  x.link + "',"  + "'newWindow');";
+                tI.setAttribute("onClick", newWindow);
+                tI.setAttribute("type", "button");
+                tI.setAttribute("class", "btn");
+                tF.appendChild(tI);
+                e.appendChild(tF);
+                e.appendChild(document.createElement('br'));
+			}
 	    }
 	
 
-		function appendMap(e, i, sortedby) {
-			e.innerHTML += "<button type = \"button\" onclick = \"callMap(" + i + sortedby + ")\">map</button><br />";
+        function appendMap(e, i, sortedby) {
+            var tB = document.createElement('button');
+            var map_string_function = "callMap(" + i + "," + sortedby + ")";
+            tB.setAttribute("type", "button");
+            tB.setAttribute("class", "btn");
+            tB.setAttribute("onClick", map_string_function);
+            tB.appendChild(document.createTextNode("Map"));
+            e.appendChild(tB);
+            e.appendChild(document.createElement('br'));
 		}
 
 		function callMap(i, sortedby) {
@@ -613,40 +705,7 @@
     </head>
     <body>
         
-        <div class="modal fade" id="results-modal">
-            <div class="modal-header">
-                <a class="close" data-dismiss="modal">&times;</a>
-                <h3>Results</h3> <h4 id="results-header"></h4>
-                <div id="sort-options">
-                    <label>Sort by:</label>
-                    <div class="switch candy blue switch-four">
-                        <input id="sort-by-price" name="sorting" type="radio" checked>
-                        <label for="sort-by-price" onclick="reveal_hide('r1-price-div', ['r4-elapsed-div', 'r2-arrive-div', 'r3-depart-div'])">Price</label>
 
-                        <input id="sort-by-arrival-time" name="sorting" type="radio">
-                        <label for="sort-by-arrival-time" onclick="reveal_hide('r2-arrive-div', ['r4-elapsed-div', 'r1-price-div', 'r3-depart-div'])">Arrival Time</label>
-
-                        <input id="sort-by-departure-time" name="sorting" type="radio">
-                        <label for="sort-by-departure-time" onclick="reveal_hide('r3-depart-div', ['r4-elapsed-div', 'r2-arrive-div', 'r1-price-div'])">Departure Time</label>
-
-                        <input id="sort-by-elapsed-time" name="sorting" type="radio">
-                        <label for="sort-by-elapsed-time" onclick="reveal_hide('r4-elapsed-div', ['r1-price-div', 'r2-arrive-div', 'r3-depart-div'])">Elapsed Time</label>
-
-                        <span class="slide-button"></span>
-                    </div>
-                </div>
-                <!--<button onclick="sortresults(comparebyprice)">Sort by Price</button>
-                <button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
-                <button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
-                <button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>-->
-            </div>
-            <div class="modal-body" id="results-div"></div>
-            <div class="modal-body" id="r1-price-div"></div>
-            <div class="modal-body" id="r2-arrive-div"></div>
-            <div class="modal-body" id="r3-depart-div"></div>
-            <div class="modal-body" id="r4-elapsed-div"></div>
-
-        </div>
 
         <div class="modal fade" id="map-modal">
             <div class="modal-header">
@@ -747,7 +806,42 @@
 		<button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
 		<button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
 		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>
-	</div>-->
+    </div>-->
+
+        <div class="modal fade" id="results-modal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h3>Results</h3> <h4 id="results-header"></h4>
+                <div id="sort-options">
+                    <label>Sort by:</label>
+                    <div class="switch candy blue switch-four">
+                        <input id="sort-by-price" name="sorting" type="radio" checked>
+                        <label for="sort-by-price" onclick="reveal_hide('r1-price-div', ['r4-elapsed-div', 'r2-arrive-div', 'r3-depart-div'])">Price</label>
+
+                        <input id="sort-by-arrival-time" name="sorting" type="radio">
+                        <label for="sort-by-arrival-time" onclick="reveal_hide('r2-arrive-div', ['r4-elapsed-div', 'r1-price-div', 'r3-depart-div'])">Arrival Time</label>
+
+                        <input id="sort-by-departure-time" name="sorting" type="radio">
+                        <label for="sort-by-departure-time" onclick="reveal_hide('r3-depart-div', ['r4-elapsed-div', 'r2-arrive-div', 'r1-price-div'])">Departure Time</label>
+
+                        <input id="sort-by-elapsed-time" name="sorting" type="radio">
+                        <label for="sort-by-elapsed-time" onclick="reveal_hide('r4-elapsed-div', ['r1-price-div', 'r2-arrive-div', 'r3-depart-div'])">Elapsed Time</label>
+
+                        <span class="slide-button"></span>
+                    </div>
+                </div>
+                <!--<button onclick="sortresults(comparebyprice)">Sort by Price</button>
+                <button onclick="sortresults(comparebyarrival)">Sort by Arrival Time</button>
+                <button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
+                <button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>-->
+            </div>
+            <div class="modal-body" id="results-div"></div>
+            <div class="modal-body" id="r1-price-div"></div>
+            <div class="modal-body" id="r2-arrive-div"></div>
+            <div class="modal-body" id="r3-depart-div"></div>
+            <div class="modal-body" id="r4-elapsed-div"></div>
+
+        </div>
 	    <div class="results" id="results"></div>
 
             <!-- Le javascript
