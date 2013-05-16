@@ -1,0 +1,107 @@
+<html>
+    <h1>Project Nightcrawler Timeline Document</h1>
+    <hr></hr>
+    <h2>March 15, 2013</h2>
+    <body>Meeting to finalize project choice and discuss technologies.
+        Settled on python as the choice language for the back end server
+        because of readability, portability, good documentation, and
+        relative familiarity by the team members. Also decided on Bootstrap
+        and javascript to structure and power our user-facing interfaces.
+        Bootstrap provides a rapid solution to well-designed assets and javascript
+        offers a clean way for dynamic updating.
+    </body>
+    <hr></hr>
+    <h2>March 17, 2013</h2>
+    <body>Discovered multiple bus lines had been shut down following multiple
+        accidents. As such, our bus resources now only include Bolt Bus, Megabus,
+        Suburban, and possibly Lucky Star. Train resources are still NJ Transit,
+        MTA, and Amtrak. We will likely use Skyscanner to access airline info.
+    </body>
+    <hr></hr>
+    <h2>March 26, 2013</h2>
+    <body>Had a meeting setting up github accounts. Set up repository. Three people
+        designated to write scripts to start scraping. One person to build a server
+        to deploy to. Getting ready to meet on Thursday.
+    </body>
+    <hr></hr>
+    <h2>March 28, 2013</h2>
+    <body>Established and deployed on AWS the Hello World Flask application. Can
+        be found at http://nightcrawler-env-sugarrrypg.elasticbeanstalk.com/.
+        This website is currently a demonstration of usage of Flask deployed to AWS
+        and domain CNAME by namecheap.
+    </body>
+    <hr></hr>
+    <h2>April 1, 2013</h2>
+    <body>Attempted to fix development environment of a team member. Ended up
+        installing a virtual machine. Megabus scraper kind of working. Drew up
+        web site schematics. Discussed database structures. Suburban scraper
+        can traverse pages, working on traversing tables.
+    </body>
+    <hr></hr>
+    <h2>April 7, 2013</h2>
+    <body>Made scripts for Orbitz. Skyscanner didn't work out. Flightstats was
+        considered and we made an account for it. Attempted to scrape Kayak, but
+        not particularly successful.
+    </body>
+    <hr></hr>
+    <h2>April 9, 2013</h2>
+    <body>Made decision to switch from Amazon to Heroku for speed. We now
+        have the ability to scrape Megabus, Orbitz, and Suburban effectively.
+        Homepage looks good with Bootstrap.
+
+        Finished move to Heroku. Static files now working? Also, project is now
+        hosted at http://radiant-meadow-8177.herokuapp.com/. Still able to reach
+        website at projectnightcrawler.com
+    </body>
+    <hr></hr>
+    <h2>April 14, 2013</h2>
+    <body>We worked on getting the time functionality working for requests working.
+        We first implemented in the python scripts functionality that allows for 
+        input of an hour and a minute and a boolean variable for whether the provided
+        time is the time that the user want to arrive by or the time that the user
+        wants to depart by.  
+        
+        We also worked on sorting the data by price and time (shortest to longest) and
+        got the flight information (already available on the backend) to display on the website. 
+    </body>
+    <hr></hr>
+    <h2>April 21, 2013</h2>
+    <body>We got time preferences working on the front end (website).  We did more
+        exploration of possible scraping techniques for train information. We have
+        yet to include any trains in our service.  We also worked on getting the 
+        auto-complete for arrival and destination location and the pop-up calendar to
+        work. We also worked to improve the style of our website. 
+    </body>
+    <hr></hr>
+ <h2>April 26, 2013</h2>
+    <body>Today, we worked on getting the loading gif and results page working and were
+          sucessful in doing that.  We also worked on search algorithm for combinging
+          different pieces of routes to get the fastest and cheapest overall route. 
+          Finally, we sucessfully scraped both NJ transit and Amtrak trains. 
+    </body>
+    <hr></hr>
+ <h2>May 2, 2013</h2>
+    <body>Today, we spent some time making sure that we had train codes properly entered
+          in the database. We also are setting up on the backend a way to display links
+          on our results page that a user can click to be directed to a page that allows
+          them to purchase the desired ticket.  We also are working on a more sophisticated
+          algorithm to find the shortest route (i.e. by combining multiple modes of 
+          transportation).
+    </body>     
+    <hr></hr>
+ <h2>May 7, 2013</h2>
+    <body>Today, we worked on displaying multiple legs for the Amtrak train results
+          (not just the original origin and the final destination). We also realized
+          that we needed to use javascript to process post requests on the front-end
+          to get amtrak links to work. 
+    </body>     
+    <hr></hr>
+ <h2>May 8, 2013</h2>
+    <body>Today, we worked on our power point for the demo. We also got got NJ 
+          transit fully working including mulit-leg trips. We fixed a bug related
+          to displaying prices. We also worked on displaying maps on our website
+          so that users can see a visual depiction of their route. 
+    </body>     
+    <hr></hr>
+
+</html>
