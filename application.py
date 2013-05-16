@@ -73,6 +73,9 @@ def show_map(name=None):
                 temp_stop += destcity
                 temp_stop += deststate
 
+        if len(temp_stop) == 4:
+            temp_stop += ', US'
+
         temp_stop = temp_stop.replace("b/t", "")
         temp_stop += "'"
         new_stops_list.append(temp_stop)
