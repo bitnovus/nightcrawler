@@ -127,7 +127,7 @@
 
 		function copyarray(src) {
 			var dest = new Array();
-			for (int i = 0; i < src.length; i++) {
+			for (var i = 0; i < src.length; i++) {
 				dest[i] = src[i];
 			}
 			return dest;
@@ -499,7 +499,7 @@
 			    results_array = results_price;
 		    } else if (sortedby == 2) {
 			    results_array = results_arrival;
-		    } elseif (sortedby == 3) {
+		    } else if (sortedby == 3) {
 			    results_array = results_departure;
 		    } else {
 			    results_array = results_elapsed;
