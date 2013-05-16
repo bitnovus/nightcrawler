@@ -6,8 +6,8 @@
         Settled on python as the choice language for the back end server
         because of readability, portability, good documentation, and
         relative familiarity by the team members. Also decided on Bootstrap
-        and JavaScript to structure and power our user-facing interfaces.
-        Bootstrap provides a rapid solution to well-designed assets and JavaScript
+        and javascript to structure and power our user-facing interfaces.
+        Bootstrap provides a rapid solution to well-designed assets and javascript
         offers a clean way for dynamic updating.
     </body>
     <hr></hr>
@@ -19,7 +19,7 @@
     </body>
     <hr></hr>
     <h2>March 26, 2013</h2>
-    <body>Had a meeting setting up Github accounts. Set up repository. Three people
+    <body>Had a meeting setting up github accounts. Set up repository. Three people
         designated to write scripts to start scraping. One person to build a server
         to deploy to. Getting ready to meet on Thursday.
     </body>
@@ -28,7 +28,7 @@
     <body>Established and deployed on AWS the Hello World Flask application. Can
         be found at http://nightcrawler-env-sugarrrypg.elasticbeanstalk.com/.
         This website is currently a demonstration of usage of Flask deployed to AWS
-        and domain CNAME by Namecheap. Below is a screenshot of the basic homepage of our site. We bought the domain <i>projectnightcrawler.com</i> over spring break. <br>
+        and domain CNAME by namecheap. Below is a screenshot of the basic homepage of our site. We bought the url <i>www.projectnightcrawler.com</i> over spring break. <br>
     </body>
      <img src="basiSite.png" alt="logo" width=400 height=200> 
     <hr></hr>
@@ -47,7 +47,7 @@
     <hr></hr>
     <h2>April 9, 2013</h2>
     <body>Made decision to switch from Amazon to Heroku for speed. We now
-        have the ability to scrape Megabus, Orbitz, and Suburban effectively. In the end, we decided not to use the results from Suburban because while we could scrape easily for schedule information, there was no straightforward way to get price information since the price information was only displayed in a PDF document. 
+        have the ability to scrape Megabus, Orbitz, and Suburban effectively. In the end, we decided not to use the results from Suburban because while we could scrape easily for schedule information, there was no straightforward way to get price information since the price information was only displayed in a pdf document. 
         Homepage looks good with Bootstrap.
 
         Finished move to Heroku. Static files now working? Also, project is now
@@ -63,7 +63,7 @@
         wants to depart after.  
         
         We also worked on sorting the data by price and time (shortest to longest) and
-        got the flight information (already available on the back-end) to display on the website. 
+        got the flight information (already available on the backend) to display on the website. 
     </body>
     <hr></hr>
     <h2>April 21, 2013</h2>
@@ -71,7 +71,7 @@
         exploration of possible scraping techniques for train information. We have
         yet to include any trains in our service.  We also worked on getting the 
         auto-complete for arrival and destination location and the pop-up calendar to
-        work. We improved the style of our website. The screen shots below show to auto-complete menu and pop-up calendar in action.<br> 
+        work. We improved the style of our website. The screen shots below show to autocomplete menu and pop-up calendar in action.<br> 
     </body>
     <img src="autoComplete.png" alt="logo" width=220 height=200> <br>
     <p> 
@@ -79,15 +79,15 @@
     <img src="calendar.png" alt="logo" width=250 height=200> <br>
     <hr></hr>
  <h2>April 26, 2013</h2>
-    <body>Today, we were successful in getting the loading GIF and results page working.      We also worked on the algorithm for combining
+    <body>Today, we were successful in getting the loading gif and results page working.      We also worked on the algorithm for combining
           different pieces of routes to get the fastest and cheapest overall route. 
-          Finally, we successfully scraped both NJ transit and Amtrak trains. 
+          Finally, we sucessfully scraped both NJ transit and Amtrak trains. 
     </body>
     <hr></hr>
  <h2>May 2, 2013</h2>
     <body>We spent some time making sure that we had train codes properly entered
-          in the database. We are also setting up from the back-end a way to display links
-          on our results page that a user can click to be directed to the travel service provider's page that allows
+          in the database. We are also setting up from the backend a way to display links
+          on our results page that a user can click to be directed to the travel service provier's page that allows
           them to purchase the desired ticket.  We also are working on a more sophisticated
           algorithm to find the shortest route (i.e. by combining multiple modes of 
           transportation).
@@ -96,13 +96,13 @@
  <h2>May 7, 2013</h2>
     <body>Today, we worked on displaying multiple legs for the Amtrak train results
           (not just the original origin and the final destination). We also realized
-          that we needed to use JavaScript to process post requests on the front-end
-          to get Amtrak links to work. 
+          that we needed to use javascript to process post requests on the front-end
+          to get amtrak links to work. 
     </body>     
     <hr></hr>
  <h2>May 8, 2013</h2>
     <body>Today, we worked on our power point for the demo. We also got got NJ 
-          transit fully working including multi-leg trips. We fixed a bug related
+          transit fully working including mulit-leg trips. We fixed a bug related
           to displaying prices. We also worked on displaying maps on our website
           so that users can see a visual depiction of their route. 
     </body>     
@@ -121,7 +121,7 @@
     </body>     
     <hr></hr>
     <h2>May 13, 2013</h2>
-    <body> We continued to work on the write-up. We also worked on a more efficient way to get flight results from Orbitz. We are now getting two sets of results, one set that is sorted by elapsed time and another that is sorted by price. This saves our algorithm some time. Since some of our bootstrap tools don't work for Internet Explorer, we wrote code to return an error message when our page is loaded using Internet Explorer, telling users to please use Firefox, Chrome, Safari, etc. We also made more progress with maps tonight. We now display more accurate maps and made both the map and results pop-up windows more readable for cases in which the internet window is expanded or contracted. We also fixed an error in the database related to the code for the airport nearest to Fairhaven, MA. 
+    <body> We continued to work on the write-up. We also worked on a more efficient way to get flight results from Orbitz. We are now getting two sets of results, one set that is sorted by elapsed time and another that is sorted by price. This saves our algorithm some time. Since some of our bootstrap tools don't work for Internet Explorer, we wrote code to return an error message when our page is loaded using Internet Explorer, telling users to please use Firefox, Chrome, Safari, etc. We also made more progress with maps tonight. We now display more accurate maps and made both the map and results pop-up windows more readable for cases in which the internet window is expanded or contracted. We also fixed an error in the database related to the code for the aiport nearest to Fairhaven, MA. 
     </body>     
     <hr></hr>
      <h2>May 14, 2013</h2>

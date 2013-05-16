@@ -4,3 +4,4 @@ venv
 *.swp
 *.db
 build
+*.cfg

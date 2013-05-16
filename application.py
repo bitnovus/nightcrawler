@@ -9,10 +9,6 @@ from werkzeug.routing import BaseConverter
 
 application = Flask(__name__)
 
-#Set application.debug=true to enable tracebacks on Beanstalk log output. 
-#Make sure to remove this line before deploying to production.
-application.debug=True
-
 application.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') \
         if os.environ.get('DATABASE_URL') else '**REDACTED**'
 
@@ -447,4 +443,4 @@ def image_routes(picName):
     return send_from_directory(os.path.join(application.root_path, 'submission_directory'), picName, mimetype='image/png')
 
 if __name__ == '__main__':
-    application.run(host='0.0.0.0', debug=True)
+    application.run(host='0.0.0.0', debug=False)
