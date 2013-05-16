@@ -114,16 +114,35 @@
 					sortresults(results_price, comparebyprice);
 					sortresults(results_elapsed, comparebyelapsed);
 					sortresults(results_departure, comparebydeparture);
-					sortresults(results_arrival, comparebyarrival);
-					if (speed) {
-						display(results_elapsed, 4);
-					} else {
-						display(results_price, 1);
+                    sortresults(results_arrival, comparebyarrival);
+
+                    display(results_price, 1, "r1-price-div");
+                    display(results_arrival, 2, "r2-arrive-div");
+                    display(results_departure, 3, "r3-depart-div");
+					display(results_elapsed, 4, "r4-elapsed-div");
+                    if (speed) {
+                        //put reveal 4 here
+                        reveal_hide("r4-elapsed-div", ["r1-price-div", "r2-arrive-div", "r3-depart-div"]);
+
+                    } else {
+                        //put reveal 1 here
+                        reveal_hide("r1-price-div", ["r4-elapsed-div", "r2-arrive-div", "r3-depart-div"]);
 					}
 					//toggleloadingimage();
 				}
 			);
-		}
+        }
+
+        function reveal_hide(revealMe, hideUs){
+            for (var i = 0; i < hideUs.length; i++) {
+                var hE = document.getElementById(hideUs[i]);
+                hE.style.display = "none";
+            }
+
+            var rE = document.getElementById(revealMe);
+            rE.style.display = "block";
+        }
+
 
 		function copyarray(src) {
 			var dest = new Array();
@@ -280,7 +299,7 @@
 
 		var map_data;
 
-		function display(results_array, sorttype) {
+		function display(results_array, sorttype, specdiv) {
 			if (!isLoading) {
 				toggleloadingimage();
 			}
@@ -288,7 +307,8 @@
 				return;
 			}
 			sortedby = sorttype;
-			var e = document.getElementById("results-div");
+            var e = document.getElementById(specdiv);
+            e.style.display = "none";
 			var header = document.getElementById("results-header");
 			header.innerHTML = document.getElementById("originform").value + " to " +
 				document.getElementById("destform").value + " on " + document.getElementById("datepicker").value;
@@ -601,16 +621,16 @@
                     <label>Sort by:</label>
                     <div class="switch candy blue switch-four">
                         <input id="sort-by-price" name="sorting" type="radio" checked>
-                        <label for="sort-by-price" onclick="display(results_price, 1)">Price</label>
+                        <label for="sort-by-price" onclick="reveal_hide('r1-price-div', ['r4-elapsed-div', 'r2-arrive-div', 'r3-depart-div'])">Price</label>
 
                         <input id="sort-by-arrival-time" name="sorting" type="radio">
-                        <label for="sort-by-arrival-time" onclick="display(results_arrival, 2)">Arrival Time</label>
+                        <label for="sort-by-arrival-time" onclick="reveal_hide('r2-arrive-div', ['r4-elapsed-div', 'r1-price-div', 'r3-depart-div'])">Arrival Time</label>
 
                         <input id="sort-by-departure-time" name="sorting" type="radio">
-                        <label for="sort-by-departure-time" onclick="display(results_departure, 3)">Departure Time</label>
+                        <label for="sort-by-departure-time" onclick="reveal_hide('r3-depart-div', ['r4-elapsed-div', 'r2-arrive-div', 'r1-price-div'])">Departure Time</label>
 
                         <input id="sort-by-elapsed-time" name="sorting" type="radio">
-                        <label for="sort-by-elapsed-time" onclick="display(results_elapsed, 4)">Elapsed Time</label>
+                        <label for="sort-by-elapsed-time" onclick="reveal_hide('r4-elapsed-div', ['r1-price-div', 'r2-arrive-div', 'r3-depart-div'])">Elapsed Time</label>
 
                         <span class="slide-button"></span>
                     </div>
@@ -620,8 +640,12 @@
                 <button onclick="sortresults(comparebydeparture)">Sort by Departure Time</button>
                 <button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>-->
             </div>
-            <div class="modal-body" id="results-div">
-            </div>
+            <div class="modal-body" id="results-div"></div>
+            <div class="modal-body" id="r1-price-div"></div>
+            <div class="modal-body" id="r2-arrive-div"></div>
+            <div class="modal-body" id="r3-depart-div"></div>
+            <div class="modal-body" id="r4-elapsed-div"></div>
+
         </div>
 
         <div class="modal fade" id="map-modal">
