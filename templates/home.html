@@ -24,7 +24,11 @@
 		var orig_state;
         var dest_state;
         var orig_city_value;
-        var dest_city_value;
+	var dest_city_value;
+	var results_price;
+	var results_elapsed;
+	var results_arrival;
+	var results_departure;
 		function submit()
 		{
 			orig_city_value = document.getElementById("originform").value;
@@ -103,17 +107,30 @@
 					console.log(data + " " + status);
 					results = data;
 					initializeprices(results);
+					results_prices = copyarray(results);
+					results_elapsed = copyarray(results);
+					results_departure = copyarray(results);
+					results_arrival = copyarray(results);
+					sortresults(results_prices, comparebyprice);
+					sortresults(results_elapsed, comparebyelapsed);
+					sortresults(results_departure, comparebydeparture);
+					sortresults(results_arrival, comparebyarrival);
 					if (speed) {
-						sortresults(comparebyelapsed, 4);
-						sortedby = 4;
+						display(comparebyelapsed, 4);
 					} else {
-						sortresults(comparebyprice, 1);
-						sortedby = 1;
+						display(comparebyprice, 1);
 					}
-					display();
 					//toggleloadingimage();
 				}
 			);
+		}
+
+		function copyarray(src) {
+			var dest = new Array();
+			for (int i = 0; i < src.length; i++) {
+				dest[i] = src[i];
+			}
+			return dest;
 		}
 
 
@@ -257,33 +274,30 @@
 		}
 
 
-		function sortresults(comparefunction, type) {
-			/*if (!isLoading) {
-				toggleloadingimage();
-				}*/
-			if (sortedby == type) {
-				return;
-			}
-			results.sort(comparefunction);
-            display();
+		function sortresults(toSort, comparefunction) {
+			toSort.sort(comparefunction);
 		}
 
 		var map_data;
 
-		function display() {
+		function display(results_array, sorttype) {
 			if (!isLoading) {
 				toggleloadingimage();
 			}
+			if (sortedby == sorttype) {
+				return;
+			}
+			sortedby = sorttype;
 			var e = document.getElementById("results-div");
 			var header = document.getElementById("results-header");
 			header.innerHTML = document.getElementById("originform").value + " to " +
 				document.getElementById("destform").value + " on " + document.getElementById("datepicker").value;
 			e.innerHTML = "";
-			if (results.length == 0) {
+			if (results_array.length == 0) {
 				e.innerHTML += "No routes found.";
 			}
-			for (var i = 0; i < results.length; i++) {
-				var r = results[i];
+			for (var i = 0; i < results_array.length; i++) {
+				var r = results_array[i];
 				if (r instanceof Array) {
 					if (r[0].departure != undefined) {
 						// multiple stops, one leg
@@ -311,7 +325,7 @@
 						}
 						appendPriceCarrier(e, stop);
 						appendLink(e, stop);
-						appendMap(e, i);
+						appendMap(e, i, sortedby);
 						e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes</b>";
 						e.innerHTML += "<hr/>"
 						continue;
@@ -364,7 +378,7 @@
 					if (addcarriers) {
 						//r.stops[r.stops.length-1] += " " + dest_state;
 					}
-					appendMap(e, i);
+					appendMap(e, i, sortedby);
 					e.innerHTML += "<br /><b>Total price: " + r[0].price + "</b>";
 					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes </b>";
 					e.innerHTML += "<hr/>"
@@ -382,7 +396,7 @@
 					appendData(e, r);
 					appendPriceCarrier(e, r);
 					appendLink(e, r);
-					appendMap(e, i);
+					appendMap(e, i, sortedby);
 					e.innerHTML += "<br /><b>Elapsed time: " + r.elapsed_time + " minutes </b>";
 					e.innerHTML += "<hr/>"
 				}
@@ -390,12 +404,12 @@
 			if (sortedby == 4) {
 				document.getElementById("sort-by-elapsed-time").checked = true;
 			}
-            $("#results-modal").modal("show");
+		        $("#results-modal").modal("show");
 
 			toggleloadingimage();
         }
 
-function showMap(stops, modes) {
+	function showMap(stops, modes) {
 			var header = document.getElementById("map-header");
 			header.innerHTML = document.getElementById("originform").value + " to " +
 				document.getElementById("destform").value;
@@ -475,14 +489,24 @@ function showMap(stops, modes) {
 	    }
 	
 
-		function appendMap(e, i) {
-			e.innerHTML += "<button type = \"button\" onclick = \"callMap(" + i + ")\">map</button><br />";
+		function appendMap(e, i, sortedby) {
+			e.innerHTML += "<button type = \"button\" onclick = \"callMap(" + i + sortedby + ")\">map</button><br />";
 		}
 
-		function callMap(i) {
-            r = results[i];
-            console.log("callMapi = " + r);
-			showMap(r.stops, r.carriers);
+		function callMap(i, sortedby) {
+		    var results_array;
+		    if (sortedby == 1) {
+			    results_array = results_price;
+		    } else if (sortedby == 2) {
+			    results_array = results_arrival;
+		    } elseif (sortedby == 3) {
+			    results_array = results_departure;
+		    } else {
+			    results_array = results_elapsed;
+		    }
+		    r = results_array[i];
+		    console.log("callMapi = " + r);
+		    showMap(r.stops, r.carriers);
 		}
 
 		function carriertomode(c) {
@@ -577,16 +601,16 @@ function showMap(stops, modes) {
                     <label>Sort by:</label>
                     <div class="switch candy blue switch-four">
                         <input id="sort-by-price" name="sorting" type="radio" checked>
-                        <label for="sort-by-price" onclick="sortresults(comparebyprice, 1)">Price</label>
+                        <label for="sort-by-price" onclick="display(results_price, 1)">Price</label>
 
                         <input id="sort-by-arrival-time" name="sorting" type="radio">
-                        <label for="sort-by-arrival-time" onclick="sortresults(comparebyarrival, 2)">Arrival Time</label>
+                        <label for="sort-by-arrival-time" onclick="display(results_arrival, 2)">Arrival Time</label>
 
                         <input id="sort-by-departure-time" name="sorting" type="radio">
-                        <label for="sort-by-departure-time" onclick="sortresults(comparebydeparture, 3)">Departure Time</label>
+                        <label for="sort-by-departure-time" onclick="display(results_departure, 3)">Departure Time</label>
 
                         <input id="sort-by-elapsed-time" name="sorting" type="radio">
-                        <label for="sort-by-elapsed-time" onclick="sortresults(comparebyelapsed, 4)">Elapsed Time</label>
+                        <label for="sort-by-elapsed-time" onclick="display(results_elapsed, 4)">Elapsed Time</label>
 
                         <span class="slide-button"></span>
                     </div>
