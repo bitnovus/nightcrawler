@@ -68,9 +68,11 @@ def show_map(name=None):
             temp_stop += ' '
             if i == 0:
                 temp_stop += origcity
+                temp_stop += ','
                 temp_stop += origstate
             elif i == len(old_stops_list)-1:
                 temp_stop += destcity
+                temp_stop += ','
                 temp_stop += deststate
 
         temp_stop = temp_stop.replace("b/t", "")
