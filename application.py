@@ -58,7 +58,8 @@ def show_map(name=None):
     #print old_stops_list
 
     for i in range(0, len(old_stops_list)):
-        temp_stop = old_stops_list[i][:-1]
+        temp_stop = '"'
+        temp_stop += old_stops_list[i][1:-1]
         if modes_list[min(i, len(modes_list)-1)] != "\'TRANSIT\'":
             print i
             temp_stop += ' '
@@ -72,7 +73,7 @@ def show_map(name=None):
                 temp_stop += deststate
 
         temp_stop = temp_stop.replace("b/t", "")
-        temp_stop += "'"
+        temp_stop += '"'
         new_stops_list.append(temp_stop)
 
     stops = ','.join(new_stops_list)
