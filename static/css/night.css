@@ -83,6 +83,11 @@
         padding: 0 0 10px 0;
         width: 100%;
     }
+    .logoStuff {
+        height: 8em;
+        position: relative;
+        left: 10%;
+    }
 }
 
 @media screen and (min-width: 960px) {
@@ -94,6 +99,7 @@
         height: 754px;
     }
     .logoStuff {
+        height: 8em;
         position: relative;
         left: 12%;
     }
@@ -101,10 +107,6 @@
         padding: 0 0 10px 0;
         width: 60%;
     }
-}
-
-.logoStuff {
-    height: 8em;
 }
 
 #logoHead {
