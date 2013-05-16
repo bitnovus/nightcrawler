@@ -456,7 +456,9 @@
 			}
 			if (sortedby == 4) {
 				document.getElementById("sort-by-elapsed-time").checked = true;
-			}
+            }
+			    var rm = document.getElementById("results-modal");
+                rm.style.display = "block";
 		        $("#results-modal").modal("show");
 
 			toggleloadingimage();
@@ -808,7 +810,7 @@
 		<button onclick="sortresults(comparebyelapsed)">Sort by Elapsed Time</button>
     </div>-->
 
-        <div class="modal fade" id="results-modal">
+        <div class="modal fade" id="results-modal" style="display:none">
             <div class="modal-header">
                 <a class="close" data-dismiss="modal">&times;</a>
                 <h3>Results</h3> <h4 id="results-header"></h4>
