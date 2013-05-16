@@ -63,7 +63,7 @@ def show_map(name=None):
 
     for i in range(0, len(old_stops_list)):
         temp_stop = old_stops_list[i][:-1]
-        if modes_list[min(i, len(modes_list)-1)] != "\'TRANSIT\'" and len(temp_stop) != 4:
+        if modes_list[min(i, len(modes_list)-1)] != "\'TRANSIT\'":
             print i
             temp_stop += ' '
             if i == 0:
@@ -72,9 +72,6 @@ def show_map(name=None):
             elif i == len(old_stops_list)-1:
                 temp_stop += destcity
                 temp_stop += deststate
-
-        if len(temp_stop) == 4:
-            temp_stop += ', US'
 
         temp_stop = temp_stop.replace("b/t", "")
         temp_stop += "'"
