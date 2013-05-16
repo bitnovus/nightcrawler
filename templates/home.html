@@ -107,7 +107,7 @@
 					console.log(data + " " + status);
 					results = data;
 					initializeprices(results);
-					results_prices = copyarray(results);
+					results_price = copyarray(results);
 					results_elapsed = copyarray(results);
 					results_departure = copyarray(results);
 					results_arrival = copyarray(results);
@@ -116,9 +116,9 @@
 					sortresults(results_departure, comparebydeparture);
 					sortresults(results_arrival, comparebyarrival);
 					if (speed) {
-						display(comparebyelapsed, 4);
+						display(results_elapsed, 4);
 					} else {
-						display(comparebyprice, 1);
+						display(results_price, 1);
 					}
 					//toggleloadingimage();
 				}
