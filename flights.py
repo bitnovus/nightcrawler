@@ -23,6 +23,7 @@ def sanitize_prices(prices):
   for p in prices:
     s = re.sub('money-symbol\">\$</span>', "", p)
     s = re.sub('<span class=\"money-cents\">', "", s)
+    s = re.sub(',', "", s)
     s = '$' + s
     g.append(s)
   return g
